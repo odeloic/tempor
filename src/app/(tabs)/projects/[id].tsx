@@ -1,13 +1,15 @@
 import { useTheme } from '@/theme/ThemeProvider';
+import { useLocalSearchParams } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function TimerScreen() {
-  const { colors, spacing } = useTheme();
+export default function EditProjectScreen() {
+  const { id } = useLocalSearchParams<{ id: string }>();
+  const { colors } = useTheme();
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <Text style={[styles.title, { color: colors.textPrimary }]}>
-        Timer Screen
+        Edit Project: {id}
       </Text>
     </View>
   );
