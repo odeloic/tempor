@@ -88,9 +88,22 @@ export function TimerControls({
           </Text>
         </Pressable>
         <Pressable
+          onPress={onStop}
+          style={({ pressed }) => [
+            styles.button,
+            styles.outlineButton,
+            { borderColor: colors.border, opacity: pressed ? 0.9 : 1 },
+          ]}
+        >
+          <Text style={[styles.buttonText, { color: colors.textPrimary }]}>
+            Stop
+          </Text>
+        </Pressable>
+        <Pressable
           onPress={onDiscard}
           style={({ pressed }) => [
             styles.button,
+            styles.fixedWidthButton,
             styles.outlineButton,
             { borderColor: colors.destructive, opacity: pressed ? 0.9 : 1 },
           ]}
@@ -117,6 +130,10 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  fixedWidthButton: {
+    flex: 0,
+    width: 90,
   },
   outlineButton: {
     borderWidth: 2,
