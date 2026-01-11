@@ -1,27 +1,644 @@
+import { type Session } from '@/atoms/sessions';
+import { timerStateAtom } from '@/atoms/timer';
+import { useProjects } from '@/hooks/useProjects';
+import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { useTheme } from '@/theme/ThemeProvider';
-import { useLocalSearchParams } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { fonts, radii, spacing } from '@/theme/tokens';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useAtomValue } from 'jotai';
+import { useCallback, useEffect, useState } from 'react';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function EditEntryScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
+  const router = useRouter();
+
+  const { projects } = useProjects();
+  const { getEntry, update, remove, refresh } = useTimeEntries();
+  const timerState = useAtomValue(timerStateAtom);
+
+  const [entry, setEntry] = useState<Session | null>(null);
+  const [projectId, setProjectId] = useState<string>('');
+  const [date, setDate] = useState<Date>(new Date());
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [note, setNote] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const entryId = id ? parseInt(id, 10) : null;
+
+  useEffect(() => {
+    if (entryId) {
+      const foundEntry = getEntry(entryId);
+      if (foundEntry) {
+        setEntry(foundEntry);
+        setProjectId(foundEntry.projectId);
+        setDate(foundEntry.date);
+        const totalMinutes = Math.floor(foundEntry.duration / 60);
+        setHours(Math.floor(totalMinutes / 60));
+        setMinutes(totalMinutes % 60);
+        setNote(foundEntry.note ?? '');
+      }
+    }
+  }, [entryId, getEntry]);
+
+  const isTimerRunning = timerState.status !== 'idle';
+
+  const duration = hours * 3600 + minutes * 60;
+  const isValid = projectId && duration > 0;
+  const hasChanges =
+    entry &&
+    (projectId !== entry.projectId ||
+      date.getTime() !== entry.date.getTime() ||
+      duration !== entry.duration ||
+      (note || '') !== (entry.note || ''));
+
+  const handleSave = useCallback(async () => {
+    if (!entryId || !isValid || isSaving) return;
+
+    setIsSaving(true);
+    try {
+      await update(entryId, {
+        projectId,
+        date,
+        duration,
+        note: note.trim() || null,
+      });
+      await refresh();
+      router.back();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save changes. Please try again.');
+    } finally {
+      setIsSaving(false);
+    }
+  }, [entryId, isValid, isSaving, projectId, date, duration, note, update, refresh, router]);
+
+  const handleDelete = useCallback(async () => {
+    if (!entryId) return;
+
+    try {
+      await remove(entryId);
+      await refresh();
+      router.back();
+    } catch (error) {
+      Alert.alert('Error', 'Failed to delete entry. Please try again.');
+    }
+  }, [entryId, remove, refresh, router]);
+
+  const handleDateChange = useCallback(
+    (_event: unknown, selectedDate?: Date) => {
+      setShowDatePicker(false);
+      if (selectedDate) {
+        setDate(selectedDate);
+      }
+    },
+    []
+  );
+
+  const formatDisplayDate = (d: Date) => {
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (d.toDateString() === today.toDateString()) return 'Today';
+    if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
+
+    return d.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+  if (!entry) {
+    return (
+      <View
+        style={[
+          styles.container,
+          styles.centered,
+          { backgroundColor: colors.background },
+        ]}
+      >
+        <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
+          Entry not found
+        </Text>
+      </View>
+    );
+  }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>
-        Edit Entry: {id}
-      </Text>
-    </View>
+    <ScrollView
+      style={[styles.container, { backgroundColor: colors.background }]}
+      contentContainerStyle={[
+        styles.content,
+        { paddingTop: insets.top + spacing.md, paddingBottom: 120 },
+      ]}
+      keyboardShouldPersistTaps="handled"
+    >
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable
+          onPress={() => router.back()}
+          style={({ pressed }) => [
+            styles.backButton,
+            { borderColor: colors.border, opacity: pressed ? 0.7 : 1 },
+          ]}
+        >
+          <Text style={[styles.backIcon, { color: colors.textPrimary }]}>
+            ‹
+          </Text>
+        </Pressable>
+        <Text style={[styles.title, { color: colors.textPrimary }]}>
+          Edit Entry
+        </Text>
+        <View style={styles.headerSpacer} />
+      </View>
+
+      {/* Timer Warning */}
+      {isTimerRunning && (
+        <View
+          style={[styles.warningBanner, { backgroundColor: colors.surface }]}
+        >
+          <Text style={[styles.warningText, { color: colors.textSecondary }]}>
+            A timer is currently running. Stop the timer before editing entries.
+          </Text>
+        </View>
+      )}
+
+      {/* Project Selector */}
+      <View style={styles.section}>
+        <Text style={[styles.label, { color: colors.textSecondary }]}>
+          PROJECT
+        </Text>
+        <View style={styles.projectList}>
+          {projects.map((p) => {
+            const isSelected = String(p.id) === projectId;
+            return (
+              <Pressable
+                key={p.id}
+                onPress={() => !isTimerRunning && setProjectId(String(p.id))}
+                disabled={isTimerRunning}
+                style={({ pressed }) => [
+                  styles.projectOption,
+                  {
+                    borderColor: isSelected
+                      ? colors.textPrimary
+                      : colors.border,
+                    borderWidth: isSelected ? 2 : 1,
+                    backgroundColor: colors.surface,
+                    opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <View
+                  style={[styles.projectDot, { backgroundColor: p.color }]}
+                />
+                <Text
+                  style={[styles.projectName, { color: colors.textPrimary }]}
+                >
+                  {p.name}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+      </View>
+
+      {/* Date Picker */}
+      <View style={styles.section}>
+        <Text style={[styles.label, { color: colors.textSecondary }]}>
+          DATE
+        </Text>
+        <Pressable
+          onPress={() => !isTimerRunning && setShowDatePicker(true)}
+          disabled={isTimerRunning}
+          style={({ pressed }) => [
+            styles.dateButton,
+            {
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
+              opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
+            },
+          ]}
+        >
+          <Text style={[styles.dateText, { color: colors.textPrimary }]}>
+            {formatDisplayDate(date)}
+          </Text>
+          <Text style={[styles.dateSubtext, { color: colors.textSecondary }]}>
+            {date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </Text>
+        </Pressable>
+        {showDatePicker && (
+          <DateTimePicker
+            value={date}
+            mode="date"
+            display="spinner"
+            onChange={handleDateChange}
+            maximumDate={new Date()}
+          />
+        )}
+      </View>
+
+      {/* Duration */}
+      <View style={styles.section}>
+        <Text style={[styles.label, { color: colors.textSecondary }]}>
+          DURATION
+        </Text>
+        <View style={styles.durationRow}>
+          <View style={styles.durationInput}>
+            <View
+              style={[
+                styles.inputWrapper,
+                {
+                  backgroundColor: colors.surface,
+                  borderColor: colors.border,
+                  opacity: isTimerRunning ? 0.5 : 1,
+                },
+              ]}
+            >
+              <TextInput
+                value={hours > 0 ? String(hours) : ''}
+                onChangeText={(text) => {
+                  const val = parseInt(text, 10);
+                  setHours(isNaN(val) ? 0 : Math.max(0, Math.min(23, val)));
+                }}
+                keyboardType="number-pad"
+                placeholder="0"
+                placeholderTextColor={colors.textSecondary}
+                editable={!isTimerRunning}
+                style={[
+                  styles.durationTextInput,
+                  { color: colors.textPrimary },
+                ]}
+              />
+              <Text
+                style={[styles.durationUnit, { color: colors.textSecondary }]}
+              >
+                hrs
+              </Text>
+            </View>
+          </View>
+          <View style={styles.durationInput}>
+            <View
+              style={[
+                styles.inputWrapper,
+                {
+                  backgroundColor: colors.surface,
+                  borderColor: colors.border,
+                  opacity: isTimerRunning ? 0.5 : 1,
+                },
+              ]}
+            >
+              <TextInput
+                value={minutes > 0 ? String(minutes) : ''}
+                onChangeText={(text) => {
+                  const val = parseInt(text, 10);
+                  setMinutes(isNaN(val) ? 0 : Math.max(0, Math.min(59, val)));
+                }}
+                keyboardType="number-pad"
+                placeholder="0"
+                placeholderTextColor={colors.textSecondary}
+                editable={!isTimerRunning}
+                style={[
+                  styles.durationTextInput,
+                  { color: colors.textPrimary },
+                ]}
+              />
+              <Text
+                style={[styles.durationUnit, { color: colors.textSecondary }]}
+              >
+                min
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+
+      {/* Note */}
+      <View style={styles.section}>
+        <Text style={[styles.label, { color: colors.textSecondary }]}>
+          NOTE{' '}
+          <Text style={styles.optionalText}>(optional)</Text>
+        </Text>
+        <TextInput
+          value={note}
+          onChangeText={setNote}
+          placeholder="What did you work on?"
+          placeholderTextColor={colors.textSecondary}
+          multiline
+          numberOfLines={3}
+          editable={!isTimerRunning}
+          style={[
+            styles.noteInput,
+            {
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
+              color: colors.textPrimary,
+              opacity: isTimerRunning ? 0.5 : 1,
+            },
+          ]}
+        />
+      </View>
+
+      {/* Save Button */}
+      <Pressable
+        onPress={handleSave}
+        disabled={!isValid || !hasChanges || isSaving || isTimerRunning}
+        style={({ pressed }) => [
+          styles.saveButton,
+          {
+            backgroundColor:
+              isValid && hasChanges && !isTimerRunning
+                ? colors.textPrimary
+                : colors.border,
+            opacity: pressed ? 0.9 : 1,
+          },
+        ]}
+      >
+        <Text
+          style={[
+            styles.saveButtonText,
+            {
+              color:
+                isValid && hasChanges && !isTimerRunning
+                  ? colors.background
+                  : colors.textSecondary,
+            },
+          ]}
+        >
+          {isSaving ? 'Saving...' : 'Save Changes'}
+        </Text>
+      </Pressable>
+
+      {/* Delete Button */}
+      {!showDeleteConfirm ? (
+        <Pressable
+          onPress={() => setShowDeleteConfirm(true)}
+          disabled={isTimerRunning}
+          style={({ pressed }) => [
+            styles.deleteButton,
+            { opacity: pressed ? 0.7 : isTimerRunning ? 0.5 : 1 },
+          ]}
+        >
+          <Text style={[styles.deleteButtonText, { color: colors.destructive }]}>
+            Delete Entry
+          </Text>
+        </Pressable>
+      ) : (
+        <View
+          style={[
+            styles.deleteConfirm,
+            { backgroundColor: '#FEF2F2' },
+          ]}
+        >
+          <Text
+            style={[styles.deleteConfirmText, { color: colors.textPrimary }]}
+          >
+            Delete this time entry?
+          </Text>
+          <View style={styles.deleteConfirmButtons}>
+            <Pressable
+              onPress={() => setShowDeleteConfirm(false)}
+              style={({ pressed }) => [
+                styles.confirmButton,
+                {
+                  backgroundColor: 'transparent',
+                  borderColor: colors.border,
+                  borderWidth: 1,
+                  opacity: pressed ? 0.7 : 1,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.confirmButtonText,
+                  { color: colors.textPrimary },
+                ]}
+              >
+                Cancel
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={handleDelete}
+              style={({ pressed }) => [
+                styles.confirmButton,
+                {
+                  backgroundColor: colors.destructive,
+                  opacity: pressed ? 0.9 : 1,
+                },
+              ]}
+            >
+              <Text style={[styles.confirmButtonText, { color: '#FFFFFF' }]}>
+                Delete
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      )}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  centered: {
     justifyContent: 'center',
     alignItems: 'center',
   },
+  content: {
+    paddingHorizontal: spacing.lg,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.xl,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: radii.sm,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backIcon: {
+    fontSize: 28,
+    lineHeight: 32,
+    marginTop: -2,
+  },
   title: {
-    fontSize: 24,
+    flex: 1,
+    fontSize: 22,
+    fontFamily: fonts.sansSemiBold,
+    textAlign: 'center',
+    marginRight: 40,
+  },
+  headerSpacer: {
+    width: 0,
+  },
+  warningBanner: {
+    padding: spacing.md,
+    borderRadius: radii.md,
+    marginBottom: spacing.lg,
+  },
+  warningText: {
+    fontSize: 14,
+    fontFamily: fonts.sans,
+    textAlign: 'center',
+  },
+  emptyText: {
+    fontSize: 16,
+    fontFamily: fonts.sans,
+  },
+  section: {
+    marginBottom: spacing.lg,
+  },
+  label: {
+    fontSize: 11,
+    fontFamily: fonts.sansMedium,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 10,
+  },
+  optionalText: {
+    textTransform: 'none',
+    fontFamily: fonts.sans,
+    letterSpacing: 0,
+  },
+  projectList: {
+    gap: 6,
+  },
+  projectOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    padding: 14,
+    paddingHorizontal: 16,
+    borderRadius: radii.md,
+  },
+  projectDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 3,
+  },
+  projectName: {
+    fontSize: 15,
+    fontFamily: fonts.sansMedium,
+  },
+  dateButton: {
+    padding: 16,
+    paddingHorizontal: 18,
+    borderRadius: radii.md,
+    borderWidth: 1,
+  },
+  dateText: {
+    fontSize: 16,
+    fontFamily: fonts.sansMedium,
+  },
+  dateSubtext: {
+    fontSize: 13,
+    fontFamily: fonts.sans,
+    marginTop: 2,
+  },
+  durationRow: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  durationInput: {
+    flex: 1,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderRadius: radii.md,
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  durationTextInput: {
+    flex: 1,
+    padding: 16,
+    paddingHorizontal: 18,
+    fontSize: 16,
+    fontFamily: fonts.sans,
+    textAlign: 'center',
+  },
+  durationUnit: {
+    paddingRight: 16,
+    fontSize: 14,
+    fontFamily: fonts.sans,
+  },
+  noteInput: {
+    padding: 16,
+    paddingHorizontal: 18,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    fontSize: 16,
+    fontFamily: fonts.sans,
+    minHeight: 100,
+    textAlignVertical: 'top',
+  },
+  saveButton: {
+    height: 56,
+    borderRadius: radii.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  saveButtonText: {
+    fontSize: 15,
+    fontFamily: fonts.sansSemiBold,
+  },
+  deleteButton: {
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteButtonText: {
+    fontSize: 14,
+    fontFamily: fonts.sansMedium,
+  },
+  deleteConfirm: {
+    borderRadius: radii.md,
+    padding: 18,
+  },
+  deleteConfirmText: {
+    fontSize: 14,
+    fontFamily: fonts.sans,
+    marginBottom: 14,
+  },
+  deleteConfirmButtons: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  confirmButton: {
+    flex: 1,
+    height: 44,
+    borderRadius: radii.sm,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  confirmButtonText: {
+    fontSize: 14,
+    fontFamily: fonts.sansMedium,
   },
 });
