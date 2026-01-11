@@ -2,22 +2,29 @@
 description: Create a branch and implement a Linear task with planning, execution, and quality checks
 argument-hint: <branch-name> <task-description>
 hooks:
-  PreToolUse:
-    - matcher: "Read"
-      hooks:
-        - type: command
-          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/pre-up-next.sh"
-          once: true
   Stop:
     - hooks:
         - type: command
-          command: "$CLAUDE_PROJECT_DIR/.claude/hooks/post-up-next.sh"
+          command: "./.claude/hooks/post-up-next.sh"
 ---
 
 # Linear Task Implementation
 
 **Branch:** `$1`
 **Task:** $ARGUMENTS
+
+---
+
+## Phase 0: Branch Setup
+
+Before doing anything else, ensure the correct branch is checked out and up to date:
+
+1. Run `git rev-parse --abbrev-ref HEAD` to check current branch
+2. If not on `$1`:
+   - If branch `$1` exists: `git checkout $1`
+   - If branch doesn't exist: `git checkout -b $1`
+3. Update branch with latest from main: `git pull origin main`
+4. Confirm you're on the correct branch before proceeding
 
 ---
 
