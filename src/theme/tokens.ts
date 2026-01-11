@@ -49,3 +49,10 @@ export const radii = {
 
 export type ThemeRadii = typeof radii;
 
+export const statusColors = {
+    running: '#2A9D8F',
+    paused: '#F4A261',
+} as const;
+
+export type StatusColors = typeof statusColors;
+
