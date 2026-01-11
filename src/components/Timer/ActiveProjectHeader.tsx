@@ -13,7 +13,12 @@ type ActiveProjectHeaderProps = {
 export function ActiveProjectHeader({ project, status }: ActiveProjectHeaderProps) {
   const { colors } = useTheme();
 
-  const statusLabel = status !== 'idle' ? 'Tracking' : 'Ready';
+  const STATUS_LABELS: Record<TimerStatus, string> = {
+    running: 'Tracking',
+    paused: 'Paused',
+    idle: 'Ready',
+  };
+  const statusLabel = STATUS_LABELS[status];
 
   return (
     <View style={styles.container}>
