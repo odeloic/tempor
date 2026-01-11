@@ -1,13 +1,40 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
 import { useProjects } from '@/hooks/useProjects';
+import { useTimer } from '@/hooks/useTimer';
+import { TimerDisplay } from '@/components/Timer/TimerDisplay';
+import { TimerControls } from '@/components/Timer/TimerControls';
+import { ActiveProjectHeader } from '@/components/Timer/ActiveProjectHeader';
+import { QuickStartProjectCard } from '@/components/Timer/QuickStartProjectCard';
 
 export default function TimerScreen() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const { projects } = useProjects();
+  const { projects, getProject } = useProjects();
+  const {
+    status,
+    projectId,
+    elapsed,
+    start,
+    pause,
+    resume,
+    stop,
+    discard,
+  } = useTimer();
+
+  const activeProject = projectId ? getProject(Number(projectId)) ?? null : null;
+
+  const handleProjectSelect = (id: number) => {
+    start(String(id));
+  };
+
+  const handleStart = () => {
+    if (activeProject) {
+      start(String(activeProject.id));
+    }
+  };
 
   return (
     <ScrollView
@@ -17,36 +44,37 @@ export default function TimerScreen() {
         { paddingTop: insets.top + spacing.xl, paddingBottom: 120 },
       ]}
     >
-      {/* Timer placeholder */}
-      <Text style={[styles.timerPlaceholder, { color: colors.textSecondary }]}>
-        Timer coming soon...
-      </Text>
+      <ActiveProjectHeader project={activeProject} status={status} />
 
-      {/* Quick Start Projects */}
+      <View style={styles.timerSection}>
+        <TimerDisplay elapsed={elapsed} isPaused={status === 'paused'} />
+      </View>
+
+      <View style={styles.controlsSection}>
+        <TimerControls
+          status={status}
+          hasProject={activeProject !== null}
+          onStart={handleStart}
+          onPause={pause}
+          onResume={resume}
+          onStop={stop}
+          onDiscard={discard}
+        />
+      </View>
+
       <View style={styles.quickStartSection}>
         <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
           QUICK START
         </Text>
         <View style={styles.projectList}>
           {projects.map((project) => (
-            <Pressable
+            <QuickStartProjectCard
               key={project.id}
-              style={({ pressed }) => [
-                styles.quickStartCard,
-                {
-                  backgroundColor: colors.surface,
-                  borderColor: colors.border,
-                  opacity: pressed ? 0.9 : 1,
-                },
-              ]}
-            >
-              <View
-                style={[styles.colorDot, { backgroundColor: project.color }]}
-              />
-              <Text style={[styles.projectName, { color: colors.textPrimary }]}>
-                {project.name}
-              </Text>
-            </Pressable>
+              project={project}
+              isActive={projectId === String(project.id)}
+              timerStatus={status}
+              onPress={() => handleProjectSelect(project.id)}
+            />
           ))}
           {projects.length === 0 && (
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
@@ -66,11 +94,11 @@ const styles = StyleSheet.create({
   content: {
     paddingHorizontal: spacing.lg,
   },
-  timerPlaceholder: {
-    fontSize: 16,
-    fontFamily: fonts.sans,
-    textAlign: 'center',
+  timerSection: {
     marginBottom: spacing.xxl,
+  },
+  controlsSection: {
+    marginBottom: spacing.xxl + spacing.md,
   },
   quickStartSection: {
     marginTop: spacing.lg,
@@ -83,25 +111,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   projectList: {
-    gap: 8,
-  },
-  quickStartCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
-    padding: spacing.md,
-    paddingHorizontal: 18,
-    borderWidth: 1,
-    borderRadius: 14,
-  },
-  colorDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 3,
-  },
-  projectName: {
-    fontSize: 15,
-    fontFamily: fonts.sansSemiBold,
+    gap: spacing.sm,
   },
   emptyText: {
     fontSize: 14,
