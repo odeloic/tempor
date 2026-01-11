@@ -1,0 +1,232 @@
+import { useState } from 'react';
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
+import { useTheme } from '@/theme/ThemeProvider';
+import { fonts, radii, spacing } from '@/theme/tokens';
+import { projectColors } from '@/constants/colors';
+import { ProjectColorPicker } from './ProjectColorPicker';
+import type { Project } from '@/db/schema';
+
+interface Props {
+  project?: Project;
+  onSave: (data: { name: string; color: string }) => void;
+  onDelete?: () => void;
+  onCancel: () => void;
+  hasTimeEntries?: boolean;
+}
+
+export function ProjectForm({
+  project,
+  onSave,
+  onDelete,
+  onCancel,
+  hasTimeEntries = false,
+}: Props) {
+  const { colors } = useTheme();
+  const [name, setName] = useState(project?.name ?? '');
+  const [color, setColor] = useState(project?.color ?? projectColors[0]);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+
+  const isValid = name.trim().length > 0;
+  const isEditMode = !!project;
+
+  const handleSave = () => {
+    if (isValid) {
+      onSave({ name: name.trim(), color });
+    }
+  };
+
+  return (
+    <ScrollView
+      style={[styles.container, { backgroundColor: colors.background }]}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
+      {/* Project Name Field */}
+      <View style={styles.field}>
+        <Text style={[styles.label, { color: colors.textSecondary }]}>
+          PROJECT NAME
+        </Text>
+        <TextInput
+          value={name}
+          onChangeText={setName}
+          placeholder="e.g. Website Redesign"
+          placeholderTextColor={colors.textSecondary}
+          style={[
+            styles.input,
+            {
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
+              color: colors.textPrimary,
+            },
+          ]}
+          autoFocus={!isEditMode}
+        />
+      </View>
+
+      {/* Color Picker */}
+      <View style={styles.field}>
+        <Text style={[styles.label, { color: colors.textSecondary }]}>
+          COLOR
+        </Text>
+        <ProjectColorPicker value={color} onChange={setColor} />
+      </View>
+
+      {/* Save Button */}
+      <Pressable
+        onPress={handleSave}
+        disabled={!isValid}
+        style={({ pressed }) => [
+          styles.saveButton,
+          {
+            backgroundColor: isValid ? colors.textPrimary : colors.border,
+            opacity: pressed ? 0.9 : 1,
+          },
+        ]}
+      >
+        <Text
+          style={[
+            styles.saveButtonText,
+            { color: isValid ? colors.background : colors.textSecondary },
+          ]}
+        >
+          {isEditMode ? 'Save Changes' : 'Create Project'}
+        </Text>
+      </Pressable>
+
+      {/* Delete Section (Edit Mode Only) */}
+      {onDelete && !showDeleteConfirm && (
+        <Pressable
+          onPress={() => setShowDeleteConfirm(true)}
+          style={styles.deleteButton}
+        >
+          <Text style={[styles.deleteButtonText, { color: colors.destructive }]}>
+            Delete Project
+          </Text>
+        </Pressable>
+      )}
+
+      {onDelete && showDeleteConfirm && (
+        <View style={styles.deleteConfirm}>
+          <Text style={[styles.deleteMessage, { color: colors.textPrimary }]}>
+            {hasTimeEntries
+              ? 'This project has time entries. Deleting will remove all associated data.'
+              : 'Are you sure you want to delete this project?'}
+          </Text>
+          <View style={styles.deleteActions}>
+            <Pressable
+              onPress={() => setShowDeleteConfirm(false)}
+              style={[
+                styles.deleteActionButton,
+                styles.deleteActionButtonCancel,
+                { borderColor: colors.border },
+              ]}
+            >
+              <Text style={[styles.deleteActionText, { color: colors.textPrimary }]}>
+                Cancel
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={onDelete}
+              style={[
+                styles.deleteActionButton,
+                { backgroundColor: colors.destructive },
+              ]}
+            >
+              <Text style={[styles.deleteActionText, { color: '#FFFFFF' }]}>
+                Delete
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      )}
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  content: {
+    padding: spacing.lg,
+    paddingTop: spacing.md,
+  },
+  field: {
+    marginBottom: spacing.lg,
+  },
+  label: {
+    fontSize: 11,
+    fontFamily: fonts.sansMedium,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 10,
+  },
+  input: {
+    padding: spacing.md,
+    paddingHorizontal: 18,
+    borderRadius: radii.md,
+    borderWidth: 1,
+    fontSize: 16,
+    fontFamily: fonts.sans,
+  },
+  saveButton: {
+    height: 56,
+    borderRadius: radii.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: spacing.md,
+    marginTop: spacing.md,
+  },
+  saveButtonText: {
+    fontSize: 15,
+    fontFamily: fonts.sansSemiBold,
+    letterSpacing: 0.3,
+  },
+  deleteButton: {
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteButtonText: {
+    fontSize: 14,
+    fontFamily: fonts.sansMedium,
+  },
+  deleteConfirm: {
+    backgroundColor: '#FEF2F2',
+    borderRadius: radii.md,
+    padding: 18,
+    marginTop: spacing.sm,
+  },
+  deleteMessage: {
+    fontSize: 14,
+    fontFamily: fonts.sans,
+    marginBottom: 14,
+    lineHeight: 20,
+  },
+  deleteActions: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  deleteActionButton: {
+    flex: 1,
+    height: 44,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteActionButtonCancel: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+  },
+  deleteActionText: {
+    fontSize: 14,
+    fontFamily: fonts.sansMedium,
+  },
+});
