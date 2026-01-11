@@ -5,6 +5,7 @@ import { eq } from "drizzle-orm";
 /**
  * Look up in timer_state singleton db
  * Inserts a row in timer_state ingleton db if it doesn't exists
+ *
  */
 export const ensureTimerState = async () => {
     const rowExists = await db.select().from(timerState).where(eq(timerState.id, 1));
@@ -13,4 +14,9 @@ export const ensureTimerState = async () => {
             id: 1
         });
     }
+}
+
+export const initializeTimer = async (cb: () => void) => {
+    await ensureTimerState();
+    cb();
 }

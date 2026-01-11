@@ -1,6 +1,6 @@
 export const colors = {
     light: {
-        backgroundColor: '#FAFAF9',
+        background: '#FAFAF9',
         surface: '#FFFFFF',
         textPrimary: '#1A1918',
         textSecondary: '#94918A',
@@ -9,7 +9,7 @@ export const colors = {
 
     },
     dark: {
-        backgroundColor: '#121211',
+        background: '#121211',
         surface: '#1E1E1C',
         textPrimary: '#FAFAF9',
         textSecondary: '#8A8983',

@@ -1,16 +1,29 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+  SpaceMono_700Bold
+} from '@expo-google-fonts/space-mono';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/components/useColorScheme';
+import { db } from '@/db/client';
+import migrations from '@/db/migrations/migrations';
+import { initializeTimer } from '@/lib/timer';
+import { ThemeProvider } from '@/theme/ThemeProvider';
+import {
+  DMSans_400Regular,
+  DMSans_500Medium,
+  DMSans_600SemiBold
+} from '@expo-google-fonts/dm-sans';
+import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
+import { Provider as JotaiProvider } from 'jotai';
+
+
 
 export {
   // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
+  ErrorBoundary
 } from 'expo-router';
 
 export const unstable_settings = {
@@ -22,38 +35,71 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    ...FontAwesome.font,
+  const [dbReady, setDbReady] = useState(false);
+  const { success: migrationsReady, error: migrationsError } = useMigrations(db, migrations);
+  const [fontsLoaded] = useFonts({
+    SpaceMono_700Bold,
+    DMSans_400Regular,
+    DMSans_500Medium,
+    DMSans_600SemiBold
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    if (migrationsReady) {
+      initializeTimer(() => setDbReady(true));
+    }
+  }, [migrationsReady]);
 
   useEffect(() => {
-    if (loaded) {
+    if (fontsLoaded && migrationsReady && dbReady) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [fontsLoaded, migrationsReady, dbReady]);
 
-  if (!loaded) {
+  if (migrationsError) {
+    console.error('Migration error:', migrationsError);
+  }
+
+  if (!fontsLoaded || !migrationsReady || !dbReady) {
     return null;
   }
+
+
+  // const [loaded, error] = useFonts({
+  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  //   ...FontAwesome.font,
+  // });
+
+  // // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+  // useEffect(() => {
+  //   if (error) throw error;
+  // }, [error]);
+
+  // useEffect(() => {
+  //   if (loaded) {
+  //     SplashScreen.hideAsync();
+  //   }
+  // }, [loaded]);
+
+  // if (!loaded) {
+  //   return null;
+  // }
 
   return <RootLayoutNav />;
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
+    <ThemeProvider>
+      <JotaiProvider>
+        <Stack screenOptions={{
+          headerShown: false
+        }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
+        </Stack>
+      </JotaiProvider>
     </ThemeProvider>
   );
 }
