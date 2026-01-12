@@ -8,6 +8,13 @@
       "when": 1767698613199,
       "tag": "0000_remarkable_madame_masque",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1736640000000,
+      "tag": "0001_add_last_used_at",
+      "breakpoints": true
     }
   ]
 }

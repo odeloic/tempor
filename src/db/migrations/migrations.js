@@ -2,11 +2,12 @@
 
 import journal from './meta/_journal.json';
 import m0000 from './0000_remarkable_madame_masque.sql';
+import m0001 from './0001_add_last_used_at.sql';
 
   export default {
     journal,
     migrations: {
-      m0000
+      m0000,
+      m0001
     }
   }
-  
