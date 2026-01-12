@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAtom } from 'jotai';
 import { db } from '@/db/client';
 import { projects, sessions, Project } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { projectColors } from '@/constants/colors';
 import { projectsAtom } from '@/atoms/projects';
+import { sortProjectsByRecentlyUsed } from '@/lib/projects';
 
 interface CreateProjectData {
   name: string;
@@ -31,6 +32,11 @@ export function useProjects() {
       setIsLoading(false);
     }
   }, [setProjectList]);
+
+  // Sort projects: recently used first, then by creation date
+  const sortedProjects = useMemo(() => {
+    return sortProjectsByRecentlyUsed(projectList);
+  }, [projectList]);
 
   // Fetch on mount if atom is empty
   useEffect(() => {
@@ -85,7 +91,7 @@ export function useProjects() {
   }, [projectList]);
 
   return {
-    projects: projectList,
+    projects: sortedProjects,
     isLoading,
     createProject,
     updateProject,

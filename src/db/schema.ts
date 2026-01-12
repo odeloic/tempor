@@ -8,6 +8,7 @@ export const projects = sqliteTable(DB_TABLES.PROJECTS, {
     color: text('color').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
     updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),
+    lastUsedAt: integer('last_used_at', { mode: 'timestamp' }),
 });
 
 export const sessions = sqliteTable(DB_TABLES.SESSIONS, {
