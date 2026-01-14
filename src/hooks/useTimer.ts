@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { db } from '@/db/client';
 import { timerState, sessions, projects, type TimerState } from '@/db/schema';
 import { timerStateAtom } from '@/atoms/timer';
+import { sessionsAtom, type Session } from '@/atoms/sessions';
 import { eq } from 'drizzle-orm';
 import { calculateElapsed } from '@/lib/time';
 
@@ -26,6 +27,7 @@ interface UseTimerReturn {
 
 export function useTimer(): UseTimerReturn {
   const [state, setState] = useAtom(timerStateAtom);
+  const setSessionList = useSetAtom(sessionsAtom);
   const [elapsed, setElapsed] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -78,14 +80,17 @@ export function useTimer(): UseTimerReturn {
 
       if (finalElapsed >= 60) {
         const now = new Date();
-        await db.insert(sessions).values({
+        const [created] = await db.insert(sessions).values({
           projectId: state.projectId,
           date: now,
           duration: finalElapsed,
           note: null,
           createdAt: now,
           updatedAt: now,
-        });
+        }).returning();
+
+        // Update sessions atom so history screen shows the new session
+        setSessionList((prev) => [created, ...prev]);
         savedSession = { projectId: state.projectId, duration: finalElapsed };
       }
     }
@@ -107,7 +112,7 @@ export function useTimer(): UseTimerReturn {
       .where(eq(projects.id, Number(projectId)));
 
     return savedSession;
-  }, [state, setState, persistState]);
+  }, [state, setState, persistState, setSessionList]);
 
   const pause = useCallback(async () => {
     if (state.status !== 'running') return;
@@ -147,14 +152,17 @@ export function useTimer(): UseTimerReturn {
     // Save session if at least 1 minute tracked
     if (state.projectId && finalElapsed >= 60) {
       const now = new Date();
-      await db.insert(sessions).values({
+      const [created] = await db.insert(sessions).values({
         projectId: state.projectId,
         date: now,
         duration: finalElapsed,
         note: null,
         createdAt: now,
         updatedAt: now,
-      });
+      }).returning();
+
+      // Update sessions atom so history screen shows the new session
+      setSessionList((prev) => [created, ...prev]);
     }
 
     const newState: Partial<TimerState> = {
@@ -166,7 +174,7 @@ export function useTimer(): UseTimerReturn {
 
     await persistState(newState);
     setState(prev => ({ ...prev, ...newState } as TimerState));
-  }, [state, setState, persistState]);
+  }, [state, setState, persistState, setSessionList]);
 
   const discard = useCallback(async () => {
     const newState: Partial<TimerState> = {
