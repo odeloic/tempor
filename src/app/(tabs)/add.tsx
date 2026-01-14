@@ -1,25 +1,195 @@
+import { useCallback, useState } from 'react';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { startOfDay } from 'date-fns';
+
+import {
+  DateSelector,
+  DurationInput,
+  NoteInput,
+  ProjectSelector,
+} from '@/components/AddEntry';
+import { Toast } from '@/components/ui/Toast';
+import { useProjects } from '@/hooks/useProjects';
+import { useTimeEntries } from '@/hooks/useTimeEntries';
+import { formatDuration } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
-import { StyleSheet, Text, View } from 'react-native';
+import { fonts, radii, spacing } from '@/theme/tokens';
 
 export default function AddEntryScreen() {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
+  const { projects } = useProjects();
+  const { create } = useTimeEntries();
+
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>(startOfDay(new Date()));
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [note, setNote] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+
+  const duration = hours * 60 + minutes;
+  const isValid = selectedProjectId !== null && duration > 0;
+
+  const resetForm = useCallback(() => {
+    setSelectedProjectId(null);
+    setSelectedDate(startOfDay(new Date()));
+    setHours(0);
+    setMinutes(0);
+    setNote('');
+  }, []);
+
+  const handleSave = useCallback(async () => {
+    if (!isValid || isSaving) return;
+
+    setIsSaving(true);
+    try {
+      await create({
+        projectId: String(selectedProjectId),
+        date: selectedDate,
+        duration,
+        note: note.trim() || null,
+      });
+
+      const selectedProject = projects.find((p) => p.id === selectedProjectId);
+      const projectName = selectedProject?.name ?? 'project';
+      setToastMessage(`Added ${formatDuration(duration * 60)} to ${projectName}`);
+      setToastVisible(true);
+
+      resetForm();
+    } catch (error) {
+      console.error('Failed to save entry:', error);
+      setToastMessage('Failed to save entry');
+      setToastVisible(true);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [
+    isValid,
+    isSaving,
+    selectedProjectId,
+    selectedDate,
+    duration,
+    note,
+    create,
+    projects,
+    resetForm,
+  ]);
+
+  const handleHideToast = useCallback(() => setToastVisible(false), []);
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text style={[styles.title, { color: colors.textPrimary }]}>
-        Add Entry Screen
-      </Text>
-    </View>
+    <KeyboardAvoidingView
+      style={styles.flex}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={[styles.container, { backgroundColor: colors.background }]}>
+          <Toast
+            message={toastMessage}
+            visible={toastVisible}
+            onHide={handleHideToast}
+          />
+          <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={[
+              styles.content,
+              { paddingTop: insets.top + spacing.xl, paddingBottom: 120 },
+            ]}
+            keyboardShouldPersistTaps="handled"
+          >
+            <Text style={[styles.title, { color: colors.textPrimary }]}>
+              Add Time
+            </Text>
+
+            <ProjectSelector
+              projects={projects}
+              selectedId={selectedProjectId}
+              onSelect={setSelectedProjectId}
+            />
+
+            <DateSelector value={selectedDate} onChange={setSelectedDate} />
+
+            <DurationInput
+              hours={hours}
+              minutes={minutes}
+              onHoursChange={setHours}
+              onMinutesChange={setMinutes}
+            />
+
+            <NoteInput value={note} onChange={setNote} />
+
+            <Pressable
+              onPress={handleSave}
+              disabled={!isValid || isSaving}
+              style={({ pressed }) => [
+                styles.saveButton,
+                {
+                  backgroundColor: isValid
+                    ? colors.textPrimary
+                    : colors.border,
+                  opacity: pressed && isValid ? 0.8 : 1,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.saveButtonText,
+                  {
+                    color: isValid ? colors.background : colors.textSecondary,
+                  },
+                ]}
+              >
+                {isSaving ? 'Saving...' : 'Add Entry'}
+              </Text>
+            </Pressable>
+          </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  content: {
+    paddingHorizontal: spacing.lg,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
+    fontFamily: fonts.sansSemiBold,
+    marginBottom: spacing.lg,
+  },
+  saveButton: {
+    height: 56,
+    borderRadius: radii.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  saveButtonText: {
+    fontSize: 15,
+    fontFamily: fonts.sansSemiBold,
+    letterSpacing: 0.3,
   },
 });
