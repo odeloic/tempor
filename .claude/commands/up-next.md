@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
 
 ## Phase 3: Refactoring
 
-After initial implementation, use the **code-simplifier** sub-agent to:
+After initial implementation, use the **code-simplifier:code-simplifier** sub-agent to:
 
 - Review for unnecessary complexity
 - Suggest refactoring opportunities
