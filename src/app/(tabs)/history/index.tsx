@@ -1,15 +1,15 @@
 /** TODO: Use Flat list or Flash list */
-import { type Session } from '@/atoms/sessions';
 import { dateRangeFilterAtom, projectFilterAtom } from '@/atoms/ui';
 import {
+  AggregatedEntryCard,
   EmptyState,
   HistoryFilterBar,
-  TimeEntryCard,
   TotalHoursCard,
 } from '@/components/History';
 import { useProjects } from '@/hooks/useProjects';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
-import { formatDateLabel, getDateKey } from '@/lib/date';
+import { formatDateLabel } from '@/lib/date';
+import { aggregateSessionsByProjectAndDate, type AggregatedEntry } from '@/lib/sessions';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
 import { useRouter } from 'expo-router';
@@ -21,7 +21,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 type GroupedEntries = {
   dateKey: string;
   label: string;
-  entries: Session[];
+  entries: AggregatedEntry[];
 };
 
 export default function HistoryScreen() {
@@ -33,7 +33,7 @@ export default function HistoryScreen() {
   const [selectedProjectIds, setSelectedProjectIds] = useAtom(projectFilterAtom);
   const [dateRange, setDateRange] = useAtom(dateRangeFilterAtom);
 
-  const { entries, totalDuration, isLoading } = useTimeEntries({
+  const { entries, totalDuration } = useTimeEntries({
     projectIds: selectedProjectIds.length > 0 ? selectedProjectIds : undefined,
     dateRange: dateRange ?? undefined,
   });
@@ -62,26 +62,31 @@ export default function HistoryScreen() {
   const hasFilters = selectedProjectIds.length > 0 || dateRange !== null;
 
   const groupedEntries = useMemo(() => {
+    const aggregatedEntries = aggregateSessionsByProjectAndDate(entries);
     const groups: Record<string, GroupedEntries> = {};
 
-    for (const entry of entries) {
-      const dateKey = getDateKey(entry.date.getTime());
-      if (!groups[dateKey]) {
-        groups[dateKey] = {
-          dateKey,
+    for (const entry of aggregatedEntries) {
+      if (!groups[entry.dateKey]) {
+        groups[entry.dateKey] = {
+          dateKey: entry.dateKey,
           label: formatDateLabel(entry.date.getTime()),
           entries: [],
         };
       }
-      groups[dateKey].entries.push(entry);
+      groups[entry.dateKey].entries.push(entry);
+    }
+
+    // Sort entries within each group by total duration descending
+    for (const group of Object.values(groups)) {
+      group.entries.sort((a, b) => b.totalDuration - a.totalDuration);
     }
 
     return Object.values(groups).sort((a, b) => b.dateKey.localeCompare(a.dateKey));
   }, [entries]);
 
-  const handleEntryPress = useCallback(
-    (entryId: number) => {
-      router.push(`/history/${entryId}`);
+  const handleSessionPress = useCallback(
+    (sessionId: number) => {
+      router.push(`/history/${sessionId}`);
     },
     [router]
   );
@@ -131,11 +136,11 @@ export default function HistoryScreen() {
             </Text>
             <View style={styles.entriesList}>
               {group.entries.map((entry) => (
-                <TimeEntryCard
-                  key={entry.id}
+                <AggregatedEntryCard
+                  key={`${entry.projectId}-${entry.dateKey}`}
                   entry={entry}
                   project={getProject(Number(entry.projectId))}
-                  onPress={() => handleEntryPress(entry.id)}
+                  onSessionPress={handleSessionPress}
                 />
               ))}
             </View>
