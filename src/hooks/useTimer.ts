@@ -3,7 +3,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { db } from '@/db/client';
 import { timerState, sessions, projects, type TimerState } from '@/db/schema';
 import { timerStateAtom } from '@/atoms/timer';
-import { sessionsAtom, type Session } from '@/atoms/sessions';
+import { sessionsAtom } from '@/atoms/sessions';
 import { eq } from 'drizzle-orm';
 import { calculateElapsed } from '@/lib/time';
 

@@ -1,6 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { fonts, radii, spacing } from '@/theme/tokens';
+import { fonts, spacing } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 
 type ProjectFilterChipProps = {
