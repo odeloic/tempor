@@ -1,53 +1,53 @@
-import { useCallback, useState } from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@/theme/ThemeProvider';
-import { fonts, spacing } from '@/theme/tokens';
-import { useProjects } from '@/hooks/useProjects';
-import { useTimer, type SavedSession } from '@/hooks/useTimer';
-import { formatDuration } from '@/lib/time';
-import { TimerDisplay } from '@/components/Timer/TimerDisplay';
-import { TimerControls } from '@/components/Timer/TimerControls';
-import { ActiveProjectHeader } from '@/components/Timer/ActiveProjectHeader';
-import { QuickStartProjectCard } from '@/components/Timer/QuickStartProjectCard';
-import { Toast } from '@/components/ui/Toast';
+import { ActiveProjectHeader } from "@/components/Timer/ActiveProjectHeader";
+import { QuickStartProjectCard } from "@/components/Timer/QuickStartProjectCard";
+import { TimerControls } from "@/components/Timer/TimerControls";
+import { TimerDisplay } from "@/components/Timer/TimerDisplay";
+import { Toast } from "@/components/ui/Toast";
+import { useProjects } from "@/hooks/useProjects";
+import { useTimer, type SavedSession } from "@/hooks/useTimer";
+import { formatDuration } from "@/lib/time";
+import { useTheme } from "@/theme/ThemeProvider";
+import { fonts, spacing } from "@/theme/tokens";
+import { useCallback, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TimerScreen() {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const { projects, getProject, refresh: refreshProjects } = useProjects();
-  const {
-    status,
-    projectId,
-    elapsed,
-    start,
-    pause,
-    resume,
-    stop,
-    discard,
-  } = useTimer();
+  const { status, projectId, elapsed, start, pause, resume, stop, discard } =
+    useTimer();
 
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
 
-  const activeProject = projectId ? getProject(Number(projectId)) ?? null : null;
+  const activeProject = projectId
+    ? getProject(Number(projectId)) ?? null
+    : null;
 
-  const showSavedToast = useCallback((saved: SavedSession) => {
-    const project = getProject(Number(saved.projectId));
-    const projectName = project?.name ?? 'Previous project';
-    const duration = formatDuration(saved.duration);
-    setToastMessage(`Saved ${duration} to ${projectName}`);
-    setToastVisible(true);
-  }, [getProject]);
+  const showSavedToast = useCallback(
+    (saved: SavedSession) => {
+      const project = getProject(Number(saved.projectId));
+      const projectName = project?.name ?? "Previous project";
+      const duration = formatDuration(saved.duration);
+      setToastMessage(`Saved ${duration} to ${projectName}`);
+      setToastVisible(true);
+    },
+    [getProject]
+  );
 
-  const handleProjectSelect = useCallback(async (id: number) => {
-    const savedSession = await start(String(id));
-    if (savedSession) {
-      showSavedToast(savedSession);
-    }
-    // Refresh projects to update the "recently used" sorting
-    refreshProjects();
-  }, [start, showSavedToast, refreshProjects]);
+  const handleProjectSelect = useCallback(
+    async (id: number) => {
+      const savedSession = await start(String(id));
+      if (savedSession) {
+        showSavedToast(savedSession);
+      }
+      // Refresh projects to update the "recently used" sorting
+      refreshProjects();
+    },
+    [start, showSavedToast, refreshProjects]
+  );
 
   const handleStart = useCallback(async () => {
     if (activeProject) {
@@ -81,7 +81,7 @@ export default function TimerScreen() {
         <ActiveProjectHeader project={activeProject} status={status} />
 
         <View style={styles.timerSection}>
-          <TimerDisplay elapsed={elapsed} isPaused={status === 'paused'} />
+          <TimerDisplay elapsed={elapsed} isPaused={status === "paused"} />
         </View>
 
         <View style={styles.controlsSection}>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontFamily: fonts.sansMedium,
     letterSpacing: 1.5,
-    textTransform: 'uppercase',
+    textTransform: "uppercase",
     marginBottom: spacing.md,
   },
   projectList: {
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 14,
     fontFamily: fonts.sans,
-    textAlign: 'center',
+    textAlign: "center",
     paddingVertical: spacing.lg,
   },
 });
