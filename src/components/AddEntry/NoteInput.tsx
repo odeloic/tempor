@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
@@ -10,12 +11,13 @@ type NoteInputProps = {
 
 export function NoteInput({ value, onChange }: NoteInputProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
       <Text style={[styles.label, { color: colors.textSecondary }]}>
-        NOTE{' '}
-        <Text style={styles.optional}>(optional)</Text>
+        {t('form.note')}{' '}
+        <Text style={styles.optional}>{t('form.optional')}</Text>
       </Text>
       <TextInput
         style={[
@@ -28,7 +30,7 @@ export function NoteInput({ value, onChange }: NoteInputProps) {
         ]}
         value={value}
         onChangeText={onChange}
-        placeholder="What did you work on?"
+        placeholder={t('form.notePlaceholder')}
         placeholderTextColor={colors.textSecondary}
         multiline
         numberOfLines={3}

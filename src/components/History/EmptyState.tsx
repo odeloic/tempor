@@ -1,5 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { fonts, spacing } from '@/theme/tokens';
 
 type EmptyStateProps = {
@@ -8,13 +9,14 @@ type EmptyStateProps = {
 
 export function EmptyState({ hasFilters }: EmptyStateProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
       <Text style={[styles.text, { color: colors.textSecondary }]}>
         {hasFilters
-          ? 'No entries match your filters'
-          : 'No time entries yet'}
+          ? t('history.noEntriesFiltered')
+          : t('history.noEntries')}
       </Text>
     </View>
   );

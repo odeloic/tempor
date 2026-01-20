@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import { format, subDays, startOfDay, isToday, isYesterday } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
@@ -10,20 +11,24 @@ type DateSelectorProps = {
   onChange: (date: Date) => void;
 };
 
-const QUICK_OPTION_LABELS = [
-  'Today',
-  'Yesterday',
-  '2 days ago',
-  '3 days ago',
-  '4 days ago',
-  '5 days ago',
-  '6 days ago',
-  '1 week ago',
-] as const;
+import type { TFunction } from 'i18next';
 
-function getDisplayLabel(date: Date): string {
-  if (isToday(date)) return 'Today';
-  if (isYesterday(date)) return 'Yesterday';
+function getQuickOptionLabels(t: TFunction) {
+  return [
+    t('date.today'),
+    t('date.yesterday'),
+    t('date.daysAgo', { count: 2 }),
+    t('date.daysAgo', { count: 3 }),
+    t('date.daysAgo', { count: 4 }),
+    t('date.daysAgo', { count: 5 }),
+    t('date.daysAgo', { count: 6 }),
+    t('date.weekAgo'),
+  ];
+}
+
+function getDisplayLabel(date: Date, t: TFunction): string {
+  if (isToday(date)) return t('date.today');
+  if (isYesterday(date)) return t('date.yesterday');
   return format(date, 'EEE, MMM d');
 }
 
@@ -39,9 +44,11 @@ function getOptionBackgroundColor(
 
 export function DateSelector({ value, onChange }: DateSelectorProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const today = startOfDay(new Date());
   const valueTime = startOfDay(value).getTime();
+  const quickOptionLabels = getQuickOptionLabels(t);
 
   function handleSelectDate(daysAgo: number): void {
     onChange(subDays(today, daysAgo));
@@ -50,7 +57,7 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.label, { color: colors.textSecondary }]}>DATE</Text>
+      <Text style={[styles.label, { color: colors.textSecondary }]}>{t('form.date')}</Text>
       <Pressable
         onPress={() => setShowModal(true)}
         style={({ pressed }) => [
@@ -63,7 +70,7 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
         ]}
       >
         <Text style={[styles.triggerText, { color: colors.textPrimary }]}>
-          {getDisplayLabel(value)}
+          {getDisplayLabel(value, t)}
         </Text>
       </Pressable>
 
@@ -79,11 +86,11 @@ export function DateSelector({ value, onChange }: DateSelectorProps) {
         >
           <View style={[styles.modal, { backgroundColor: colors.surface }]}>
             <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
-              Select Date
+              {t('date.selectDate')}
             </Text>
 
             <View style={styles.optionList}>
-              {QUICK_OPTION_LABELS.map((label, index) => {
+              {quickOptionLabels.map((label, index) => {
                 const optionDate = subDays(today, index);
                 const isSelected = valueTime === optionDate.getTime();
 

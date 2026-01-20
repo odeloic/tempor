@@ -7,6 +7,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
 import { projectColors } from '@/constants/colors';
@@ -29,6 +30,7 @@ export function ProjectForm({
   hasTimeEntries = false,
 }: Props) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const [name, setName] = useState(project?.name ?? '');
   const [color, setColor] = useState(project?.color ?? projectColors[0]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -51,12 +53,12 @@ export function ProjectForm({
       {/* Project Name Field */}
       <View style={styles.field}>
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          PROJECT NAME
+          {t('projectForm.projectName')}
         </Text>
         <TextInput
           value={name}
           onChangeText={setName}
-          placeholder="e.g. Website Redesign"
+          placeholder={t('projectForm.namePlaceholder')}
           placeholderTextColor={colors.textSecondary}
           style={[
             styles.input,
@@ -73,7 +75,7 @@ export function ProjectForm({
       {/* Color Picker */}
       <View style={styles.field}>
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          COLOR
+          {t('projectForm.color')}
         </Text>
         <ProjectColorPicker value={color} onChange={setColor} />
       </View>
@@ -96,7 +98,7 @@ export function ProjectForm({
             { color: isValid ? colors.background : colors.textSecondary },
           ]}
         >
-          {isEditMode ? 'Save Changes' : 'Create Project'}
+          {isEditMode ? t('projectForm.saveChanges') : t('projectForm.createProject')}
         </Text>
       </Pressable>
 
@@ -107,7 +109,7 @@ export function ProjectForm({
           style={styles.deleteButton}
         >
           <Text style={[styles.deleteButtonText, { color: colors.destructive }]}>
-            Delete Project
+            {t('projectForm.deleteProject')}
           </Text>
         </Pressable>
       )}
@@ -116,8 +118,8 @@ export function ProjectForm({
         <View style={styles.deleteConfirm}>
           <Text style={[styles.deleteMessage, { color: colors.textPrimary }]}>
             {hasTimeEntries
-              ? 'This project has time entries. Deleting will remove all associated data.'
-              : 'Are you sure you want to delete this project?'}
+              ? t('projectForm.deleteConfirmWithEntries')
+              : t('projectForm.deleteConfirmNoEntries')}
           </Text>
           <View style={styles.deleteActions}>
             <Pressable
@@ -129,7 +131,7 @@ export function ProjectForm({
               ]}
             >
               <Text style={[styles.deleteActionText, { color: colors.textPrimary }]}>
-                Cancel
+                {t('common.cancel')}
               </Text>
             </Pressable>
             <Pressable
@@ -140,7 +142,7 @@ export function ProjectForm({
               ]}
             >
               <Text style={[styles.deleteActionText, { color: '#FFFFFF' }]}>
-                Delete
+                {t('common.delete')}
               </Text>
             </Pressable>
           </View>

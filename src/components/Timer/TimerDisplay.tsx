@@ -1,7 +1,7 @@
-import { useTheme } from '@/theme/ThemeProvider';
-import { StyleSheet, Text, View, Animated } from 'react-native';
-import { formatElapsed } from '@/lib/time';
-import { useEffect, useRef } from 'react';
+import { formatElapsed } from "@/lib/time";
+import { useTheme } from "@/theme/ThemeProvider";
+import { useEffect, useRef } from "react";
+import { Animated, StyleSheet, View } from "react-native";
 
 type TimerDisplayProps = {
   elapsed: number;
@@ -61,7 +61,7 @@ export function TimerDisplay({ elapsed, isPaused = false }: TimerDisplayProps) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: "center",
   },
   time: {
     fontSize: 64,

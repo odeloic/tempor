@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { startOfDay } from 'date-fns';
 
 import {
@@ -28,6 +29,7 @@ import { fonts, radii, spacing } from '@/theme/tokens';
 
 export default function AddEntryScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { projects } = useProjects();
   const { create } = useTimeEntries();
@@ -66,13 +68,13 @@ export default function AddEntryScreen() {
 
       const selectedProject = projects.find((p) => p.id === selectedProjectId);
       const projectName = selectedProject?.name ?? 'project';
-      setToastMessage(`Added ${formatDuration(duration * 60)} to ${projectName}`);
+      setToastMessage(t('addEntry.savedToast', { duration: formatDuration(duration * 60), project: projectName }));
       setToastVisible(true);
 
       resetForm();
     } catch (error) {
       console.error('Failed to save entry:', error);
-      setToastMessage('Failed to save entry');
+      setToastMessage(t('addEntry.failedToSave'));
       setToastVisible(true);
     } finally {
       setIsSaving(false);
@@ -87,6 +89,7 @@ export default function AddEntryScreen() {
     create,
     projects,
     resetForm,
+    t,
   ]);
 
   const handleHideToast = useCallback(() => setToastVisible(false), []);
@@ -112,7 +115,7 @@ export default function AddEntryScreen() {
             keyboardShouldPersistTaps="handled"
           >
             <Text style={[styles.title, { color: colors.textPrimary }]}>
-              Add Time
+              {t('addEntry.title')}
             </Text>
 
             <ProjectSelector
@@ -153,7 +156,7 @@ export default function AddEntryScreen() {
                   },
                 ]}
               >
-                {isSaving ? 'Saving...' : 'Add Entry'}
+                {isSaving ? t('addEntry.saving') : t('addEntry.addEntry')}
               </Text>
             </Pressable>
           </ScrollView>

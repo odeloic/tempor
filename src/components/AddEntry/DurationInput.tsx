@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
@@ -23,11 +24,12 @@ export function DurationInput({
   onMinutesChange,
 }: DurationInputProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
       <Text style={[styles.label, { color: colors.textSecondary }]}>
-        DURATION
+        {t('form.duration')}
       </Text>
       <View style={styles.inputRow}>
         <View style={styles.inputWrapper}>
@@ -48,7 +50,7 @@ export function DurationInput({
               selectTextOnFocus
             />
             <Text style={[styles.unit, { color: colors.textSecondary }]}>
-              hrs
+              {t('duration.hrs')}
             </Text>
           </View>
         </View>
@@ -70,7 +72,7 @@ export function DurationInput({
               selectTextOnFocus
             />
             <Text style={[styles.unit, { color: colors.textSecondary }]}>
-              min
+              {t('duration.min')}
             </Text>
           </View>
         </View>

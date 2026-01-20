@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
@@ -11,6 +12,7 @@ import { ProjectForm } from '@/components/Project/ProjectForm';
 export default function EditProjectScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { getProject, updateProject, deleteProject, hasTimeEntries } = useProjects();
@@ -38,7 +40,7 @@ export default function EditProjectScreen() {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text style={[styles.notFound, { color: colors.textSecondary }]}>
-          Project not found
+          {t('projects.notFound')}
         </Text>
       </View>
     );
@@ -61,7 +63,7 @@ export default function EditProjectScreen() {
           <Ionicons name="chevron-back" size={20} color={colors.textPrimary} />
         </Pressable>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Edit Project
+          {t('projectForm.editProject')}
         </Text>
         <View style={styles.headerSpacer} />
       </View>

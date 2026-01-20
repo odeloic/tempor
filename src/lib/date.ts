@@ -1,11 +1,11 @@
-import { strings } from '@/constants/strings';
+import i18n from '@/i18n';
 import { isToday, isYesterday, startOfDay } from 'date-fns';
 
 export const formatDateLabel = (timestamp: number): string => {
   const date = startOfDay(timestamp);
 
-  if (isToday(date)) return strings.today;
-  if (isYesterday(date)) return strings.yesterday;
+  if (isToday(date)) return i18n.t('date.today');
+  if (isYesterday(date)) return i18n.t('date.yesterday');
 
   return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(date);
 };

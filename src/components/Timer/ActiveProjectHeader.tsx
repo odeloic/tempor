@@ -1,5 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { spacing, fonts } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 
@@ -12,11 +13,12 @@ type ActiveProjectHeaderProps = {
 
 export function ActiveProjectHeader({ project, status }: ActiveProjectHeaderProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const STATUS_LABELS: Record<TimerStatus, string> = {
-    running: 'Tracking',
-    paused: 'Paused',
-    idle: 'Ready',
+    running: t('timer.status.tracking'),
+    paused: t('timer.status.paused'),
+    idle: t('timer.status.ready'),
   };
   const statusLabel = STATUS_LABELS[status];
 
@@ -36,7 +38,7 @@ export function ActiveProjectHeader({ project, status }: ActiveProjectHeaderProp
         </View>
       ) : (
         <Text style={[styles.placeholder, { color: colors.textSecondary }]}>
-          Select a project to begin
+          {t('timer.selectProject')}
         </Text>
       )}
     </View>

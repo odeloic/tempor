@@ -8,6 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Alert,
   Pressable,
@@ -22,6 +23,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function EditEntryScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
 
@@ -80,12 +82,12 @@ export default function EditEntryScreen() {
       });
       await refresh();
       router.back();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to save changes. Please try again.');
+    } catch {
+      Alert.alert(t('common.error'), t('editEntry.saveFailed'));
     } finally {
       setIsSaving(false);
     }
-  }, [entryId, isValid, isSaving, projectId, date, duration, note, update, refresh, router]);
+  }, [entryId, isValid, isSaving, projectId, date, duration, note, update, refresh, router, t]);
 
   const handleDelete = useCallback(async () => {
     if (!entryId) return;
@@ -94,10 +96,10 @@ export default function EditEntryScreen() {
       await remove(entryId);
       await refresh();
       router.back();
-    } catch (error) {
-      Alert.alert('Error', 'Failed to delete entry. Please try again.');
+    } catch {
+      Alert.alert(t('common.error'), t('editEntry.deleteFailed'));
     }
-  }, [entryId, remove, refresh, router]);
+  }, [entryId, remove, refresh, router, t]);
 
   const handleDateChange = useCallback(
     (_event: unknown, selectedDate?: Date) => {
@@ -114,8 +116,8 @@ export default function EditEntryScreen() {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
 
-    if (d.toDateString() === today.toDateString()) return 'Today';
-    if (d.toDateString() === yesterday.toDateString()) return 'Yesterday';
+    if (d.toDateString() === today.toDateString()) return t('date.today');
+    if (d.toDateString() === yesterday.toDateString()) return t('date.yesterday');
 
     return d.toLocaleDateString('en-US', {
       weekday: 'short',
@@ -134,7 +136,7 @@ export default function EditEntryScreen() {
         ]}
       >
         <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-          Entry not found
+          {t('editEntry.entryNotFound')}
         </Text>
       </View>
     );
@@ -163,7 +165,7 @@ export default function EditEntryScreen() {
           </Text>
         </Pressable>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Edit Entry
+          {t('editEntry.title')}
         </Text>
         <View style={styles.headerSpacer} />
       </View>
@@ -174,7 +176,7 @@ export default function EditEntryScreen() {
           style={[styles.warningBanner, { backgroundColor: colors.surface }]}
         >
           <Text style={[styles.warningText, { color: colors.textSecondary }]}>
-            A timer is currently running. Stop the timer before editing entries.
+            {t('editEntry.timerWarning')}
           </Text>
         </View>
       )}
@@ -182,7 +184,7 @@ export default function EditEntryScreen() {
       {/* Project Selector */}
       <View style={styles.section}>
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          PROJECT
+          {t('form.project')}
         </Text>
         <View style={styles.projectList}>
           {projects.map((p) => {
@@ -221,7 +223,7 @@ export default function EditEntryScreen() {
       {/* Date Picker */}
       <View style={styles.section}>
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          DATE
+          {t('form.date')}
         </Text>
         <Pressable
           onPress={() => !isTimerRunning && setShowDatePicker(true)}
@@ -260,7 +262,7 @@ export default function EditEntryScreen() {
       {/* Duration */}
       <View style={styles.section}>
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          DURATION
+          {t('form.duration')}
         </Text>
         <View style={styles.durationRow}>
           <View style={styles.durationInput}>
@@ -292,7 +294,7 @@ export default function EditEntryScreen() {
               <Text
                 style={[styles.durationUnit, { color: colors.textSecondary }]}
               >
-                hrs
+                {t('duration.hrs')}
               </Text>
             </View>
           </View>
@@ -325,7 +327,7 @@ export default function EditEntryScreen() {
               <Text
                 style={[styles.durationUnit, { color: colors.textSecondary }]}
               >
-                min
+                {t('duration.min')}
               </Text>
             </View>
           </View>
@@ -335,13 +337,13 @@ export default function EditEntryScreen() {
       {/* Note */}
       <View style={styles.section}>
         <Text style={[styles.label, { color: colors.textSecondary }]}>
-          NOTE{' '}
-          <Text style={styles.optionalText}>(optional)</Text>
+          {t('form.note')}{' '}
+          <Text style={styles.optionalText}>{t('form.optional')}</Text>
         </Text>
         <TextInput
           value={note}
           onChangeText={setNote}
-          placeholder="What did you work on?"
+          placeholder={t('form.notePlaceholder')}
           placeholderTextColor={colors.textSecondary}
           multiline
           numberOfLines={3}
@@ -384,7 +386,7 @@ export default function EditEntryScreen() {
             },
           ]}
         >
-          {isSaving ? 'Saving...' : 'Save Changes'}
+          {isSaving ? t('editEntry.saving') : t('editEntry.saveChanges')}
         </Text>
       </Pressable>
 
@@ -399,7 +401,7 @@ export default function EditEntryScreen() {
           ]}
         >
           <Text style={[styles.deleteButtonText, { color: colors.destructive }]}>
-            Delete Entry
+            {t('editEntry.deleteEntry')}
           </Text>
         </Pressable>
       ) : (
@@ -412,7 +414,7 @@ export default function EditEntryScreen() {
           <Text
             style={[styles.deleteConfirmText, { color: colors.textPrimary }]}
           >
-            Delete this time entry?
+            {t('editEntry.deleteConfirm')}
           </Text>
           <View style={styles.deleteConfirmButtons}>
             <Pressable
@@ -433,7 +435,7 @@ export default function EditEntryScreen() {
                   { color: colors.textPrimary },
                 ]}
               >
-                Cancel
+                {t('common.cancel')}
               </Text>
             </Pressable>
             <Pressable
@@ -447,7 +449,7 @@ export default function EditEntryScreen() {
               ]}
             >
               <Text style={[styles.confirmButtonText, { color: '#FFFFFF' }]}>
-                Delete
+                {t('common.delete')}
               </Text>
             </Pressable>
           </View>

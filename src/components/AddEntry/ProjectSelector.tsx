@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { type Project } from '@/db/schema';
 import { useTheme } from '@/theme/ThemeProvider';
@@ -16,11 +17,12 @@ export function ProjectSelector({
   onSelect,
 }: ProjectSelectorProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View style={styles.container}>
       <Text style={[styles.label, { color: colors.textSecondary }]}>
-        PROJECT
+        {t('form.project')}
       </Text>
       <View style={styles.list}>
         {projects.map((project) => {
@@ -50,7 +52,7 @@ export function ProjectSelector({
         })}
         {projects.length === 0 && (
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            No projects. Create one first.
+            {t('common.noProjects')}
           </Text>
         )}
       </View>

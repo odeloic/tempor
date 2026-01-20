@@ -2,6 +2,7 @@ import { useTheme } from '@/theme/ThemeProvider';
 import { Pressable, StyleSheet, Text, View, Modal } from 'react-native';
 import { fonts, radii, spacing } from '@/theme/tokens';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 import { type DateRange } from '@/hooks/useTimeEntries';
 
@@ -15,40 +16,42 @@ type PresetOption = {
   getValue: () => DateRange;
 };
 
-const getPresets = (): PresetOption[] => {
+import type { TFunction } from 'i18next';
+
+const getPresets = (t: TFunction): PresetOption[] => {
   const today = new Date();
   return [
     {
-      label: 'Today',
+      label: t('dateRange.today'),
       getValue: () => ({ start: today, end: today }),
     },
     {
-      label: 'Yesterday',
+      label: t('dateRange.yesterday'),
       getValue: () => {
         const yesterday = subDays(today, 1);
         return { start: yesterday, end: yesterday };
       },
     },
     {
-      label: 'This Week',
+      label: t('dateRange.thisWeek'),
       getValue: () => ({
         start: startOfWeek(today, { weekStartsOn: 1 }),
         end: endOfWeek(today, { weekStartsOn: 1 }),
       }),
     },
     {
-      label: 'Last 7 Days',
+      label: t('dateRange.last7Days'),
       getValue: () => ({ start: subDays(today, 6), end: today }),
     },
     {
-      label: 'This Month',
+      label: t('dateRange.thisMonth'),
       getValue: () => ({
         start: startOfMonth(today),
         end: endOfMonth(today),
       }),
     },
     {
-      label: 'Last 30 Days',
+      label: t('dateRange.last30Days'),
       getValue: () => ({ start: subDays(today, 29), end: today }),
     },
   ];
@@ -56,11 +59,12 @@ const getPresets = (): PresetOption[] => {
 
 export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
-  const presets = getPresets();
+  const presets = getPresets(t);
 
   const getDisplayLabel = () => {
-    if (!value) return 'All Time';
+    if (!value) return t('dateRange.allTime');
     const startStr = format(value.start, 'MMM d');
     const endStr = format(value.end, 'MMM d');
     if (startStr === endStr) return startStr;
@@ -117,7 +121,7 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
             ]}
           >
             <Text style={[styles.modalTitle, { color: colors.textPrimary }]}>
-              Select Date Range
+              {t('dateRange.selectDateRange')}
             </Text>
 
             <View style={styles.presetList}>
@@ -152,7 +156,7 @@ export function DateRangeFilter({ value, onChange }: DateRangeFilterProps) {
               ]}
             >
               <Text style={[styles.clearText, { color: colors.textSecondary }]}>
-                Clear Filter
+                {t('dateRange.clearFilter')}
               </Text>
             </Pressable>
           </View>
