@@ -1,3 +1,5 @@
+import '@/i18n';
+
 import {
   SpaceMono_700Bold
 } from '@expo-google-fonts/space-mono';

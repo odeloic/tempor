@@ -15,6 +15,7 @@ import { fonts, spacing } from '@/theme/tokens';
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -26,6 +27,7 @@ type GroupedEntries = {
 
 export default function HistoryScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { projects, getProject } = useProjects();
@@ -101,7 +103,7 @@ export default function HistoryScreen() {
     >
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Time History
+          {t('history.title')}
         </Text>
         {hasFilters && (
           <Pressable
@@ -109,7 +111,7 @@ export default function HistoryScreen() {
             style={({ pressed }) => [{ opacity: pressed ? 0.7 : 1 }]}
           >
             <Text style={[styles.clearText, { color: colors.textSecondary }]}>
-              Clear filters
+              {t('history.clearFilters')}
             </Text>
           </Pressable>
         )}

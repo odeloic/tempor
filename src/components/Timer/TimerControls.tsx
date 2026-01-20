@@ -1,5 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { spacing, radii, fonts } from '@/theme/tokens';
 
 type TimerStatus = 'idle' | 'running' | 'paused';
@@ -24,6 +25,7 @@ export function TimerControls({
   onDiscard,
 }: TimerControlsProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   if (status === 'idle' && hasProject) {
     return (
@@ -36,7 +38,7 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.background }]}>
-            Start
+            {t('timer.controls.start')}
           </Text>
         </Pressable>
       </View>
@@ -55,7 +57,7 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.textPrimary }]}>
-            Pause
+            {t('timer.controls.pause')}
           </Text>
         </Pressable>
         <Pressable
@@ -66,7 +68,7 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.background }]}>
-            Stop
+            {t('timer.controls.stop')}
           </Text>
         </Pressable>
       </View>
@@ -84,7 +86,7 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.background }]}>
-            Resume
+            {t('timer.controls.resume')}
           </Text>
         </Pressable>
         <Pressable
@@ -96,7 +98,7 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.textPrimary }]}>
-            Stop
+            {t('timer.controls.stop')}
           </Text>
         </Pressable>
         <Pressable
@@ -109,7 +111,7 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.destructive }]}>
-            Discard
+            {t('timer.controls.discard')}
           </Text>
         </Pressable>
       </View>

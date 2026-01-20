@@ -9,11 +9,13 @@ import { formatDuration } from "@/lib/time";
 import { useTheme } from "@/theme/ThemeProvider";
 import { fonts, spacing } from "@/theme/tokens";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TimerScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { projects, getProject, refresh: refreshProjects } = useProjects();
   const { status, projectId, elapsed, start, pause, resume, stop, discard } =
@@ -31,10 +33,10 @@ export default function TimerScreen() {
       const project = getProject(Number(saved.projectId));
       const projectName = project?.name ?? "Previous project";
       const duration = formatDuration(saved.duration);
-      setToastMessage(`Saved ${duration} to ${projectName}`);
+      setToastMessage(t('timer.savedToast', { duration, project: projectName }));
       setToastVisible(true);
     },
-    [getProject]
+    [getProject, t]
   );
 
   const handleProjectSelect = useCallback(
@@ -98,7 +100,7 @@ export default function TimerScreen() {
 
         <View style={styles.quickStartSection}>
           <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
-            QUICK START
+            {t('timer.quickStart')}
           </Text>
           <View style={styles.projectList}>
             {projects.map((project) => (
@@ -112,7 +114,7 @@ export default function TimerScreen() {
             ))}
             {projects.length === 0 && (
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                No projects yet. Create one to get started.
+                {t('timer.noProjects')}
               </Text>
             )}
           </View>

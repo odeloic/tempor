@@ -1,11 +1,12 @@
-import { strings } from "@/constants/strings";
 import { TABS } from "@/constants/tabs";
 import { useTheme } from "@/theme/ThemeProvider";
 import { Tabs } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 
 export default function TabLayout() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -20,16 +21,16 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen name={TABS.timer} options={{
-        title: strings.tabs.timer
+        title: t('tabs.timer')
       }} />
       <Tabs.Screen name={TABS.projects} options={{
-        title: strings.tabs.projects
+        title: t('tabs.projects')
       }} />
       <Tabs.Screen name={TABS.add} options={{
-        title: strings.tabs.add
+        title: t('tabs.add')
       }} />
       <Tabs.Screen name={TABS.history} options={{
-        title: strings.tabs.history
+        title: t('tabs.history')
       }} />
     </Tabs>
   )

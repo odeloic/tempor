@@ -1,5 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { fonts, radii, spacing } from '@/theme/tokens';
 import { formatDuration } from '@/lib/time';
 
@@ -9,6 +10,7 @@ type TotalHoursCardProps = {
 
 export function TotalHoursCard({ totalSeconds }: TotalHoursCardProps) {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <View
@@ -21,7 +23,7 @@ export function TotalHoursCard({ totalSeconds }: TotalHoursCardProps) {
       ]}
     >
       <Text style={[styles.label, { color: colors.textSecondary }]}>
-        Total hours
+        {t('history.totalHours')}
       </Text>
       <Text style={[styles.value, { color: colors.textPrimary }]}>
         {formatDuration(totalSeconds)}

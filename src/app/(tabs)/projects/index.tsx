@@ -1,6 +1,7 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
@@ -9,6 +10,7 @@ import { ProjectCard } from '@/components/Project/ProjectCard';
 
 export default function ProjectsScreen() {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { projects, isLoading } = useProjects();
@@ -18,7 +20,7 @@ export default function ProjectsScreen() {
       {/* Header */}
       <View style={[styles.header, { paddingTop: insets.top + spacing.lg }]}>
         <Text style={[styles.title, { color: colors.textPrimary }]}>
-          Projects
+          {t('projects.title')}
         </Text>
         <Pressable
           onPress={() => router.push('/project/new')}
@@ -49,10 +51,10 @@ export default function ProjectsScreen() {
           !isLoading ? (
             <View style={styles.emptyState}>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                No projects yet
+                {t('projects.noProjects')}
               </Text>
               <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-                Tap + to create your first project
+                {t('projects.createFirst')}
               </Text>
             </View>
           ) : null
