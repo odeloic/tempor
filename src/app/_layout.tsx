@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import 'react-native-reanimated';
 
 import { db } from '@/db/client';
+import { prepareMigrations } from '@/db/migrate';
 import migrations from '@/db/migrations/migrations';
 import { initializeTimer } from '@/lib/timer';
 import { ThemeProvider } from '@/theme/ThemeProvider';
@@ -21,7 +22,9 @@ import {
 import { useMigrations } from 'drizzle-orm/expo-sqlite/migrator';
 import { Provider as JotaiProvider } from 'jotai';
 
-
+// Run baseline migration check before any React components render.
+// This must happen before useMigrations() is called.
+prepareMigrations();
 
 export {
   // Catch any errors thrown by the Layout component.
