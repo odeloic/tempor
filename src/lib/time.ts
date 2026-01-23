@@ -21,3 +21,11 @@ export const calculateElapsed = (accumulated: number, lastResumed: number | null
   if (lastResumed === null) return accumulated;
   return accumulated + Math.floor((Date.now() - lastResumed) / 1000);
 }
+
+/**
+ * Converts hours and minutes to total seconds.
+ * Use this for all manual time entry to ensure consistent units.
+ */
+export const hoursMinutesToSeconds = (hours: number, minutes: number): number => {
+  return hours * 3600 + minutes * 60;
+}

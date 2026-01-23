@@ -1,4 +1,4 @@
-import { formatDuration, formatElapsed, calculateElapsed } from './time';
+import { formatDuration, formatElapsed, calculateElapsed, hoursMinutesToSeconds } from './time';
 describe('formatElapsed', () => {
   it ('formats zero seconds', () => {
     expect(formatElapsed(0)).toBe('00:00:00')
@@ -52,3 +52,51 @@ describe('calculateElapsed', () => {
     // expect(calculateElapsed())
   })
 })
+
+describe('hoursMinutesToSeconds', () => {
+  it('converts 7 hours to 25200 seconds', () => {
+    expect(hoursMinutesToSeconds(7, 0)).toBe(25200);
+  });
+
+  it('converts 2 hours 30 minutes to 9000 seconds', () => {
+    expect(hoursMinutesToSeconds(2, 30)).toBe(9000);
+  });
+
+  it('converts 0 hours 45 minutes to 2700 seconds', () => {
+    expect(hoursMinutesToSeconds(0, 45)).toBe(2700);
+  });
+
+  it('converts 0 hours 0 minutes to 0 seconds', () => {
+    expect(hoursMinutesToSeconds(0, 0)).toBe(0);
+  });
+
+  it('converts 1 hour 1 minute to 3660 seconds', () => {
+    expect(hoursMinutesToSeconds(1, 1)).toBe(3660);
+  });
+});
+
+/**
+ * Integration tests: hoursMinutesToSeconds + formatDuration
+ * These verify that manual entries display correctly when using the conversion function
+ */
+describe('manual entry with hoursMinutesToSeconds displays correctly', () => {
+  it('7 hours displays as 7h', () => {
+    const duration = hoursMinutesToSeconds(7, 0);
+    expect(formatDuration(duration)).toBe('7h');
+  });
+
+  it('2 hours 30 minutes displays as 2h30m', () => {
+    const duration = hoursMinutesToSeconds(2, 30);
+    expect(formatDuration(duration)).toBe('2h30m');
+  });
+
+  it('45 minutes displays as 45m', () => {
+    const duration = hoursMinutesToSeconds(0, 45);
+    expect(formatDuration(duration)).toBe('45m');
+  });
+
+  it('1 hour 15 minutes displays as 1h15m', () => {
+    const duration = hoursMinutesToSeconds(1, 15);
+    expect(formatDuration(duration)).toBe('1h15m');
+  });
+});
