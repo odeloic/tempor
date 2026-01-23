@@ -2,6 +2,7 @@ import { type Session } from '@/atoms/sessions';
 import { timerStateAtom } from '@/atoms/timer';
 import { useProjects } from '@/hooks/useProjects';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
+import { hoursMinutesToSeconds } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -60,7 +61,7 @@ export default function EditEntryScreen() {
 
   const isTimerRunning = timerState.status !== 'idle';
 
-  const duration = hours * 3600 + minutes * 60;
+  const duration = hoursMinutesToSeconds(hours, minutes);
   const isValid = projectId && duration > 0;
   const hasChanges =
     entry &&

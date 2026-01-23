@@ -1,4 +1,4 @@
-import { formatDuration, formatElapsed, calculateElapsed } from './time';
+import { formatDuration, formatElapsed, calculateElapsed, hoursMinutesToSeconds } from './time';
 describe('formatElapsed', () => {
   it ('formats zero seconds', () => {
     expect(formatElapsed(0)).toBe('00:00:00')
@@ -53,86 +53,50 @@ describe('calculateElapsed', () => {
   })
 })
 
+describe('hoursMinutesToSeconds', () => {
+  it('converts 7 hours to 25200 seconds', () => {
+    expect(hoursMinutesToSeconds(7, 0)).toBe(25200);
+  });
+
+  it('converts 2 hours 30 minutes to 9000 seconds', () => {
+    expect(hoursMinutesToSeconds(2, 30)).toBe(9000);
+  });
+
+  it('converts 0 hours 45 minutes to 2700 seconds', () => {
+    expect(hoursMinutesToSeconds(0, 45)).toBe(2700);
+  });
+
+  it('converts 0 hours 0 minutes to 0 seconds', () => {
+    expect(hoursMinutesToSeconds(0, 0)).toBe(0);
+  });
+
+  it('converts 1 hour 1 minute to 3660 seconds', () => {
+    expect(hoursMinutesToSeconds(1, 1)).toBe(3660);
+  });
+});
+
 /**
- * Tests for manual entry duration calculation
- *
- * This simulates how add.tsx calculates duration:
- *   const duration = hours * 60 + minutes;
- *
- * The duration is stored in the database and later displayed using formatDuration()
+ * Integration tests: hoursMinutesToSeconds + formatDuration
+ * These verify that manual entries display correctly when using the conversion function
  */
-describe('manual entry duration calculation', () => {
-  // Helper to simulate what add.tsx does
-  const calculateManualEntryDuration = (hours: number, minutes: number): number => {
-    return hours * 60 + minutes;
-  };
-
-  it('calculates duration for 7 hours as 420 (minutes)', () => {
-    const duration = calculateManualEntryDuration(7, 0);
-    expect(duration).toBe(420);
+describe('manual entry with hoursMinutesToSeconds displays correctly', () => {
+  it('7 hours displays as 7h', () => {
+    const duration = hoursMinutesToSeconds(7, 0);
+    expect(formatDuration(duration)).toBe('7h');
   });
 
-  it('calculates duration for 2 hours 30 minutes as 150 (minutes)', () => {
-    const duration = calculateManualEntryDuration(2, 30);
-    expect(duration).toBe(150);
+  it('2 hours 30 minutes displays as 2h30m', () => {
+    const duration = hoursMinutesToSeconds(2, 30);
+    expect(formatDuration(duration)).toBe('2h30m');
   });
 
-  it('calculates duration for 0 hours 45 minutes as 45 (minutes)', () => {
-    const duration = calculateManualEntryDuration(0, 45);
-    expect(duration).toBe(45);
+  it('45 minutes displays as 45m', () => {
+    const duration = hoursMinutesToSeconds(0, 45);
+    expect(formatDuration(duration)).toBe('45m');
   });
 
-  /**
-   * BUG: This test documents the current buggy behavior
-   * When user enters 7 hours, the duration is stored as 420 (minutes)
-   * But formatDuration expects SECONDS, so it interprets 420 as 420 seconds = 7 minutes
-   */
-  describe('formatDuration with manual entry values (BUG DEMONSTRATION)', () => {
-    it('BUG: 7 hours entered displays as 7m instead of 7h', () => {
-      const userEnteredHours = 7;
-      const userEnteredMinutes = 0;
-      const storedDuration = calculateManualEntryDuration(userEnteredHours, userEnteredMinutes);
-
-      // This is what actually happens (buggy)
-      const actualDisplay = formatDuration(storedDuration);
-      expect(actualDisplay).toBe('7m'); // BUG: shows 7 minutes instead of 7 hours
-
-      // What should happen (correct behavior):
-      // formatDuration should receive seconds, not minutes
-      // 7 hours = 7 * 3600 = 25200 seconds
-      const correctSecondsValue = userEnteredHours * 3600 + userEnteredMinutes * 60;
-      const correctDisplay = formatDuration(correctSecondsValue);
-      expect(correctDisplay).toBe('7h'); // This is what user expects to see
-    });
-
-    it('BUG: 2h 30m entered displays as 2m instead of 2h30m', () => {
-      const userEnteredHours = 2;
-      const userEnteredMinutes = 30;
-      const storedDuration = calculateManualEntryDuration(userEnteredHours, userEnteredMinutes);
-
-      // This is what actually happens (buggy)
-      const actualDisplay = formatDuration(storedDuration);
-      expect(actualDisplay).toBe('2m'); // BUG: shows 2 minutes instead of 2h30m
-
-      // What should happen (correct behavior):
-      const correctSecondsValue = userEnteredHours * 3600 + userEnteredMinutes * 60;
-      const correctDisplay = formatDuration(correctSecondsValue);
-      expect(correctDisplay).toBe('2h30m'); // This is what user expects to see
-    });
-
-    it('BUG: 45 minutes entered displays as 0m instead of 45m', () => {
-      const userEnteredHours = 0;
-      const userEnteredMinutes = 45;
-      const storedDuration = calculateManualEntryDuration(userEnteredHours, userEnteredMinutes);
-
-      // This is what actually happens (buggy)
-      const actualDisplay = formatDuration(storedDuration);
-      expect(actualDisplay).toBe('0m'); // BUG: shows 0 minutes instead of 45m
-
-      // What should happen (correct behavior):
-      const correctSecondsValue = userEnteredHours * 3600 + userEnteredMinutes * 60;
-      const correctDisplay = formatDuration(correctSecondsValue);
-      expect(correctDisplay).toBe('45m'); // This is what user expects to see
-    });
+  it('1 hour 15 minutes displays as 1h15m', () => {
+    const duration = hoursMinutesToSeconds(1, 15);
+    expect(formatDuration(duration)).toBe('1h15m');
   });
 });

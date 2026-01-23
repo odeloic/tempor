@@ -23,7 +23,7 @@ import {
 import { Toast } from '@/components/ui/Toast';
 import { useProjects } from '@/hooks/useProjects';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
-import { formatDuration } from '@/lib/time';
+import { formatDuration, hoursMinutesToSeconds } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
 
@@ -43,7 +43,7 @@ export default function AddEntryScreen() {
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
 
-  const duration = hours * 60 + minutes;
+  const duration = hoursMinutesToSeconds(hours, minutes);
   const isValid = selectedProjectId !== null && duration > 0;
 
   const resetForm = useCallback(() => {
@@ -68,7 +68,7 @@ export default function AddEntryScreen() {
 
       const selectedProject = projects.find((p) => p.id === selectedProjectId);
       const projectName = selectedProject?.name ?? 'project';
-      setToastMessage(t('addEntry.savedToast', { duration: formatDuration(duration * 60), project: projectName }));
+      setToastMessage(t('addEntry.savedToast', { duration: formatDuration(duration), project: projectName }));
       setToastVisible(true);
 
       resetForm();
