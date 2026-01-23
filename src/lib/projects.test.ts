@@ -9,6 +9,7 @@ const createProject = (
 ): Project => ({
   id,
   name,
+  client: null,
   color: '#E63946',
   createdAt,
   updatedAt: createdAt,

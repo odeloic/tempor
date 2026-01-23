@@ -32,9 +32,16 @@ export function ActiveProjectHeader({ project, status }: ActiveProjectHeaderProp
           <View
             style={[styles.colorDot, { backgroundColor: project.color }]}
           />
-          <Text style={[styles.projectName, { color: colors.textPrimary }]}>
-            {project.name}
-          </Text>
+          <View style={styles.projectInfo}>
+            <Text style={[styles.projectName, { color: colors.textPrimary }]}>
+              {project.name}
+            </Text>
+            {project.client && (
+              <Text style={[styles.clientName, { color: colors.textSecondary }]}>
+                {project.client}
+              </Text>
+            )}
+          </View>
         </View>
       ) : (
         <Text style={[styles.placeholder, { color: colors.textSecondary }]}>
@@ -47,30 +54,40 @@ export function ActiveProjectHeader({ project, status }: ActiveProjectHeaderProp
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: spacing.xxl,
+    marginBottom: 48,
   },
   statusLabel: {
     fontSize: 11,
     fontFamily: fonts.sansMedium,
-    letterSpacing: 1.5,
-    marginBottom: spacing.sm,
+    letterSpacing: 1.65,
+    lineHeight: 16.5,
+    marginBottom: 8,
   },
   projectRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm + 2,
+    gap: 10,
   },
   colorDot: {
     width: 12,
     height: 12,
     borderRadius: 3,
   },
+  projectInfo: {
+    gap: 2,
+  },
   projectName: {
     fontSize: 20,
     fontFamily: fonts.sansSemiBold,
+    lineHeight: 30,
+  },
+  clientName: {
+    fontSize: 14,
+    fontFamily: fonts.sans,
   },
   placeholder: {
     fontSize: 20,
     fontFamily: fonts.sansMedium,
+    lineHeight: 30,
   },
 });

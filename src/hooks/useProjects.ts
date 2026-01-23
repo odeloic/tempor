@@ -9,11 +9,13 @@ import { sortProjectsByRecentlyUsed } from '@/lib/projects';
 
 interface CreateProjectData {
   name: string;
+  client?: string | null;
   color: string;
 }
 
 interface UpdateProjectData {
   name?: string;
+  client?: string | null;
   color?: string;
 }
 
@@ -49,6 +51,7 @@ export function useProjects() {
     const now = new Date();
     const [created] = await db.insert(projects).values({
       name: data.name,
+      client: data.client ?? null,
       color: data.color,
       createdAt: now,
       updatedAt: now,

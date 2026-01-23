@@ -1,9 +1,11 @@
 CREATE TABLE `projects` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
+	`client` text,
 	`color` text NOT NULL,
 	`created_at` integer NOT NULL,
-	`updated_at` integer NOT NULL
+	`updated_at` integer NOT NULL,
+	`last_used_at` integer
 );
 --> statement-breakpoint
 CREATE TABLE `sessions` (

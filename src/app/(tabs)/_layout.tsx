@@ -1,23 +1,17 @@
+import { CustomTabBar } from "@/components/navigation/CustomTabBar";
 import { TABS } from "@/constants/tabs";
-import { useTheme } from "@/theme/ThemeProvider";
 import { Tabs } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 
 export default function TabLayout() {
-  const { colors } = useTheme();
   const { t } = useTranslation();
 
   return (
     <Tabs
+      tabBar={(props) => <CustomTabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.textPrimary,
-        tabBarInactiveTintColor: colors.textSecondary,
-        tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border
-        }
       }}
     >
       <Tabs.Screen name={TABS.timer} options={{

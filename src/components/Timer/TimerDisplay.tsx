@@ -61,11 +61,10 @@ export function TimerDisplay({ elapsed, isPaused = false }: TimerDisplayProps) {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   time: {
     fontSize: 64,
-    letterSpacing: -1,
-    lineHeight: 64,
+    letterSpacing: -1.28,
   },
 });

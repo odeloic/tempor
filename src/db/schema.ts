@@ -5,6 +5,7 @@ import { check, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
 export const projects = sqliteTable(DB_TABLES.PROJECTS, {
     id: integer().primaryKey(),
     name: text('name').notNull(),
+    client: text('client'),
     color: text('color').notNull(),
     createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
     updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),

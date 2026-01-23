@@ -15,7 +15,7 @@ export default function NewProjectModal() {
   const insets = useSafeAreaInsets();
   const { createProject } = useProjects();
 
-  const handleSave = async (data: { name: string; color: string }) => {
+  const handleSave = async (data: { name: string; client: string | null; color: string }) => {
     await createProject(data);
     router.back();
   };

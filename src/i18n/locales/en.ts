@@ -41,6 +41,8 @@ export const en = {
     editProject: 'Edit Project',
     projectName: 'PROJECT NAME',
     namePlaceholder: 'e.g. Website Redesign',
+    client: 'CLIENT / COMPANY',
+    clientPlaceholder: 'e.g. Acme Corp',
     color: 'COLOR',
     createProject: 'Create Project',
     saveChanges: 'Save Changes',

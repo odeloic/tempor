@@ -1,6 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { spacing, fonts, radii, statusColors } from '@/theme/tokens';
+import { fonts, radii, statusColors } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 
 type TimerStatus = 'idle' | 'running' | 'paused';
@@ -31,21 +31,35 @@ export function QuickStartProjectCard({
         {
           backgroundColor: isActive ? colors.textPrimary : colors.surface,
           borderColor: isActive ? 'transparent' : colors.border,
-          borderWidth: isActive ? 0 : 1,
+          borderWidth: 0.5,
           transform: [{ scale: pressed ? 0.98 : 1 }],
           opacity: pressed ? 0.9 : 1,
         },
       ]}
     >
       <View style={[styles.colorDot, { backgroundColor: project.color }]} />
-      <Text
-        style={[
-          styles.projectName,
-          { color: isActive ? colors.background : colors.textPrimary },
-        ]}
-      >
-        {project.name}
-      </Text>
+      <View style={styles.textContainer}>
+        <Text
+          style={[
+            styles.projectName,
+            { color: isActive ? colors.background : colors.textPrimary },
+          ]}
+          numberOfLines={1}
+        >
+          {project.name}
+        </Text>
+        {project.client && (
+          <Text
+            style={[
+              styles.clientName,
+              { color: isActive ? colors.background : colors.textSecondary },
+            ]}
+            numberOfLines={1}
+          >
+            {project.client}
+          </Text>
+        )}
+      </View>
       {showRunningIndicator && (
         <View
           style={[styles.runningIndicator, { backgroundColor: indicatorColor }]}
@@ -59,20 +73,28 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.md,
-    padding: spacing.md,
+    gap: 14,
+    paddingVertical: 18,
     paddingHorizontal: 18,
-    borderRadius: radii.lg,
+    borderRadius: 14,
   },
   colorDot: {
     width: 10,
     height: 10,
     borderRadius: 3,
   },
-  projectName: {
+  textContainer: {
     flex: 1,
+    gap: 2,
+  },
+  projectName: {
     fontSize: 15,
     fontFamily: fonts.sansSemiBold,
+  },
+  clientName: {
+    fontSize: 13,
+    fontFamily: fonts.sans,
+    opacity: 0.7,
   },
   runningIndicator: {
     width: 8,

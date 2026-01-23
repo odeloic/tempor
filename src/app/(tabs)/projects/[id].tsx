@@ -26,7 +26,7 @@ export default function EditProjectScreen() {
     }
   }, [id, hasTimeEntries]);
 
-  const handleSave = async (data: { name: string; color: string }) => {
+  const handleSave = async (data: { name: string; client: string | null; color: string }) => {
     await updateProject(Number(id), data);
     router.back();
   };

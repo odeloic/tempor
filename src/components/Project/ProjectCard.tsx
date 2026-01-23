@@ -30,6 +30,11 @@ export function ProjectCard({ project, onPress }: Props) {
         <Text style={[styles.name, { color: colors.textPrimary }]}>
           {project.name}
         </Text>
+        {project.client && (
+          <Text style={[styles.client, { color: colors.textSecondary }]}>
+            {project.client}
+          </Text>
+        )}
       </View>
       <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
     </Pressable>
@@ -53,9 +58,14 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    gap: 2,
   },
   name: {
     fontSize: 16,
     fontFamily: fonts.sansSemiBold,
+  },
+  client: {
+    fontSize: 13,
+    fontFamily: fonts.sans,
   },
 });

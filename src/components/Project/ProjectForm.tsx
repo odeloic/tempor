@@ -16,7 +16,7 @@ import type { Project } from '@/db/schema';
 
 interface Props {
   project?: Project;
-  onSave: (data: { name: string; color: string }) => void;
+  onSave: (data: { name: string; client: string | null; color: string }) => void;
   onDelete?: () => void;
   onCancel: () => void;
   hasTimeEntries?: boolean;
@@ -32,6 +32,7 @@ export function ProjectForm({
   const { colors } = useTheme();
   const { t } = useTranslation();
   const [name, setName] = useState(project?.name ?? '');
+  const [client, setClient] = useState(project?.client ?? '');
   const [color, setColor] = useState(project?.color ?? projectColors[0]);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
@@ -40,7 +41,7 @@ export function ProjectForm({
 
   const handleSave = () => {
     if (isValid) {
-      onSave({ name: name.trim(), color });
+      onSave({ name: name.trim(), client: client.trim() || null, color });
     }
   };
 
@@ -52,9 +53,11 @@ export function ProjectForm({
     >
       {/* Project Name Field */}
       <View style={styles.field}>
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('projectForm.projectName')}
-        </Text>
+        <View style={styles.labelRow}>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
+            {t('projectForm.projectName')}
+          </Text>
+        </View>
         <TextInput
           value={name}
           onChangeText={setName}
@@ -72,11 +75,39 @@ export function ProjectForm({
         />
       </View>
 
+      {/* Client Field */}
+      <View style={styles.field}>
+        <View style={styles.labelRow}>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
+            {t('projectForm.client')}
+          </Text>
+          <Text style={[styles.optional, { color: colors.textSecondary }]}>
+            {t('form.optional')}
+          </Text>
+        </View>
+        <TextInput
+          value={client}
+          onChangeText={setClient}
+          placeholder={t('projectForm.clientPlaceholder')}
+          placeholderTextColor={colors.textSecondary}
+          style={[
+            styles.input,
+            {
+              backgroundColor: colors.surface,
+              borderColor: colors.border,
+              color: colors.textPrimary,
+            },
+          ]}
+        />
+      </View>
+
       {/* Color Picker */}
       <View style={styles.field}>
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('projectForm.color')}
-        </Text>
+        <View style={styles.labelRow}>
+          <Text style={[styles.label, { color: colors.textSecondary }]}>
+            {t('projectForm.color')}
+          </Text>
+        </View>
         <ProjectColorPicker value={color} onChange={setColor} />
       </View>
 
@@ -163,12 +194,21 @@ const styles = StyleSheet.create({
   field: {
     marginBottom: spacing.lg,
   },
+  labelRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
+    marginBottom: 10,
+  },
   label: {
     fontSize: 11,
     fontFamily: fonts.sansMedium,
     letterSpacing: 1.5,
     textTransform: 'uppercase',
-    marginBottom: 10,
+  },
+  optional: {
+    fontSize: 11,
+    fontFamily: fonts.sans,
   },
   input: {
     padding: spacing.md,
