@@ -5,7 +5,7 @@ import { projects, sessions, Project } from '@/db/schema';
 import { eq } from 'drizzle-orm';
 import { projectColors } from '@/constants/colors';
 import { projectsAtom } from '@/atoms/projects';
-import { sortProjectsByRecentlyUsed } from '@/lib/projects';
+import { sortProjectsByCreatedAt } from '@/lib/projects';
 
 interface CreateProjectData {
   name: string;
@@ -35,9 +35,9 @@ export function useProjects() {
     }
   }, [setProjectList]);
 
-  // Sort projects: recently used first, then by creation date
+  // Sort projects by creation date (newest first) for stable ordering
   const sortedProjects = useMemo(() => {
-    return sortProjectsByRecentlyUsed(projectList);
+    return sortProjectsByCreatedAt(projectList);
   }, [projectList]);
 
   // Fetch on mount if atom is empty

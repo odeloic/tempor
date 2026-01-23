@@ -94,6 +94,34 @@ Translations are in `src/i18n/locales/en.ts`, organized by feature:
 - **sessions**: id, projectId (FK), date, duration (seconds), note, createdAt, updatedAt
 - **timerState**: singleton for persisting timer state
 
+## Database Troubleshooting
+
+### Finding the SQLite Database (iOS Simulator)
+
+```bash
+# Find the database file
+find ~/Library/Developer/CoreSimulator/Devices -name "tempor.db" 2>/dev/null
+
+# Query the database directly
+sqlite3 "<path-from-above>" "SELECT name FROM sqlite_master WHERE type='table';"
+```
+
+### Migration Issues
+
+If migrations fail with "table already exists" errors, the database was likely created before the migration system was set up. The `prepareMigrations()` function in `src/db/migrate.ts` handles this by detecting existing tables and seeding the `__drizzle_migrations` tracking table.
+
+To manually check migration state:
+```bash
+sqlite3 "<db-path>" "SELECT * FROM __drizzle_migrations;"
+```
+
+To reset migration tracking (for debugging):
+```bash
+sqlite3 "<db-path>" "DROP TABLE IF EXISTS __drizzle_migrations;"
+```
+
+For development, use `deleteDatabase()` from `src/db/client.ts` to completely reset the database (requires app restart).
+
 ## Key Patterns
 
 1. **State management**: Use Jotai atoms for global state, refresh functions to sync with DB

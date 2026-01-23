@@ -21,7 +21,7 @@ interface UseTimerReturn {
   start: (projectId: string) => Promise<SavedSession | null>;
   pause: () => Promise<void>;
   resume: () => Promise<void>;
-  stop: () => Promise<void>;
+  stop: () => Promise<SavedSession | null>;
   discard: () => Promise<void>;
 }
 
@@ -143,11 +143,12 @@ export function useTimer(): UseTimerReturn {
     setState(prev => ({ ...prev, ...newState } as TimerState));
   }, [state, setState, persistState]);
 
-  const stop = useCallback(async () => {
-    if (state.status === 'idle') return;
+  const stop = useCallback(async (): Promise<SavedSession | null> => {
+    if (state.status === 'idle') return null;
 
     const lastResumedMs = state.lastResumedAt?.getTime() ?? null;
     const finalElapsed = calculateElapsed(state.accumulatedSeconds, lastResumedMs);
+    let savedSession: SavedSession | null = null;
 
     // Save session if at least 1 minute tracked
     if (state.projectId && finalElapsed >= 60) {
@@ -163,6 +164,7 @@ export function useTimer(): UseTimerReturn {
 
       // Update sessions atom so history screen shows the new session
       setSessionList((prev) => [created, ...prev]);
+      savedSession = { projectId: state.projectId, duration: finalElapsed };
     }
 
     const newState: Partial<TimerState> = {
@@ -174,6 +176,8 @@ export function useTimer(): UseTimerReturn {
 
     await persistState(newState);
     setState(prev => ({ ...prev, ...newState } as TimerState));
+
+    return savedSession;
   }, [state, setState, persistState, setSessionList]);
 
   const discard = useCallback(async () => {

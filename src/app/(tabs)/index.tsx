@@ -17,8 +17,8 @@ export default function TimerScreen() {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { projects, getProject, refresh: refreshProjects } = useProjects();
-  const { status, projectId, elapsed, start, pause, resume, stop, discard } =
+  const { projects, getProject } = useProjects();
+  const { status, projectId, elapsed, start, stop, discard } =
     useTimer();
 
   const [toastMessage, setToastMessage] = useState("");
@@ -45,10 +45,8 @@ export default function TimerScreen() {
       if (savedSession) {
         showSavedToast(savedSession);
       }
-      // Refresh projects to update the "recently used" sorting
-      refreshProjects();
     },
-    [start, showSavedToast, refreshProjects]
+    [start, showSavedToast]
   );
 
   const handleStart = useCallback(async () => {
@@ -57,10 +55,15 @@ export default function TimerScreen() {
       if (savedSession) {
         showSavedToast(savedSession);
       }
-      // Refresh projects to update the "recently used" sorting
-      refreshProjects();
     }
-  }, [activeProject, start, showSavedToast, refreshProjects]);
+  }, [activeProject, start, showSavedToast]);
+
+  const handleStop = useCallback(async () => {
+    const savedSession = await stop();
+    if (savedSession) {
+      showSavedToast(savedSession);
+    }
+  }, [stop, showSavedToast]);
 
   const handleHideToast = useCallback(() => {
     setToastVisible(false);
@@ -91,9 +94,7 @@ export default function TimerScreen() {
             status={status}
             hasProject={activeProject !== null}
             onStart={handleStart}
-            onPause={pause}
-            onResume={resume}
-            onStop={stop}
+            onStop={handleStop}
             onDiscard={discard}
           />
         </View>
