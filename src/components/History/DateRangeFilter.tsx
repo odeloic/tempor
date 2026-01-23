@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { format, subDays, startOfWeek, endOfWeek, startOfMonth, endOfMonth } from 'date-fns';
 import { type DateRange } from '@/hooks/useTimeEntries';
 
+import type { TFunction } from 'i18next';
+
 type DateRangeFilterProps = {
   value: DateRange | null;
   onChange: (range: DateRange | null) => void;
@@ -15,8 +17,6 @@ type PresetOption = {
   label: string;
   getValue: () => DateRange;
 };
-
-import type { TFunction } from 'i18next';
 
 const getPresets = (t: TFunction): PresetOption[] => {
   const today = new Date();

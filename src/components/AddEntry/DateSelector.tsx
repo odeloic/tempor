@@ -6,12 +6,12 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
 
+import type { TFunction } from 'i18next';
+
 type DateSelectorProps = {
   value: Date;
   onChange: (date: Date) => void;
 };
-
-import type { TFunction } from 'i18next';
 
 function getQuickOptionLabels(t: TFunction) {
   return [
