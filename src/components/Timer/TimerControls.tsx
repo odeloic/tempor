@@ -9,8 +9,6 @@ type TimerControlsProps = {
   status: TimerStatus;
   hasProject: boolean;
   onStart: () => void;
-  onPause: () => void;
-  onResume: () => void;
   onStop: () => void;
   onDiscard: () => void;
 };
@@ -19,8 +17,6 @@ export function TimerControls({
   status,
   hasProject,
   onStart,
-  onPause,
-  onResume,
   onStop,
   onDiscard,
 }: TimerControlsProps) {
@@ -45,21 +41,9 @@ export function TimerControls({
     );
   }
 
-  if (status === 'running') {
+  if (status === 'running' || status === 'paused') {
     return (
       <View style={styles.container}>
-        <Pressable
-          onPress={onPause}
-          style={({ pressed }) => [
-            styles.button,
-            styles.outlineButton,
-            { borderColor: colors.border, opacity: pressed ? 0.9 : 1 },
-          ]}
-        >
-          <Text style={[styles.buttonText, { color: colors.textPrimary }]}>
-            {t('timer.controls.pause')}
-          </Text>
-        </Pressable>
         <Pressable
           onPress={onStop}
           style={({ pressed }) => [
@@ -68,36 +52,6 @@ export function TimerControls({
           ]}
         >
           <Text style={[styles.buttonText, { color: colors.background }]}>
-            {t('timer.controls.stop')}
-          </Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  if (status === 'paused') {
-    return (
-      <View style={styles.container}>
-        <Pressable
-          onPress={onResume}
-          style={({ pressed }) => [
-            styles.button,
-            { backgroundColor: colors.textPrimary, opacity: pressed ? 0.9 : 1 },
-          ]}
-        >
-          <Text style={[styles.buttonText, { color: colors.background }]}>
-            {t('timer.controls.resume')}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={onStop}
-          style={({ pressed }) => [
-            styles.button,
-            styles.outlineButton,
-            { borderColor: colors.border, opacity: pressed ? 0.9 : 1 },
-          ]}
-        >
-          <Text style={[styles.buttonText, { color: colors.textPrimary }]}>
             {t('timer.controls.stop')}
           </Text>
         </Pressable>
@@ -105,7 +59,6 @@ export function TimerControls({
           onPress={onDiscard}
           style={({ pressed }) => [
             styles.button,
-            styles.fixedWidthButton,
             styles.outlineButton,
             { borderColor: colors.destructive, opacity: pressed ? 0.9 : 1 },
           ]}
@@ -132,10 +85,6 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  fixedWidthButton: {
-    flex: 0,
-    width: 90,
   },
   outlineButton: {
     borderWidth: 2,

@@ -1,4 +1,4 @@
-import { sortProjectsByRecentlyUsed } from './projects';
+import { sortProjectsByCreatedAt } from './projects';
 import { type Project } from '@/db/schema';
 
 const createProject = (
@@ -16,60 +16,30 @@ const createProject = (
   lastUsedAt,
 });
 
-describe('sortProjectsByRecentlyUsed', () => {
+describe('sortProjectsByCreatedAt', () => {
   it('returns empty array for empty input', () => {
-    expect(sortProjectsByRecentlyUsed([])).toEqual([]);
+    expect(sortProjectsByCreatedAt([])).toEqual([]);
   });
 
-  it('sorts projects with lastUsedAt by most recent first', () => {
-    const older = createProject(1, 'Older', new Date('2024-01-01'), new Date('2024-01-10'));
-    const newer = createProject(2, 'Newer', new Date('2024-01-01'), new Date('2024-01-15'));
-    const newest = createProject(3, 'Newest', new Date('2024-01-01'), new Date('2024-01-20'));
-
-    const result = sortProjectsByRecentlyUsed([older, newest, newer]);
-
-    expect(result.map(p => p.name)).toEqual(['Newest', 'Newer', 'Older']);
-  });
-
-  it('places projects with lastUsedAt before those without', () => {
-    const used = createProject(1, 'Used', new Date('2024-01-01'), new Date('2024-01-10'));
-    const unused = createProject(2, 'Unused', new Date('2024-01-15'), null);
-
-    const result = sortProjectsByRecentlyUsed([unused, used]);
-
-    expect(result.map(p => p.name)).toEqual(['Used', 'Unused']);
-  });
-
-  it('sorts unused projects by creation date (newest first)', () => {
+  it('sorts projects by creation date (newest first)', () => {
     const older = createProject(1, 'Older', new Date('2024-01-01'), null);
     const newer = createProject(2, 'Newer', new Date('2024-01-10'), null);
     const newest = createProject(3, 'Newest', new Date('2024-01-20'), null);
 
-    const result = sortProjectsByRecentlyUsed([older, newest, newer]);
+    const result = sortProjectsByCreatedAt([older, newest, newer]);
 
     expect(result.map(p => p.name)).toEqual(['Newest', 'Newer', 'Older']);
   });
 
-  it('handles mixed used and unused projects correctly', () => {
-    const usedOldest = createProject(1, 'UsedOldest', new Date('2024-01-01'), new Date('2024-01-05'));
-    const usedNewest = createProject(2, 'UsedNewest', new Date('2024-01-01'), new Date('2024-01-20'));
-    const unusedOld = createProject(3, 'UnusedOld', new Date('2024-01-01'), null);
-    const unusedNew = createProject(4, 'UnusedNew', new Date('2024-01-15'), null);
+  it('ignores lastUsedAt and only sorts by createdAt', () => {
+    const usedRecently = createProject(1, 'UsedRecently', new Date('2024-01-01'), new Date('2024-01-20'));
+    const usedLongAgo = createProject(2, 'UsedLongAgo', new Date('2024-01-15'), new Date('2024-01-05'));
+    const neverUsed = createProject(3, 'NeverUsed', new Date('2024-01-10'), null);
 
-    const result = sortProjectsByRecentlyUsed([
-      unusedOld,
-      usedOldest,
-      unusedNew,
-      usedNewest,
-    ]);
+    const result = sortProjectsByCreatedAt([usedRecently, usedLongAgo, neverUsed]);
 
-    // Used projects first (by lastUsedAt), then unused (by createdAt)
-    expect(result.map(p => p.name)).toEqual([
-      'UsedNewest',
-      'UsedOldest',
-      'UnusedNew',
-      'UnusedOld',
-    ]);
+    // Should sort by createdAt only, ignoring lastUsedAt
+    expect(result.map(p => p.name)).toEqual(['UsedLongAgo', 'NeverUsed', 'UsedRecently']);
   });
 
   it('does not mutate the original array', () => {
@@ -78,7 +48,7 @@ describe('sortProjectsByRecentlyUsed', () => {
     const original = [project1, project2];
     const originalCopy = [...original];
 
-    sortProjectsByRecentlyUsed(original);
+    sortProjectsByCreatedAt(original);
 
     expect(original).toEqual(originalCopy);
   });
