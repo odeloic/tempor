@@ -11,11 +11,14 @@
     "splash": {
       "image": "./src/assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#FFD739"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.odeloic.tempor"
+      "bundleIdentifier": "com.odeloic.tempor",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
