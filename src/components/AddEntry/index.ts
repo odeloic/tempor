@@ -1,4 +1,4 @@
-export { ProjectSelector } from './ProjectSelector';
-export { DateSelector } from './DateSelector';
-export { DurationInput } from './DurationInput';
-export { NoteInput } from './NoteInput';
+export { ProjectSelector } from '@/components/AddEntry/ProjectSelector';
+export { DateSelector } from '@/components/AddEntry/DateSelector';
+export { DurationInput } from '@/components/AddEntry/DurationInput';
+export { NoteInput } from '@/components/AddEntry/NoteInput';

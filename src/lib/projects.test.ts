@@ -1,4 +1,4 @@
-import { sortProjectsByCreatedAt } from './projects';
+import { sortProjectsByCreatedAt } from '@/lib/projects';
 import { type Project } from '@/db/schema';
 
 const createProject = (

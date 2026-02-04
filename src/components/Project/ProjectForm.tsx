@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
 import { projectColors } from '@/constants/colors';
-import { ProjectColorPicker } from './ProjectColorPicker';
+import { ProjectColorPicker } from '@/components/Project/ProjectColorPicker';
 import type { Project } from '@/db/schema';
 
 interface Props {

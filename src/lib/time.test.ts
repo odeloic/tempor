@@ -1,4 +1,4 @@
-import { formatDuration, formatElapsed, calculateElapsed, hoursMinutesToSeconds } from './time';
+import { formatDuration, formatElapsed, calculateElapsed, hoursMinutesToSeconds } from '@/lib/time';
 describe('formatElapsed', () => {
   it ('formats zero seconds', () => {
     expect(formatElapsed(0)).toBe('00:00:00')

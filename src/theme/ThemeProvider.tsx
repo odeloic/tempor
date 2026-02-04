@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import { useColorScheme } from "react-native";
-import { colors, fonts, radii, spacing, type ThemeColor, type ThemeFont, type ThemeRadii, type ThemeSpacing } from "./tokens";
+import { colors, fonts, radii, spacing, type ThemeColor, type ThemeFont, type ThemeRadii, type ThemeSpacing } from "@/theme/tokens";
 
 type Theme = {
     colors: ThemeColor,

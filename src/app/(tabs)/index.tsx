@@ -18,27 +18,35 @@ export default function TimerScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const { projects, getProject } = useProjects();
-  const { status, projectId, elapsed, start, stop, discard } =
-    useTimer();
+  const { status, projectId, elapsed, start, stop, discard } = useTimer();
 
   const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
 
   const activeProject = projectId
-    ? getProject(Number(projectId)) ?? null
+    ? (getProject(Number(projectId)) ?? null)
     : null;
 
+  /**
+   * FIXME: Wouldn't this be something like a hook useToast that can be reused
+   * anywhere within the app? I imagine this would be better suited for different use cases
+   * Saving a project, Saving a new time entry
+   * Also different states: Error, Success, Warning
+   */
   const showSavedToast = useCallback(
     (saved: SavedSession) => {
       const project = getProject(Number(saved.projectId));
       const projectName = project?.name ?? "Previous project";
       const duration = formatDuration(saved.duration);
-      setToastMessage(t('timer.savedToast', { duration, project: projectName }));
+      setToastMessage(
+        t("timer.savedToast", { duration, project: projectName }),
+      );
       setToastVisible(true);
     },
-    [getProject, t]
+    [getProject, t],
   );
 
+  // FIXME: Not every time i select a project this toast shows up
   const handleProjectSelect = useCallback(
     async (id: number) => {
       const savedSession = await start(String(id));
@@ -46,7 +54,7 @@ export default function TimerScreen() {
         showSavedToast(savedSession);
       }
     },
-    [start, showSavedToast]
+    [start, showSavedToast],
   );
 
   const handleStart = useCallback(async () => {
@@ -90,6 +98,7 @@ export default function TimerScreen() {
         </View>
 
         <View style={styles.controlsSection}>
+          {/** FIXME: As far as i know */}
           <TimerControls
             status={status}
             hasProject={activeProject !== null}
@@ -101,9 +110,15 @@ export default function TimerScreen() {
 
         <View style={styles.quickStartSection}>
           <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
-            {t('timer.quickStart')}
+            {t("timer.quickStart")}
           </Text>
           <View style={styles.projectList}>
+            {/**
+             * FIXME: Now this is a component that is being re-used in multiple places
+             * Timer screen, when creating an entry, when editing an entry, etc...
+             * Need to be refactored and re-designed to support multiple projects,
+             * or even maybe add a quick add
+             */}
             {projects.map((project) => (
               <QuickStartProjectCard
                 key={project.id}
@@ -115,7 +130,7 @@ export default function TimerScreen() {
             ))}
             {projects.length === 0 && (
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                {t('timer.noProjects')}
+                {t("timer.noProjects")}
               </Text>
             )}
           </View>

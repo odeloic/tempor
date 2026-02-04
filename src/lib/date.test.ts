@@ -1,6 +1,6 @@
 import { strings } from '@/constants/strings';
 import { startOfDay, subDays } from 'date-fns';
-import { formatDateLabel, getDateKey } from './date';
+import { formatDateLabel, getDateKey } from '@/lib/date';
 describe('formatDateLabel', () => {
   it('returns `Today` for todays timestamp', () => {
     expect(formatDateLabel(Date.now())).toBe(strings.today)

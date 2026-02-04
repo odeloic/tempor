@@ -1,4 +1,4 @@
-import { en } from './locales/en';
+import { en } from '@/i18n/locales/en';
 
 export type TranslationKeys = typeof en;
 

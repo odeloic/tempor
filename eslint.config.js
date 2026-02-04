@@ -5,6 +5,15 @@ const expoConfig = require("eslint-config-expo/flat");
 module.exports = defineConfig([
   expoConfig,
   {
-    ignores: ["dist/*"],
+    ignores: ["dist/*", "src/db/migrations/**"],
+    files: ["**/*.ts", "**/*.tsx"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: ["../*", "./*"],
+        },
+      ],
+    },
   }
 ]);

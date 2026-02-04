@@ -2,8 +2,8 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { spacing } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 import { type DateRange } from '@/hooks/useTimeEntries';
-import { ProjectFilterChip } from './ProjectFilterChip';
-import { DateRangeFilter } from './DateRangeFilter';
+import { ProjectFilterChip } from '@/components/History/ProjectFilterChip';
+import { DateRangeFilter } from '@/components/History/DateRangeFilter';
 
 type HistoryFilterBarProps = {
   projects: Project[];

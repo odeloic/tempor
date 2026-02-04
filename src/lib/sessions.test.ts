@@ -1,5 +1,5 @@
 import { type Session } from '@/atoms/sessions';
-import { aggregateSessionsByProjectAndDate } from './sessions';
+import { aggregateSessionsByProjectAndDate } from '@/lib/sessions';
 
 const createSession = (
   id: number,

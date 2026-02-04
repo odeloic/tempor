@@ -1,5 +1,5 @@
 import { type Session } from '@/atoms/sessions';
-import { getDateKey } from './date';
+import { getDateKey } from '@/lib/date';
 
 export type AggregatedEntry = {
   projectId: string;

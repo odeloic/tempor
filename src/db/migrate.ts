@@ -1,5 +1,5 @@
-import { expoDb } from './client';
-import migrations from './migrations/migrations';
+import { expoDb } from '@/db/client';
+import migrations from '@/db/migrations/migrations';
 
 /**
  * Check if a table exists in the database.

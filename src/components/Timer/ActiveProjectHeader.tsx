@@ -1,7 +1,7 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { spacing, fonts } from '@/theme/tokens';
+import { fonts } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 
 type TimerStatus = 'idle' | 'running' | 'paused';
