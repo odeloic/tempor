@@ -122,6 +122,20 @@ sqlite3 "<db-path>" "DROP TABLE IF EXISTS __drizzle_migrations;"
 
 For development, use `deleteDatabase()` from `src/db/client.ts` to completely reset the database (requires app restart).
 
+## Imports - REQUIRED
+
+**ALWAYS use the `@/` alias instead of relative paths** when importing modules.
+
+```typescript
+// Good
+import { useTimer } from '@/hooks/useTimer';
+import { db } from '@/db/client';
+
+// Bad - never use relative paths
+import { useTimer } from '../../hooks/useTimer';
+import { db } from '../db/client';
+```
+
 ## Key Patterns
 
 1. **State management**: Use Jotai atoms for global state, refresh functions to sync with DB
