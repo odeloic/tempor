@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
-import { useTheme } from '@/theme/ThemeProvider';
-import { fonts, spacing } from '@/theme/tokens';
-import { useProjects } from '@/hooks/useProjects';
-import { ProjectForm } from '@/components/Project/ProjectForm';
+import { ProjectForm } from "@/components/Project/ProjectForm";
+import { Screen } from "@/components/ui/Screen";
+import { ScreenHeader } from "@/components/ui/ScreenHeader";
+import { useProjects } from "@/hooks/useProjects";
+import { useTheme } from "@/theme/ThemeProvider";
+import { fonts, spacing } from "@/theme/tokens";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { KeyboardAvoidingView, Platform, StyleSheet, Text } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function EditProjectScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -15,7 +16,8 @@ export default function EditProjectScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  const { getProject, updateProject, deleteProject, hasTimeEntries } = useProjects();
+  const { getProject, updateProject, deleteProject, hasTimeEntries } =
+    useProjects();
 
   const [hasEntries, setHasEntries] = useState(false);
   const project = getProject(Number(id));
@@ -26,7 +28,11 @@ export default function EditProjectScreen() {
     }
   }, [id, hasTimeEntries]);
 
-  const handleSave = async (data: { name: string; client: string | null; color: string }) => {
+  const handleSave = async (data: {
+    name: string;
+    client: string | null;
+    color: string;
+  }) => {
     await updateProject(Number(id), data);
     router.back();
   };
@@ -38,79 +44,49 @@ export default function EditProjectScreen() {
 
   if (!project) {
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <Screen>
         <Text style={[styles.notFound, { color: colors.textSecondary }]}>
-          {t('projects.notFound')}
+          {t("projects.notFound")}
         </Text>
-      </View>
+      </Screen>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.lg }]}>
-        <Pressable
-          onPress={() => router.back()}
-          style={({ pressed }) => [
-            styles.backButton,
-            {
-              borderColor: colors.border,
-              opacity: pressed ? 0.7 : 1,
-            },
-          ]}
-        >
-          <Ionicons name="chevron-back" size={20} color={colors.textPrimary} />
-        </Pressable>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          {t('projectForm.editProject')}
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? insets.top : 0}
+    >
+      <Screen>
+        {/* Header */}
+        <ScreenHeader
+          title={t("projectForm.editProject")}
+          onBack={() => router.back()}
+          style={{
+            paddingTop: insets.top + spacing.lg,
+            paddingBottom: spacing.lg,
+          }}
+        />
 
-      {/* Form */}
-      <ProjectForm
-        project={project}
-        onSave={handleSave}
-        onDelete={handleDelete}
-        onCancel={() => router.back()}
-        hasTimeEntries={hasEntries}
-      />
-    </View>
+        {/* Form */}
+        <ProjectForm
+          project={project}
+          onSave={handleSave}
+          onDelete={handleDelete}
+          onCancel={() => router.back()}
+          hasTimeEntries={hasEntries}
+        />
+      </Screen>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-    paddingHorizontal: spacing.lg,
-    paddingBottom: spacing.lg,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    flex: 1,
-    fontSize: 22,
-    fontFamily: fonts.sansSemiBold,
-  },
-  headerSpacer: {
-    width: 40,
-  },
   notFound: {
     flex: 1,
-    textAlign: 'center',
-    textAlignVertical: 'center',
+    textAlign: "center",
+    textAlignVertical: "center",
     fontSize: 16,
     fontFamily: fonts.sans,
   },

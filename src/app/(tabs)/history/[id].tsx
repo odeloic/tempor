@@ -5,6 +5,10 @@ import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { hoursMinutesToSeconds } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
+import { AppScrollView } from '@/components/ui/AppScrollView';
+import { Screen } from '@/components/ui/Screen';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
+import { ScreenSection } from '@/components/ui/ScreenSection';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAtomValue } from 'jotai';
@@ -12,8 +16,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -129,97 +134,85 @@ export default function EditEntryScreen() {
 
   if (!entry) {
     return (
-      <View
-        style={[
-          styles.container,
-          styles.centered,
-          { backgroundColor: colors.background },
-        ]}
-      >
+      <Screen style={[styles.container, styles.centered]}>
         <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
           {t('editEntry.entryNotFound')}
         </Text>
-      </View>
+      </Screen>
     );
   }
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={[
-        styles.content,
-        { paddingTop: insets.top + spacing.md, paddingBottom: 120 },
-      ]}
-      keyboardShouldPersistTaps="handled"
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 0}
     >
-      {/* Header */}
-      <View style={styles.header}>
-        <Pressable
-          onPress={() => router.back()}
-          style={({ pressed }) => [
-            styles.backButton,
-            { borderColor: colors.border, opacity: pressed ? 0.7 : 1 },
+      <Screen>
+        <AppScrollView
+          style={styles.container}
+          contentContainerStyle={[
+            styles.content,
+            { paddingTop: insets.top + spacing.md, paddingBottom: 120 },
           ]}
+          keyboardShouldPersistTaps="handled"
         >
-          <Text style={[styles.backIcon, { color: colors.textPrimary }]}>
-            ‹
-          </Text>
-        </Pressable>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          {t('editEntry.title')}
-        </Text>
-        <View style={styles.headerSpacer} />
-      </View>
+          <ScreenHeader
+            title={t('editEntry.title')}
+            onBack={() => router.back()}
+            style={{ marginBottom: spacing.xl }}
+          />
 
-      {/* Timer Warning */}
-      {isTimerRunning && (
-        <View
-          style={[styles.warningBanner, { backgroundColor: colors.surface }]}
-        >
-          <Text style={[styles.warningText, { color: colors.textSecondary }]}>
-            {t('editEntry.timerWarning')}
-          </Text>
-        </View>
-      )}
+          <ScreenSection>
+          {/* Timer Warning */}
+          {isTimerRunning && (
+            <View
+              style={[styles.warningBanner, { backgroundColor: colors.surface }]}
+            >
+              <Text style={[styles.warningText, { color: colors.textSecondary }]}>
+                {t('editEntry.timerWarning')}
+              </Text>
+            </View>
+          )}
 
-      {/* Project Selector */}
-      <View style={styles.section}>
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('form.project')}
-        </Text>
-        <View style={styles.projectList}>
-          {projects.map((p) => {
-            const isSelected = String(p.id) === projectId;
-            return (
-              <Pressable
-                key={p.id}
-                onPress={() => !isTimerRunning && setProjectId(String(p.id))}
-                disabled={isTimerRunning}
-                style={({ pressed }) => [
-                  styles.projectOption,
-                  {
-                    borderColor: isSelected
-                      ? colors.textPrimary
-                      : colors.border,
-                    borderWidth: isSelected ? 2 : 1,
-                    backgroundColor: colors.surface,
-                    opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
-                  },
-                ]}
-              >
-                <View
-                  style={[styles.projectDot, { backgroundColor: p.color }]}
-                />
-                <Text
-                  style={[styles.projectName, { color: colors.textPrimary }]}
-                >
-                  {p.name}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
-      </View>
+          {/* Project Selector */}
+          <View style={styles.section}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>
+              {t('form.project')}
+            </Text>
+            <View style={styles.projectList}>
+              {projects.map((p) => {
+                const isSelected = String(p.id) === projectId;
+                return (
+                  <Pressable
+                    key={p.id}
+                    onPress={() => !isTimerRunning && setProjectId(String(p.id))}
+                    disabled={isTimerRunning}
+                    style={({ pressed }) => [
+                      styles.projectOption,
+                      {
+                        borderColor: isSelected
+                          ? colors.textPrimary
+                          : colors.border,
+                        borderWidth: isSelected ? 2 : 1,
+                        backgroundColor: colors.surface,
+                        opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
+                      },
+                    ]}
+                  >
+                    <View
+                      style={[styles.projectDot, { backgroundColor: p.color }]}
+                    />
+                    <Text
+                      style={[styles.projectName, { color: colors.textPrimary }]}
+                    >
+                      {p.name}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
 
       {/* Date Picker */}
       <View style={styles.section}>
@@ -456,7 +449,10 @@ export default function EditEntryScreen() {
           </View>
         </View>
       )}
-    </ScrollView>
+          </ScreenSection>
+        </AppScrollView>
+      </Screen>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -469,35 +465,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {
-    paddingHorizontal: spacing.lg,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: spacing.xl,
-  },
-  backButton: {
-    width: 40,
-    height: 40,
-    borderRadius: radii.sm,
-    borderWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  backIcon: {
-    fontSize: 28,
-    lineHeight: 32,
-    marginTop: -2,
-  },
-  title: {
-    flex: 1,
-    fontSize: 22,
-    fontFamily: fonts.sansSemiBold,
-    textAlign: 'center',
-    marginRight: 40,
-  },
-  headerSpacer: {
-    width: 0,
+    paddingTop: 0,
   },
   warningBanner: {
     padding: spacing.md,

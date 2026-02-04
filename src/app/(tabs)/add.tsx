@@ -4,11 +4,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
-  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -20,6 +18,9 @@ import {
   NoteInput,
   ProjectSelector,
 } from '@/components/AddEntry';
+import { AppScrollView } from '@/components/ui/AppScrollView';
+import { Screen } from '@/components/ui/Screen';
+import { ScreenSection } from '@/components/ui/ScreenSection';
 import { Toast } from '@/components/ui/Toast';
 import { useProjects } from '@/hooks/useProjects';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
@@ -98,69 +99,72 @@ export default function AddEntryScreen() {
     <KeyboardAvoidingView
       style={styles.flex}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={[styles.container, { backgroundColor: colors.background }]}>
+        <Screen style={styles.container}>
           <Toast
             message={toastMessage}
             visible={toastVisible}
             onHide={handleHideToast}
           />
-          <ScrollView
+          <AppScrollView
             style={styles.scrollView}
-            contentContainerStyle={[
-              styles.content,
-              { paddingTop: insets.top + spacing.xl, paddingBottom: 120 },
-            ]}
+            contentContainerStyle={{
+              paddingTop: insets.top + spacing.xl,
+              paddingBottom: 120,
+            }}
             keyboardShouldPersistTaps="handled"
           >
-            <Text style={[styles.title, { color: colors.textPrimary }]}>
-              {t('addEntry.title')}
-            </Text>
+            <ScreenSection>
+              <Text style={[styles.title, { color: colors.textPrimary }]}>
+                {t('addEntry.title')}
+              </Text>
 
-            <ProjectSelector
-              projects={projects}
-              selectedId={selectedProjectId}
-              onSelect={setSelectedProjectId}
-            />
+              <ProjectSelector
+                projects={projects}
+                selectedId={selectedProjectId}
+                onSelect={setSelectedProjectId}
+              />
 
-            <DateSelector value={selectedDate} onChange={setSelectedDate} />
+              <DateSelector value={selectedDate} onChange={setSelectedDate} />
 
-            <DurationInput
-              hours={hours}
-              minutes={minutes}
-              onHoursChange={setHours}
-              onMinutesChange={setMinutes}
-            />
+              <DurationInput
+                hours={hours}
+                minutes={minutes}
+                onHoursChange={setHours}
+                onMinutesChange={setMinutes}
+              />
 
-            <NoteInput value={note} onChange={setNote} />
+              <NoteInput value={note} onChange={setNote} />
 
-            <Pressable
-              onPress={handleSave}
-              disabled={!isValid || isSaving}
-              style={({ pressed }) => [
-                styles.saveButton,
-                {
-                  backgroundColor: isValid
-                    ? colors.textPrimary
-                    : colors.border,
-                  opacity: pressed && isValid ? 0.8 : 1,
-                },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.saveButtonText,
+              <Pressable
+                onPress={handleSave}
+                disabled={!isValid || isSaving}
+                style={({ pressed }) => [
+                  styles.saveButton,
                   {
-                    color: isValid ? colors.background : colors.textSecondary,
+                    backgroundColor: isValid
+                      ? colors.textPrimary
+                      : colors.border,
+                    opacity: pressed && isValid ? 0.8 : 1,
                   },
                 ]}
               >
-                {isSaving ? t('addEntry.saving') : t('addEntry.addEntry')}
-              </Text>
-            </Pressable>
-          </ScrollView>
-        </View>
+                <Text
+                  style={[
+                    styles.saveButtonText,
+                    {
+                      color: isValid ? colors.background : colors.textSecondary,
+                    },
+                  ]}
+                >
+                  {isSaving ? t('addEntry.saving') : t('addEntry.addEntry')}
+                </Text>
+              </Pressable>
+            </ScreenSection>
+          </AppScrollView>
+        </Screen>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
@@ -175,9 +179,6 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-  },
-  content: {
-    paddingHorizontal: spacing.lg,
   },
   title: {
     fontSize: 28,

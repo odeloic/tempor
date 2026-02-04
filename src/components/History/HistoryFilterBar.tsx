@@ -1,9 +1,10 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { spacing } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 import { type DateRange } from '@/hooks/useTimeEntries';
 import { ProjectFilterChip } from '@/components/History/ProjectFilterChip';
 import { DateRangeFilter } from '@/components/History/DateRangeFilter';
+import { AppScrollView } from '@/components/ui/AppScrollView';
 
 type HistoryFilterBarProps = {
   projects: Project[];
@@ -26,7 +27,7 @@ export function HistoryFilterBar({
 
   return (
     <View style={styles.container}>
-      <ScrollView
+      <AppScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
@@ -46,7 +47,7 @@ export function HistoryFilterBar({
         ))}
         <View style={styles.divider} />
         <DateRangeFilter value={dateRange} onChange={onDateRangeChange} />
-      </ScrollView>
+      </AppScrollView>
     </View>
   );
 }
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
   scrollContent: {
     gap: spacing.sm,
     paddingBottom: spacing.xs,
+    paddingHorizontal: spacing.lg,
   },
   divider: {
     width: 1,

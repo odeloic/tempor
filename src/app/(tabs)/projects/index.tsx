@@ -1,8 +1,11 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Ionicons } from '@expo/vector-icons';
+import { ScreenList } from '@/components/ui/ScreenList';
+import { Screen } from '@/components/ui/Screen';
+import { ScreenSection } from '@/components/ui/ScreenSection';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
 import { useProjects } from '@/hooks/useProjects';
@@ -16,28 +19,30 @@ export default function ProjectsScreen() {
   const { projects, isLoading } = useProjects();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <Screen>
       {/* Header */}
-      <View style={[styles.header, { paddingTop: insets.top + spacing.lg }]}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          {t('projects.title')}
-        </Text>
-        <Pressable
-          onPress={() => router.push('/project/new')}
-          style={({ pressed }) => [
-            styles.addButton,
-            {
-              backgroundColor: colors.textPrimary,
-              opacity: pressed ? 0.9 : 1,
-            },
-          ]}
-        >
-          <Ionicons name="add" size={24} color={colors.background} />
-        </Pressable>
-      </View>
+      <ScreenSection style={{ paddingTop: insets.top + spacing.lg }}>
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: colors.textPrimary }]}>
+            {t('projects.title')}
+          </Text>
+          <Pressable
+            onPress={() => router.push('/project/new')}
+            style={({ pressed }) => [
+              styles.addButton,
+              {
+                backgroundColor: colors.textPrimary,
+                opacity: pressed ? 0.9 : 1,
+              },
+            ]}
+          >
+            <Ionicons name="add" size={24} color={colors.background} />
+          </Pressable>
+        </View>
+      </ScreenSection>
 
       {/* Projects List */}
-      <FlatList
+      <ScreenList
         data={projects}
         keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.listContent}
@@ -61,19 +66,15 @@ export default function ProjectsScreen() {
         }
         ItemSeparatorComponent={() => <View style={styles.separator} />}
       />
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: spacing.lg,
     paddingBottom: spacing.xl,
   },
   title: {
@@ -88,7 +89,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   listContent: {
-    paddingHorizontal: spacing.lg,
     paddingBottom: 120,
   },
   separator: {
@@ -97,7 +97,6 @@ const styles = StyleSheet.create({
   emptyState: {
     alignItems: 'center',
     paddingTop: 48,
-    paddingHorizontal: spacing.lg,
   },
   emptyText: {
     fontSize: 16,

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   Pressable,
-  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -13,6 +12,7 @@ import { fonts, radii, spacing } from '@/theme/tokens';
 import { projectColors } from '@/constants/colors';
 import { ProjectColorPicker } from '@/components/Project/ProjectColorPicker';
 import type { Project } from '@/db/schema';
+import { AppScrollView } from '@/components/ui/AppScrollView';
 
 interface Props {
   project?: Project;
@@ -46,7 +46,7 @@ export function ProjectForm({
   };
 
   return (
-    <ScrollView
+    <AppScrollView
       style={[styles.container, { backgroundColor: colors.background }]}
       contentContainerStyle={styles.content}
       keyboardShouldPersistTaps="handled"
@@ -179,7 +179,7 @@ export function ProjectForm({
           </View>
         </View>
       )}
-    </ScrollView>
+    </AppScrollView>
   );
 }
 

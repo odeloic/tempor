@@ -12,11 +12,14 @@ import { formatDateLabel } from '@/lib/date';
 import { aggregateSessionsByProjectAndDate, type AggregatedEntry } from '@/lib/sessions';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
+import { AppScrollView } from '@/components/ui/AppScrollView';
+import { Screen } from '@/components/ui/Screen';
+import { ScreenSection } from '@/components/ui/ScreenSection';
 import { useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type GroupedEntries = {
@@ -94,62 +97,68 @@ export default function HistoryScreen() {
   );
 
   return (
-    <ScrollView
-      style={[styles.container, { backgroundColor: colors.background }]}
-      contentContainerStyle={[
-        styles.content,
-        { paddingTop: insets.top + spacing.xl, paddingBottom: 120 },
-      ]}
-    >
-      <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.textPrimary }]}>
-          {t('history.title')}
-        </Text>
-        {hasFilters && (
-          <Pressable
-            onPress={handleClearAllFilters}
-            style={({ pressed }) => [{ opacity: pressed ? 0.7 : 1 }]}
-          >
-            <Text style={[styles.clearText, { color: colors.textSecondary }]}>
-              {t('history.clearFilters')}
+    <Screen>
+      <AppScrollView
+        style={styles.container}
+        contentContainerStyle={[
+          styles.content,
+          { paddingTop: insets.top + spacing.xl, paddingBottom: 120 },
+        ]}
+      >
+        <ScreenSection>
+          <View style={styles.header}>
+            <Text style={[styles.title, { color: colors.textPrimary }]}>
+              {t('history.title')}
             </Text>
-          </Pressable>
-        )}
-      </View>
-
-      <HistoryFilterBar
-        projects={projects}
-        selectedProjectIds={selectedProjectIds}
-        onProjectToggle={handleProjectToggle}
-        onClearProjectFilter={handleClearProjectFilter}
-        dateRange={dateRange}
-        onDateRangeChange={setDateRange}
-      />
-
-      <TotalHoursCard totalSeconds={totalDuration} />
-
-      {entries.length === 0 ? (
-        <EmptyState hasFilters={hasFilters} />
-      ) : (
-        groupedEntries.map((group) => (
-          <View key={group.dateKey} style={styles.dateGroup}>
-            <Text style={[styles.dateLabel, { color: colors.textSecondary }]}>
-              {group.label}
-            </Text>
-            <View style={styles.entriesList}>
-              {group.entries.map((entry) => (
-                <AggregatedEntryCard
-                  key={`${entry.projectId}-${entry.dateKey}`}
-                  entry={entry}
-                  project={getProject(Number(entry.projectId))}
-                  onSessionPress={handleSessionPress}
-                />
-              ))}
-            </View>
+            {hasFilters && (
+              <Pressable
+                onPress={handleClearAllFilters}
+                style={({ pressed }) => [{ opacity: pressed ? 0.7 : 1 }]}
+              >
+                <Text style={[styles.clearText, { color: colors.textSecondary }]}>
+                  {t('history.clearFilters')}
+                </Text>
+              </Pressable>
+            )}
           </View>
-        ))
-      )}
-    </ScrollView>
+        </ScreenSection>
+
+        <HistoryFilterBar
+          projects={projects}
+          selectedProjectIds={selectedProjectIds}
+          onProjectToggle={handleProjectToggle}
+          onClearProjectFilter={handleClearProjectFilter}
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+        />
+
+        <ScreenSection>
+          <TotalHoursCard totalSeconds={totalDuration} />
+
+          {entries.length === 0 ? (
+            <EmptyState hasFilters={hasFilters} />
+          ) : (
+            groupedEntries.map((group) => (
+              <View key={group.dateKey} style={styles.dateGroup}>
+                <Text style={[styles.dateLabel, { color: colors.textSecondary }]}>
+                  {group.label}
+                </Text>
+                <View style={styles.entriesList}>
+                  {group.entries.map((entry) => (
+                    <AggregatedEntryCard
+                      key={`${entry.projectId}-${entry.dateKey}`}
+                      entry={entry}
+                      project={getProject(Number(entry.projectId))}
+                      onSessionPress={handleSessionPress}
+                    />
+                  ))}
+                </View>
+              </View>
+            ))
+          )}
+        </ScreenSection>
+      </AppScrollView>
+    </Screen>
   );
 }
 
@@ -158,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingHorizontal: spacing.lg,
+    paddingTop: 0,
   },
   header: {
     flexDirection: 'row',
