@@ -5,25 +5,24 @@ import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { hoursMinutesToSeconds } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
-import { AppScrollView } from '@/components/ui/AppScrollView';
 import { Screen } from '@/components/ui/Screen';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { ScreenSection } from '@/components/ui/ScreenSection';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Alert,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function EditEntryScreen() {
@@ -36,6 +35,7 @@ export default function EditEntryScreen() {
   const { projects } = useProjects();
   const { getEntry, update, remove, refresh } = useTimeEntries();
   const timerState = useAtomValue(timerStateAtom);
+  const tabBarHeight = useBottomTabBarHeight();
 
   const [entry, setEntry] = useState<Session | null>(null);
   const [projectId, setProjectId] = useState<string>('');
@@ -143,20 +143,16 @@ export default function EditEntryScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 0}
-    >
-      <Screen>
-        <AppScrollView
-          style={styles.container}
-          contentContainerStyle={[
-            styles.content,
-            { paddingTop: insets.top + spacing.md, paddingBottom: 120 },
-          ]}
-          keyboardShouldPersistTaps="handled"
-        >
+    <Screen>
+      <KeyboardAwareScrollView
+        style={styles.container}
+        contentContainerStyle={[
+          styles.content,
+          { paddingTop: insets.top + spacing.md, paddingBottom: 120 },
+        ]}
+        bottomOffset={tabBarHeight}
+        keyboardShouldPersistTaps="handled"
+      >
           <ScreenHeader
             title={t('editEntry.title')}
             onBack={() => router.back()}
@@ -450,9 +446,8 @@ export default function EditEntryScreen() {
         </View>
       )}
           </ScreenSection>
-        </AppScrollView>
-      </Screen>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
+    </Screen>
   );
 }
 

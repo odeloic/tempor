@@ -1,16 +1,14 @@
 import { useCallback, useState } from 'react';
 import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
   Pressable,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { startOfDay } from 'date-fns';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 
 import {
   DateSelector,
@@ -18,7 +16,6 @@ import {
   NoteInput,
   ProjectSelector,
 } from '@/components/AddEntry';
-import { AppScrollView } from '@/components/ui/AppScrollView';
 import { Screen } from '@/components/ui/Screen';
 import { ScreenSection } from '@/components/ui/ScreenSection';
 import { Toast } from '@/components/ui/Toast';
@@ -32,6 +29,7 @@ export default function AddEntryScreen() {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const tabBarHeight = useBottomTabBarHeight();
   const { projects } = useProjects();
   const { create } = useTimeEntries();
 
@@ -96,84 +94,74 @@ export default function AddEntryScreen() {
   const handleHideToast = useCallback(() => setToastVisible(false), []);
 
   return (
-    <KeyboardAvoidingView
-      style={styles.flex}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 0}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Screen style={styles.container}>
-          <Toast
-            message={toastMessage}
-            visible={toastVisible}
-            onHide={handleHideToast}
+    <Screen style={styles.container}>
+      <Toast
+        message={toastMessage}
+        visible={toastVisible}
+        onHide={handleHideToast}
+      />
+      <KeyboardAwareScrollView
+        style={styles.scrollView}
+        contentContainerStyle={{
+          paddingTop: insets.top + spacing.xl,
+          paddingBottom: 120,
+        }}
+        bottomOffset={tabBarHeight}
+        keyboardShouldPersistTaps="handled"
+      >
+        <ScreenSection>
+          <Text style={[styles.title, { color: colors.textPrimary }]}>
+            {t('addEntry.title')}
+          </Text>
+
+          <ProjectSelector
+            projects={projects}
+            selectedId={selectedProjectId}
+            onSelect={setSelectedProjectId}
           />
-          <AppScrollView
-            style={styles.scrollView}
-            contentContainerStyle={{
-              paddingTop: insets.top + spacing.xl,
-              paddingBottom: 120,
-            }}
-            keyboardShouldPersistTaps="handled"
+
+          <DateSelector value={selectedDate} onChange={setSelectedDate} />
+
+          <DurationInput
+            hours={hours}
+            minutes={minutes}
+            onHoursChange={setHours}
+            onMinutesChange={setMinutes}
+          />
+
+          <NoteInput value={note} onChange={setNote} />
+
+          <Pressable
+            onPress={handleSave}
+            disabled={!isValid || isSaving}
+            style={({ pressed }) => [
+              styles.saveButton,
+              {
+                backgroundColor: isValid
+                  ? colors.textPrimary
+                  : colors.border,
+                opacity: pressed && isValid ? 0.8 : 1,
+              },
+            ]}
           >
-            <ScreenSection>
-              <Text style={[styles.title, { color: colors.textPrimary }]}>
-                {t('addEntry.title')}
-              </Text>
-
-              <ProjectSelector
-                projects={projects}
-                selectedId={selectedProjectId}
-                onSelect={setSelectedProjectId}
-              />
-
-              <DateSelector value={selectedDate} onChange={setSelectedDate} />
-
-              <DurationInput
-                hours={hours}
-                minutes={minutes}
-                onHoursChange={setHours}
-                onMinutesChange={setMinutes}
-              />
-
-              <NoteInput value={note} onChange={setNote} />
-
-              <Pressable
-                onPress={handleSave}
-                disabled={!isValid || isSaving}
-                style={({ pressed }) => [
-                  styles.saveButton,
-                  {
-                    backgroundColor: isValid
-                      ? colors.textPrimary
-                      : colors.border,
-                    opacity: pressed && isValid ? 0.8 : 1,
-                  },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.saveButtonText,
-                    {
-                      color: isValid ? colors.background : colors.textSecondary,
-                    },
-                  ]}
-                >
-                  {isSaving ? t('addEntry.saving') : t('addEntry.addEntry')}
-                </Text>
-              </Pressable>
-            </ScreenSection>
-          </AppScrollView>
-        </Screen>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+            <Text
+              style={[
+                styles.saveButtonText,
+                {
+                  color: isValid ? colors.background : colors.textSecondary,
+                },
+              ]}
+            >
+              {isSaving ? t('addEntry.saving') : t('addEntry.addEntry')}
+            </Text>
+          </Pressable>
+        </ScreenSection>
+      </KeyboardAwareScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  flex: {
-    flex: 1,
-  },
   container: {
     flex: 1,
   },

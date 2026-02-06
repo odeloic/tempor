@@ -1,7 +1,6 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { KeyboardAvoidingView, Platform } from 'react-native';
 import { Screen } from '@/components/ui/Screen';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { spacing } from '@/theme/tokens';
@@ -20,25 +19,19 @@ export default function NewProjectModal() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? insets.top : 0}
-    >
-      <Screen>
-        {/* Header */}
-        <ScreenHeader
-          title={t('projectForm.newProject')}
-          onBack={() => router.back()}
-          style={{ paddingTop: insets.top + spacing.lg, paddingBottom: spacing.lg }}
-        />
+    <Screen>
+      {/* Header */}
+      <ScreenHeader
+        title={t('projectForm.newProject')}
+        onBack={() => router.back()}
+        style={{ paddingTop: insets.top + spacing.lg, paddingBottom: spacing.lg }}
+      />
 
-        {/* Form */}
-        <ProjectForm
-          onSave={handleSave}
-          onCancel={() => router.back()}
-        />
-      </Screen>
-    </KeyboardAvoidingView>
+      {/* Form */}
+      <ProjectForm
+        onSave={handleSave}
+        onCancel={() => router.back()}
+      />
+    </Screen>
   );
 }

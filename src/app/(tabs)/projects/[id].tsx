@@ -7,7 +7,7 @@ import { fonts, spacing } from "@/theme/tokens";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { KeyboardAvoidingView, Platform, StyleSheet, Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function EditProjectScreen() {
@@ -53,32 +53,26 @@ export default function EditProjectScreen() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? insets.top : 0}
-    >
-      <Screen>
-        {/* Header */}
-        <ScreenHeader
-          title={t("projectForm.editProject")}
-          onBack={() => router.back()}
-          style={{
-            paddingTop: insets.top + spacing.lg,
-            paddingBottom: spacing.lg,
-          }}
-        />
+    <Screen>
+      {/* Header */}
+      <ScreenHeader
+        title={t("projectForm.editProject")}
+        onBack={() => router.back()}
+        style={{
+          paddingTop: insets.top + spacing.lg,
+          paddingBottom: spacing.lg,
+        }}
+      />
 
-        {/* Form */}
-        <ProjectForm
-          project={project}
-          onSave={handleSave}
-          onDelete={handleDelete}
-          onCancel={() => router.back()}
-          hasTimeEntries={hasEntries}
-        />
-      </Screen>
-    </KeyboardAvoidingView>
+      {/* Form */}
+      <ProjectForm
+        project={project}
+        onSave={handleSave}
+        onDelete={handleDelete}
+        onCancel={() => router.back()}
+        hasTimeEntries={hasEntries}
+      />
+    </Screen>
   );
 }
 

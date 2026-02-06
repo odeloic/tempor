@@ -14,6 +14,7 @@ import { prepareMigrations } from '@/db/migrate';
 import migrations from '@/db/migrations/migrations';
 import { initializeTimer } from '@/lib/timer';
 import { ThemeProvider } from '@/theme/ThemeProvider';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
   DMSans_400Regular,
   DMSans_500Medium,
@@ -98,12 +99,14 @@ function RootLayoutNav() {
   return (
     <ThemeProvider>
       <JotaiProvider>
-        <Stack screenOptions={{
-          headerShown: false
-        }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
-        </Stack>
+        <KeyboardProvider>
+          <Stack screenOptions={{
+            headerShown: false
+          }}>
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
+          </Stack>
+        </KeyboardProvider>
       </JotaiProvider>
     </ThemeProvider>
   );
