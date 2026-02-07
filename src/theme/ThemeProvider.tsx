@@ -1,12 +1,13 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import { useColorScheme } from "react-native";
-import { colors, fonts, radii, spacing, type ThemeColor, type ThemeFont, type ThemeRadii, type ThemeSpacing } from "@/theme/tokens";
+import { colors, fonts, radii, spacing, statusColors, type ThemeColor, type ThemeFont, type ThemeRadii, type ThemeSpacing, type StatusColors } from "@/theme/tokens";
 
 type Theme = {
     colors: ThemeColor,
     fonts: ThemeFont,
     spacing: ThemeSpacing,
-    radii: ThemeRadii
+    radii: ThemeRadii,
+    statusColors: StatusColors
 }
 
 const ThemeContext = createContext<Theme | null>(null);
@@ -18,7 +19,8 @@ export const ThemeProvider = ({ children }: PropsWithChildren) => {
         colors: colorsScheme === 'dark' ? colors.dark : colors.light,
         fonts,
         spacing,
-        radii
+        radii,
+        statusColors
     };
 
     return (

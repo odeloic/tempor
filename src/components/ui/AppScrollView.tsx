@@ -11,6 +11,7 @@ export function AppScrollView({
 }: ScrollViewProps) {
   return (
     <RNScrollView
+      contentInsetAdjustmentBehavior="automatic"
       showsVerticalScrollIndicator={showsVerticalScrollIndicator}
       showsHorizontalScrollIndicator={showsHorizontalScrollIndicator}
       {...props}
