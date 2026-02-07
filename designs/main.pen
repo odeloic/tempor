@@ -5,11 +5,11 @@
       "type": "frame",
       "id": "bi8Au",
       "x": 0,
-      "y": 0,
+      "y": -11,
       "name": "Frame",
       "clip": true,
       "width": 2550,
-      "height": 3750,
+      "height": 4741,
       "fill": "#FFFFFF",
       "layout": "none"
     },
@@ -2303,1467 +2303,6 @@
       ]
     },
     {
-      "type": "frame",
-      "id": "wd8zG",
-      "x": 185,
-      "y": 1590,
-      "name": "Component/SessionItem/Default",
-      "reusable": true,
-      "width": 345,
-      "height": 52,
-      "fill": "#ffffffff",
-      "cornerRadius": 12,
-      "stroke": {
-        "align": "inside",
-        "thickness": 0.5,
-        "fill": "#e5e3deff"
-      },
-      "gap": 12,
-      "padding": [
-        0,
-        14
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "fDP9F",
-          "name": "Dot",
-          "width": 8,
-          "height": 8,
-          "fill": "#e63946ff",
-          "cornerRadius": 2
-        },
-        {
-          "type": "text",
-          "id": "fbVSH",
-          "name": "ProjectName",
-          "fill": "#1a1918ff",
-          "content": "Project Name",
-          "lineHeight": 1.4,
-          "fontFamily": "DM Sans",
-          "fontSize": 14,
-          "fontWeight": "500"
-        },
-        {
-          "type": "frame",
-          "id": "RSrNl",
-          "name": "Spacer",
-          "width": "fill_container",
-          "height": 1
-        },
-        {
-          "type": "text",
-          "id": "6UVrs",
-          "name": "Duration",
-          "fill": "#1a1918ff",
-          "content": "0h 00m",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 14,
-          "fontWeight": "600"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "p4WkQ",
-      "x": 550,
-      "y": 1590,
-      "name": "Component/SessionItem/Selected",
-      "reusable": true,
-      "width": 345,
-      "height": 52,
-      "fill": "#1a1918ff",
-      "cornerRadius": 12,
-      "gap": 12,
-      "padding": [
-        0,
-        14
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "skhd5",
-          "name": "Dot",
-          "width": 8,
-          "height": 8,
-          "fill": "#e63946ff",
-          "cornerRadius": 2
-        },
-        {
-          "type": "text",
-          "id": "iD3qQ",
-          "name": "ProjectName",
-          "fill": "#fafaf9ff",
-          "content": "Project Name",
-          "lineHeight": 1.4,
-          "fontFamily": "DM Sans",
-          "fontSize": 14,
-          "fontWeight": "500"
-        },
-        {
-          "type": "frame",
-          "id": "DqOnY",
-          "name": "Spacer",
-          "width": "fill_container",
-          "height": 1
-        },
-        {
-          "type": "text",
-          "id": "7GaNz",
-          "name": "Duration",
-          "fill": "#fafaf9ff",
-          "content": "0h 00m",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 14,
-          "fontWeight": "600"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "omR7l",
-      "x": 185,
-      "y": 1790,
-      "name": "Component/ProjectItem/Default",
-      "reusable": true,
-      "width": 345,
-      "height": 60,
-      "cornerRadius": 12,
-      "gap": 14,
-      "padding": [
-        0,
-        16
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "yJ45k",
-          "name": "Dot",
-          "width": 10,
-          "height": 10,
-          "fill": "#e63946ff",
-          "cornerRadius": 3
-        },
-        {
-          "type": "frame",
-          "id": "qO1rx",
-          "name": "Info",
-          "width": "fill_container",
-          "layout": "vertical",
-          "gap": 2,
-          "children": [
-            {
-              "type": "text",
-              "id": "gNrgf",
-              "name": "ProjectName",
-              "fill": "#1a1918ff",
-              "content": "Project Name",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 15,
-              "fontWeight": "500"
-            },
-            {
-              "type": "text",
-              "id": "9nnXu",
-              "name": "Subtitle",
-              "fill": "#94918aff",
-              "content": "Client Name",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 13,
-              "fontWeight": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "FRSdN",
-      "x": 550,
-      "y": 1790,
-      "name": "Component/ProjectItem/Selected",
-      "reusable": true,
-      "width": 345,
-      "height": 60,
-      "fill": "#1a1918ff",
-      "cornerRadius": 12,
-      "gap": 14,
-      "padding": [
-        0,
-        16
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "kKVm4",
-          "name": "Dot",
-          "width": 10,
-          "height": 10,
-          "fill": "#e63946ff",
-          "cornerRadius": 3
-        },
-        {
-          "type": "frame",
-          "id": "t4AeD",
-          "name": "Info",
-          "width": "fill_container",
-          "layout": "vertical",
-          "gap": 2,
-          "children": [
-            {
-              "type": "text",
-              "id": "5GPUF",
-              "name": "ProjectName",
-              "fill": "#fafaf9ff",
-              "content": "Project Name",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 15,
-              "fontWeight": "600"
-            },
-            {
-              "type": "text",
-              "id": "LPgGd",
-              "name": "Subtitle",
-              "fill": "#94918aff",
-              "content": "Client Name",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 13,
-              "fontWeight": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "LFF7b",
-      "x": 915,
-      "y": 1790,
-      "name": "Component/WorkHistoryItem/Default",
-      "reusable": true,
-      "width": 345,
-      "height": 77,
-      "fill": "#ffffffff",
-      "cornerRadius": 12,
-      "stroke": {
-        "align": "inside",
-        "thickness": 0.5,
-        "fill": "#e5e3deff"
-      },
-      "gap": 14,
-      "padding": [
-        0,
-        18
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "VPp4x",
-          "name": "ColorBar",
-          "width": 4,
-          "height": 36,
-          "fill": "#e63946ff",
-          "cornerRadius": 2
-        },
-        {
-          "type": "frame",
-          "id": "ngqR3",
-          "name": "Info",
-          "width": "fill_container",
-          "layout": "vertical",
-          "gap": 2,
-          "children": [
-            {
-              "type": "text",
-              "id": "xBDd8",
-              "name": "Title",
-              "fill": "#1a1918ff",
-              "content": "Project Name",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 15,
-              "fontWeight": "500"
-            },
-            {
-              "type": "text",
-              "id": "o3z7b",
-              "name": "Subtitle",
-              "fill": "#94918aff",
-              "content": "Task description",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 13,
-              "fontWeight": "normal"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "id": "OaWDK",
-          "name": "Duration",
-          "fill": "#1a1918ff",
-          "content": "0h 00m",
-          "lineHeight": 1.5,
-          "fontFamily": "Space Mono",
-          "fontSize": 14,
-          "fontWeight": "normal"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "9TtQa",
-      "x": 185,
-      "y": 1340,
-      "name": "Component/Button/Primary",
-      "reusable": true,
-      "width": 345,
-      "height": 56,
-      "fill": "#1a1918ff",
-      "cornerRadius": 12,
-      "gap": 8,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "3term",
-          "name": "Icon",
-          "enabled": false,
-          "width": 18,
-          "height": 18,
-          "iconFontName": "circle",
-          "iconFontFamily": "lucide",
-          "fill": "#fafaf9ff"
-        },
-        {
-          "type": "text",
-          "id": "46f02",
-          "name": "Label",
-          "fill": "#fafaf9ff",
-          "content": "Button",
-          "lineHeight": 1.5,
-          "textAlign": "center",
-          "fontFamily": "DM Sans",
-          "fontSize": 15,
-          "fontWeight": "600"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "2ShoT",
-      "x": 550,
-      "y": 1340,
-      "name": "Component/Button/Secondary",
-      "reusable": true,
-      "width": 345,
-      "height": 56,
-      "cornerRadius": 12,
-      "stroke": {
-        "align": "inside",
-        "thickness": 1.5,
-        "fill": "#e5e3deff"
-      },
-      "gap": 8,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "75iAx",
-          "name": "Icon",
-          "enabled": false,
-          "width": 18,
-          "height": 18,
-          "iconFontName": "circle",
-          "iconFontFamily": "lucide",
-          "fill": "#1a1918ff"
-        },
-        {
-          "type": "text",
-          "id": "eOveh",
-          "name": "Label",
-          "fill": "#1a1918ff",
-          "content": "Button",
-          "lineHeight": 1.5,
-          "textAlign": "center",
-          "fontFamily": "DM Sans",
-          "fontSize": 15,
-          "fontWeight": "600"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "WxKUj",
-      "x": 915,
-      "y": 1340,
-      "name": "Component/Button/Disabled",
-      "reusable": true,
-      "width": 345,
-      "height": 56,
-      "fill": "#e5e3deff",
-      "cornerRadius": 12,
-      "gap": 8,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "n0byp",
-          "name": "Icon",
-          "enabled": false,
-          "width": 18,
-          "height": 18,
-          "iconFontName": "circle",
-          "iconFontFamily": "lucide",
-          "fill": "#94918aff"
-        },
-        {
-          "type": "text",
-          "id": "hUEnP",
-          "name": "Label",
-          "fill": "#94918aff",
-          "content": "Button",
-          "lineHeight": 1.5,
-          "textAlign": "center",
-          "fontFamily": "DM Sans",
-          "fontSize": 15,
-          "fontWeight": "600"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "wZhRL",
-      "x": 1280,
-      "y": 1340,
-      "name": "Component/Button/Destructive",
-      "reusable": true,
-      "width": 345,
-      "height": 56,
-      "cornerRadius": 12,
-      "stroke": {
-        "align": "inside",
-        "thickness": 1,
-        "fill": "#e5e3deff"
-      },
-      "gap": 8,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "dhWE6",
-          "name": "Icon",
-          "enabled": false,
-          "width": 18,
-          "height": 18,
-          "iconFontName": "trash-2",
-          "iconFontFamily": "lucide",
-          "fill": "#e63946ff"
-        },
-        {
-          "type": "text",
-          "id": "3VPqV",
-          "name": "Label",
-          "fill": "#e63946ff",
-          "content": "Delete",
-          "lineHeight": 1.5,
-          "textAlign": "center",
-          "fontFamily": "DM Sans",
-          "fontSize": 15,
-          "fontWeight": "600"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "M72Zy",
-      "x": 1645,
-      "y": 1340,
-      "name": "Component/Button/Icon",
-      "reusable": true,
-      "width": 40,
-      "height": 40,
-      "fill": "#1a1918ff",
-      "cornerRadius": 10,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "RTi2A",
-          "name": "Icon",
-          "width": 20,
-          "height": 20,
-          "iconFontName": "plus",
-          "iconFontFamily": "lucide",
-          "fill": "#fafaf9ff"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "TRxmj",
-      "x": 185,
-      "y": 1990,
-      "name": "Component/ProjectFilterItem/Default",
-      "reusable": true,
-      "height": 40,
-      "cornerRadius": 20,
-      "stroke": {
-        "align": "inside",
-        "thickness": 0.5,
-        "fill": "#e5e3deff"
-      },
-      "gap": 8,
-      "padding": [
-        0,
-        16
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "uC1Tx",
-          "name": "Dot",
-          "width": 8,
-          "height": 8,
-          "fill": "#e63946ff",
-          "cornerRadius": 2
-        },
-        {
-          "type": "text",
-          "id": "8QDL4",
-          "name": "Label",
-          "fill": "#1a1918ff",
-          "content": "Project Name",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 13,
-          "fontWeight": "500"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "tLEds",
-      "x": 337,
-      "y": 1990,
-      "name": "Component/ProjectFilterItem/Selected",
-      "reusable": true,
-      "height": 40,
-      "fill": "#1a1918ff",
-      "cornerRadius": 20,
-      "padding": [
-        0,
-        16
-      ],
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "text",
-          "id": "2CwXG",
-          "name": "Label",
-          "fill": "#fafaf9ff",
-          "content": "All Projects",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 13,
-          "fontWeight": "500"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "8Qrun",
-      "x": 459,
-      "y": 1990,
-      "name": "Component/ProjectsFilter",
-      "reusable": true,
-      "height": 40,
-      "gap": 8,
-      "alignItems": "center",
-      "children": [
-        {
-          "id": "3R8to",
-          "type": "ref",
-          "ref": "tLEds",
-          "name": "allProjects",
-          "descendants": {
-            "2CwXG": {
-              "content": "All Projects"
-            }
-          }
-        },
-        {
-          "id": "SFp5n",
-          "type": "ref",
-          "ref": "TRxmj",
-          "name": "project1",
-          "descendants": {
-            "uC1Tx": {
-              "fill": "#e63946ff"
-            },
-            "8QDL4": {
-              "content": "Project 1"
-            }
-          }
-        },
-        {
-          "id": "DkuzA",
-          "type": "ref",
-          "ref": "TRxmj",
-          "name": "project2",
-          "descendants": {
-            "uC1Tx": {
-              "fill": "#2a9d8fff"
-            },
-            "8QDL4": {
-              "content": "Project 2"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "sxRlp",
-      "x": 185,
-      "y": 2190,
-      "name": "Component/BottomTabBarNav/Item/Default",
-      "reusable": true,
-      "width": 80,
-      "height": 59,
-      "cornerRadius": 12,
-      "layout": "vertical",
-      "gap": 4,
-      "padding": [
-        10,
-        0
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "84SWP",
-          "name": "Icon",
-          "width": 20,
-          "height": 20,
-          "iconFontName": "circle",
-          "iconFontFamily": "lucide",
-          "fill": "#94918aff"
-        },
-        {
-          "type": "text",
-          "id": "81u3c",
-          "name": "Label",
-          "fill": "#94918aff",
-          "content": "Tab",
-          "lineHeight": 1.5,
-          "textAlign": "center",
-          "fontFamily": "DM Sans",
-          "fontSize": 10,
-          "fontWeight": "500"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "nOwie",
-      "x": 285,
-      "y": 2190,
-      "name": "Component/BottomTabBarNav/Item/Selected",
-      "reusable": true,
-      "width": 80,
-      "height": 59,
-      "fill": "#1a1918ff",
-      "cornerRadius": 12,
-      "layout": "vertical",
-      "gap": 4,
-      "padding": [
-        10,
-        0
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "ktJsx",
-          "name": "Icon",
-          "width": 20,
-          "height": 20,
-          "iconFontName": "circle",
-          "iconFontFamily": "lucide",
-          "fill": "#fafaf9ff"
-        },
-        {
-          "type": "text",
-          "id": "mPsm9",
-          "name": "Label",
-          "fill": "#fafaf9ff",
-          "content": "Tab",
-          "lineHeight": 1.5,
-          "textAlign": "center",
-          "fontFamily": "DM Sans",
-          "fontSize": 10,
-          "fontWeight": "500"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "HjNBU",
-      "x": 385,
-      "y": 2190,
-      "name": "Component/BottomTabBarNav",
-      "reusable": true,
-      "width": 345,
-      "height": 72,
-      "fill": "#ffffffff",
-      "cornerRadius": 16,
-      "stroke": {
-        "align": "inside",
-        "thickness": 0.5,
-        "fill": "#e5e3deff"
-      },
-      "gap": 4,
-      "padding": [
-        6,
-        6,
-        0,
-        6
-      ],
-      "children": [
-        {
-          "id": "EEedZ",
-          "type": "ref",
-          "ref": "nOwie",
-          "width": "fill_container",
-          "name": "timerTab",
-          "descendants": {
-            "ktJsx": {
-              "iconFontName": "timer"
-            },
-            "mPsm9": {
-              "content": "Timer"
-            }
-          }
-        },
-        {
-          "id": "1j5it",
-          "type": "ref",
-          "ref": "sxRlp",
-          "width": "fill_container",
-          "name": "projectsTab",
-          "descendants": {
-            "84SWP": {
-              "iconFontName": "folder"
-            },
-            "81u3c": {
-              "content": "Projects"
-            }
-          }
-        },
-        {
-          "id": "q3m1k",
-          "type": "ref",
-          "ref": "sxRlp",
-          "width": "fill_container",
-          "name": "addTab",
-          "descendants": {
-            "84SWP": {
-              "iconFontName": "plus"
-            },
-            "81u3c": {
-              "content": "Add"
-            }
-          }
-        },
-        {
-          "id": "JTcVl",
-          "type": "ref",
-          "ref": "sxRlp",
-          "width": "fill_container",
-          "name": "historyTab",
-          "descendants": {
-            "84SWP": {
-              "iconFontName": "history"
-            },
-            "81u3c": {
-              "content": "History"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "IU7o7",
-      "x": 1705,
-      "y": 1340,
-      "name": "Component/Button/Ghost",
-      "reusable": true,
-      "width": 32,
-      "height": 32,
-      "fill": "#f5f5f4ff",
-      "cornerRadius": 16,
-      "justifyContent": "center",
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "icon_font",
-          "id": "ocqjL",
-          "name": "Icon",
-          "width": 16,
-          "height": 16,
-          "iconFontName": "x",
-          "iconFontFamily": "lucide",
-          "fill": "#94918aff"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "WwGpB",
-      "x": 185,
-      "y": 3140,
-      "name": "Component/ProjectBottomSheet",
-      "reusable": true,
-      "width": 393,
-      "height": 500,
-      "fill": "#ffffffff",
-      "cornerRadius": [
-        24,
-        24,
-        0,
-        0
-      ],
-      "layout": "vertical",
-      "padding": [
-        8,
-        0,
-        0,
-        0
-      ],
-      "children": [
-        {
-          "type": "frame",
-          "id": "GcGa5",
-          "name": "HandleContainer",
-          "width": "fill_container",
-          "height": 24,
-          "justifyContent": "center",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "frame",
-              "id": "TaKsB",
-              "name": "HandleBar",
-              "width": 40,
-              "height": 5,
-              "fill": "#e5e3deff",
-              "cornerRadius": 3
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "94zKN",
-          "name": "Header",
-          "width": "fill_container",
-          "height": 48,
-          "padding": [
-            0,
-            24
-          ],
-          "justifyContent": "space_between",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "text",
-              "id": "Y8ANr",
-              "name": "Title",
-              "fill": "#1a1918ff",
-              "content": "Select Project",
-              "lineHeight": 1.4,
-              "fontFamily": "DM Sans",
-              "fontSize": 17,
-              "fontWeight": "600"
-            },
-            {
-              "id": "7bQeF",
-              "type": "ref",
-              "ref": "IU7o7",
-              "name": "dismissBtn"
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "m2hsP",
-          "name": "ProjectList",
-          "width": "fill_container",
-          "height": "fill_container",
-          "layout": "vertical",
-          "gap": 4,
-          "padding": [
-            8,
-            24,
-            24,
-            24
-          ],
-          "children": [
-            {
-              "id": "YRf0w",
-              "type": "ref",
-              "ref": "FRSdN",
-              "width": "fill_container",
-              "name": "p1",
-              "descendants": {
-                "kKVm4": {
-                  "fill": "#e63946ff"
-                },
-                "5GPUF": {
-                  "content": "Brand Redesign"
-                },
-                "LPgGd": {
-                  "enabled": false
-                }
-              }
-            },
-            {
-              "id": "qd2wm",
-              "type": "ref",
-              "ref": "omR7l",
-              "width": "fill_container",
-              "name": "p2",
-              "descendants": {
-                "yJ45k": {
-                  "fill": "#2a9d8fff"
-                },
-                "gNrgf": {
-                  "content": "API Integration"
-                },
-                "9nnXu": {
-                  "enabled": false
-                }
-              }
-            },
-            {
-              "id": "Y3t5f",
-              "type": "ref",
-              "ref": "omR7l",
-              "width": "fill_container",
-              "name": "p3",
-              "descendants": {
-                "yJ45k": {
-                  "fill": "#3a86ffff"
-                },
-                "gNrgf": {
-                  "content": "Mobile App Audit"
-                },
-                "9nnXu": {
-                  "enabled": false
-                }
-              }
-            },
-            {
-              "id": "dRBx9",
-              "type": "ref",
-              "ref": "omR7l",
-              "width": "fill_container",
-              "name": "p4",
-              "descendants": {
-                "yJ45k": {
-                  "fill": "#f4a261ff"
-                },
-                "gNrgf": {
-                  "content": "E-commerce Platform"
-                },
-                "9nnXu": {
-                  "enabled": false
-                }
-              }
-            },
-            {
-              "type": "frame",
-              "id": "nWScX",
-              "name": "NewProjectButton",
-              "width": "fill_container",
-              "height": 52,
-              "fill": "#f5f5f4ff",
-              "cornerRadius": 12,
-              "gap": 12,
-              "padding": [
-                0,
-                16
-              ],
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "PrawG",
-                  "name": "Icon",
-                  "width": 18,
-                  "height": 18,
-                  "iconFontName": "plus",
-                  "iconFontFamily": "lucide",
-                  "fill": "#94918aff"
-                },
-                {
-                  "type": "text",
-                  "id": "7SAKv",
-                  "name": "Label",
-                  "fill": "#94918aff",
-                  "content": "Create New Project",
-                  "lineHeight": 1.5,
-                  "fontFamily": "DM Sans",
-                  "fontSize": 15,
-                  "fontWeight": "500"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "ZUba8",
-      "x": 185,
-      "y": 2490,
-      "name": "Component/TimerDisplay/Idle",
-      "reusable": true,
-      "width": 345,
-      "padding": [
-        24,
-        0
-      ],
-      "children": [
-        {
-          "type": "text",
-          "id": "uVD58",
-          "name": "Time",
-          "fill": "#1a1918ff",
-          "content": "00:00:00",
-          "lineHeight": 1,
-          "fontFamily": "Space Mono",
-          "fontSize": 64,
-          "fontWeight": "700",
-          "letterSpacing": -1.28
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "hkAKM",
-      "x": 550,
-      "y": 2490,
-      "name": "Component/TimerDisplay/Empty",
-      "reusable": true,
-      "width": 345,
-      "padding": [
-        24,
-        0
-      ],
-      "children": [
-        {
-          "type": "text",
-          "id": "0UOGT",
-          "name": "Time",
-          "fill": "#c4c1bbff",
-          "content": "00:00:00",
-          "lineHeight": 1,
-          "fontFamily": "Space Mono",
-          "fontSize": 64,
-          "fontWeight": "700",
-          "letterSpacing": -1.28
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "fOF80",
-      "x": 915,
-      "y": 2490,
-      "name": "Component/TimerDisplay/Running",
-      "reusable": true,
-      "width": 345,
-      "padding": [
-        24,
-        0
-      ],
-      "children": [
-        {
-          "type": "text",
-          "id": "b0Wdy",
-          "name": "Time",
-          "fill": "#1a1918ff",
-          "content": "01:24:37",
-          "lineHeight": 1,
-          "fontFamily": "Space Mono",
-          "fontSize": 64,
-          "fontWeight": "700",
-          "letterSpacing": -1.28
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "mNFH4",
-      "x": 1280,
-      "y": 2490,
-      "name": "Component/TimerDisplay/Active",
-      "reusable": true,
-      "width": 345,
-      "layout": "vertical",
-      "gap": 24,
-      "children": [
-        {
-          "type": "frame",
-          "id": "M5XxD",
-          "name": "Display",
-          "width": "fill_container",
-          "padding": [
-            24,
-            0
-          ],
-          "children": [
-            {
-              "type": "text",
-              "id": "RuWjn",
-              "name": "Time",
-              "fill": "#1a1918ff",
-              "content": "01:24:37",
-              "lineHeight": 1,
-              "fontFamily": "Space Mono",
-              "fontSize": 64,
-              "fontWeight": "700",
-              "letterSpacing": -1.28
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "1EyZp",
-          "name": "Controls",
-          "width": "fill_container",
-          "gap": 12,
-          "children": [
-            {
-              "id": "WC6EY",
-              "type": "ref",
-              "ref": "wZhRL",
-              "width": "fill_container",
-              "cornerRadius": 14,
-              "name": "discardBtn",
-              "descendants": {
-                "dhWE6": {
-                  "enabled": true,
-                  "iconFontName": "trash-2"
-                },
-                "3VPqV": {
-                  "content": "Discard"
-                }
-              }
-            },
-            {
-              "id": "A1mFb",
-              "type": "ref",
-              "ref": "9TtQa",
-              "width": "fill_container",
-              "cornerRadius": 14,
-              "name": "stopBtn",
-              "descendants": {
-                "3term": {
-                  "enabled": true,
-                  "iconFontName": "square"
-                },
-                "46f02": {
-                  "content": "Stop"
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "jfyXh",
-      "x": 185,
-      "y": 2840,
-      "name": "Component/Input/SelectButton",
-      "reusable": true,
-      "width": 345,
-      "height": 56,
-      "fill": "#ffffffff",
-      "cornerRadius": 12,
-      "stroke": {
-        "align": "inside",
-        "thickness": 1,
-        "fill": "#e5e3deff"
-      },
-      "gap": 12,
-      "padding": [
-        0,
-        16
-      ],
-      "alignItems": "center",
-      "children": [
-        {
-          "type": "frame",
-          "id": "WrdPh",
-          "name": "Dot",
-          "width": 10,
-          "height": 10,
-          "fill": "#e63946ff",
-          "cornerRadius": 3
-        },
-        {
-          "type": "text",
-          "id": "YTCre",
-          "name": "ProjectName",
-          "fill": "#1a1918ff",
-          "content": "Project Name",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 15,
-          "fontWeight": "500"
-        },
-        {
-          "type": "frame",
-          "id": "JVHZv",
-          "name": "Spacer",
-          "width": "fill_container",
-          "height": 1
-        },
-        {
-          "type": "icon_font",
-          "id": "TGa3k",
-          "name": "Chevron",
-          "width": 18,
-          "height": 18,
-          "iconFontName": "chevron-down",
-          "iconFontFamily": "lucide",
-          "fill": "#94918aff"
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "emqYj",
-      "x": 550,
-      "y": 2840,
-      "name": "Component/Input/Select",
-      "reusable": true,
-      "width": 345,
-      "layout": "vertical",
-      "gap": 10,
-      "children": [
-        {
-          "type": "text",
-          "id": "iYzlL",
-          "name": "Label",
-          "fill": "#94918aff",
-          "content": "LABEL",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 11,
-          "fontWeight": "500",
-          "letterSpacing": 1.65
-        },
-        {
-          "type": "frame",
-          "id": "U3Ity",
-          "name": "Button",
-          "width": "fill_container",
-          "height": 56,
-          "fill": "#ffffffff",
-          "cornerRadius": 12,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#e5e3deff"
-          },
-          "gap": 12,
-          "padding": [
-            0,
-            16
-          ],
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "icon_font",
-              "id": "WZVo5",
-              "name": "Icon",
-              "width": 18,
-              "height": 18,
-              "iconFontName": "calendar",
-              "iconFontFamily": "lucide",
-              "fill": "#94918aff"
-            },
-            {
-              "type": "text",
-              "id": "Z5dnT",
-              "name": "Value",
-              "fill": "#1a1918ff",
-              "content": "Select option",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 15,
-              "fontWeight": "500"
-            },
-            {
-              "type": "frame",
-              "id": "ILuPR",
-              "name": "Spacer",
-              "width": "fill_container",
-              "height": 1
-            },
-            {
-              "type": "icon_font",
-              "id": "yomWa",
-              "name": "Chevron",
-              "width": 18,
-              "height": 18,
-              "iconFontName": "chevron-down",
-              "iconFontFamily": "lucide",
-              "fill": "#94918aff"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "O1LuK",
-      "x": 915,
-      "y": 2840,
-      "name": "Component/Input/Text",
-      "reusable": true,
-      "width": 160,
-      "layout": "vertical",
-      "gap": 10,
-      "children": [
-        {
-          "type": "text",
-          "id": "frp2m",
-          "name": "Label",
-          "fill": "#94918aff",
-          "content": "LABEL",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 11,
-          "fontWeight": "500",
-          "letterSpacing": 1.65
-        },
-        {
-          "type": "frame",
-          "id": "dW3Bz",
-          "name": "Input",
-          "width": "fill_container",
-          "height": 56,
-          "fill": "#ffffffff",
-          "cornerRadius": 12,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#e5e3deff"
-          },
-          "padding": [
-            0,
-            16
-          ],
-          "justifyContent": "center",
-          "alignItems": "center",
-          "children": [
-            {
-              "type": "text",
-              "id": "1ddhu",
-              "name": "Value",
-              "fill": "#1a1918ff",
-              "content": "9:00 AM",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 17,
-              "fontWeight": "600"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "frame",
-      "id": "MIeah",
-      "x": 1095,
-      "y": 2840,
-      "name": "Component/Input/TextArea",
-      "reusable": true,
-      "width": 345,
-      "layout": "vertical",
-      "gap": 10,
-      "children": [
-        {
-          "type": "text",
-          "id": "SK7NO",
-          "name": "Label",
-          "fill": "#94918aff",
-          "content": "LABEL (OPTIONAL)",
-          "lineHeight": 1.5,
-          "fontFamily": "DM Sans",
-          "fontSize": 11,
-          "fontWeight": "500",
-          "letterSpacing": 1.65
-        },
-        {
-          "type": "frame",
-          "id": "AHHXq",
-          "name": "Input",
-          "width": "fill_container",
-          "height": 100,
-          "fill": "#ffffffff",
-          "cornerRadius": 12,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#e5e3deff"
-          },
-          "layout": "vertical",
-          "padding": 16,
-          "children": [
-            {
-              "type": "text",
-              "id": "sLrWX",
-              "name": "Value",
-              "fill": "#94918aff",
-              "content": "Add notes about this time entry...",
-              "lineHeight": 1.5,
-              "fontFamily": "DM Sans",
-              "fontSize": 15,
-              "fontWeight": "normal"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "type": "text",
       "id": "LFWQn",
       "x": 185,
@@ -3870,6 +2409,2753 @@
       "fontFamily": "DM Sans",
       "fontSize": 18,
       "fontWeight": "600"
+    },
+    {
+      "type": "frame",
+      "id": "LInPC",
+      "x": 2800,
+      "y": 0,
+      "name": "Components",
+      "width": 2000,
+      "height": 4000,
+      "fill": "#F5F5F5",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "f6cCa",
+          "x": 50,
+          "y": 80,
+          "name": "Buttons",
+          "width": 900,
+          "height": 280,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "9TtQa",
+              "x": 20,
+              "y": 60,
+              "name": "Component/Button/Primary",
+              "reusable": true,
+              "width": 345,
+              "height": 56,
+              "fill": "#1a1918ff",
+              "cornerRadius": 12,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "3term",
+                  "name": "Icon",
+                  "enabled": false,
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "circle",
+                  "iconFontFamily": "lucide",
+                  "fill": "#fafaf9ff"
+                },
+                {
+                  "type": "text",
+                  "id": "46f02",
+                  "name": "Label",
+                  "fill": "#fafaf9ff",
+                  "content": "Button",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "2ShoT",
+              "x": 20,
+              "y": 136,
+              "name": "Component/Button/Secondary",
+              "reusable": true,
+              "width": 345,
+              "height": 56,
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1.5,
+                "fill": "#e5e3deff"
+              },
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "75iAx",
+                  "name": "Icon",
+                  "enabled": false,
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "circle",
+                  "iconFontFamily": "lucide",
+                  "fill": "#1a1918ff"
+                },
+                {
+                  "type": "text",
+                  "id": "eOveh",
+                  "name": "Label",
+                  "fill": "#1a1918ff",
+                  "content": "Button",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "WxKUj",
+              "x": 385,
+              "y": 60,
+              "name": "Component/Button/Disabled",
+              "reusable": true,
+              "width": 345,
+              "height": 56,
+              "fill": "#e5e3deff",
+              "cornerRadius": 12,
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "n0byp",
+                  "name": "Icon",
+                  "enabled": false,
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "circle",
+                  "iconFontFamily": "lucide",
+                  "fill": "#94918aff"
+                },
+                {
+                  "type": "text",
+                  "id": "hUEnP",
+                  "name": "Label",
+                  "fill": "#94918aff",
+                  "content": "Button",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "wZhRL",
+              "x": 385,
+              "y": 136,
+              "name": "Component/Button/Destructive",
+              "reusable": true,
+              "width": 345,
+              "height": 56,
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#e5e3deff"
+              },
+              "gap": 8,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "dhWE6",
+                  "name": "Icon",
+                  "enabled": false,
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "trash-2",
+                  "iconFontFamily": "lucide",
+                  "fill": "#e63946ff"
+                },
+                {
+                  "type": "text",
+                  "id": "3VPqV",
+                  "name": "Label",
+                  "fill": "#e63946ff",
+                  "content": "Delete",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "M72Zy",
+              "x": 750,
+              "y": 60,
+              "name": "Component/Button/Icon",
+              "reusable": true,
+              "width": 40,
+              "height": 40,
+              "fill": "#1a1918ff",
+              "cornerRadius": 10,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "RTi2A",
+                  "name": "Icon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "plus",
+                  "iconFontFamily": "lucide",
+                  "fill": "#fafaf9ff"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "IU7o7",
+              "x": 750,
+              "y": 120,
+              "name": "Component/Button/Ghost",
+              "reusable": true,
+              "width": 32,
+              "height": 32,
+              "fill": "#f5f5f4ff",
+              "cornerRadius": 16,
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ocqjL",
+                  "name": "Icon",
+                  "width": 16,
+                  "height": 16,
+                  "iconFontName": "x",
+                  "iconFontFamily": "lucide",
+                  "fill": "#94918aff"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "1jJdS",
+          "x": 50,
+          "y": 320,
+          "name": "Session Items",
+          "width": 800,
+          "height": 200,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "wd8zG",
+              "x": 20,
+              "y": 60,
+              "name": "Component/SessionItem/Default",
+              "reusable": true,
+              "width": 345,
+              "height": 52,
+              "fill": "#ffffffff",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "gap": 12,
+              "padding": [
+                0,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "fDP9F",
+                  "name": "Dot",
+                  "width": 8,
+                  "height": 8,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 2
+                },
+                {
+                  "type": "text",
+                  "id": "fbVSH",
+                  "name": "ProjectName",
+                  "fill": "#1a1918ff",
+                  "content": "Project Name",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "RSrNl",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "text",
+                  "id": "6UVrs",
+                  "name": "Duration",
+                  "fill": "#1a1918ff",
+                  "content": "0h 00m",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "p4WkQ",
+              "x": 20,
+              "y": 132,
+              "name": "Component/SessionItem/Selected",
+              "reusable": true,
+              "width": 345,
+              "height": 52,
+              "fill": "#1a1918ff",
+              "cornerRadius": 12,
+              "gap": 12,
+              "padding": [
+                0,
+                14
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "skhd5",
+                  "name": "Dot",
+                  "width": 8,
+                  "height": 8,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 2
+                },
+                {
+                  "type": "text",
+                  "id": "iD3qQ",
+                  "name": "ProjectName",
+                  "fill": "#fafaf9ff",
+                  "content": "Project Name",
+                  "lineHeight": 1.4,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "DqOnY",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "text",
+                  "id": "7GaNz",
+                  "name": "Duration",
+                  "fill": "#fafaf9ff",
+                  "content": "0h 00m",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 14,
+                  "fontWeight": "600"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "1sJbT",
+          "x": 50,
+          "y": 560,
+          "name": "Project Items",
+          "width": 800,
+          "height": 300,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "omR7l",
+              "x": 20,
+              "y": 60,
+              "name": "Component/ProjectItem/Default",
+              "reusable": true,
+              "width": 345,
+              "height": 60,
+              "cornerRadius": 12,
+              "gap": 14,
+              "padding": [
+                0,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "yJ45k",
+                  "name": "Dot",
+                  "width": 10,
+                  "height": 10,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 3
+                },
+                {
+                  "type": "frame",
+                  "id": "qO1rx",
+                  "name": "Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "gNrgf",
+                      "name": "ProjectName",
+                      "fill": "#1a1918ff",
+                      "content": "Project Name",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "9nnXu",
+                      "name": "Subtitle",
+                      "fill": "#94918aff",
+                      "content": "Client Name",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "FRSdN",
+              "x": 20,
+              "y": 140,
+              "name": "Component/ProjectItem/Selected",
+              "reusable": true,
+              "width": 345,
+              "height": 60,
+              "fill": "#1a1918ff",
+              "cornerRadius": 12,
+              "gap": 14,
+              "padding": [
+                0,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "kKVm4",
+                  "name": "Dot",
+                  "width": 10,
+                  "height": 10,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 3
+                },
+                {
+                  "type": "frame",
+                  "id": "t4AeD",
+                  "name": "Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "5GPUF",
+                      "name": "ProjectName",
+                      "fill": "#fafaf9ff",
+                      "content": "Project Name",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "LPgGd",
+                      "name": "Subtitle",
+                      "fill": "#94918aff",
+                      "content": "Client Name",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "LFF7b",
+              "x": 20,
+              "y": 220,
+              "name": "Component/WorkHistoryItem/Default",
+              "reusable": true,
+              "width": 345,
+              "height": 77,
+              "fill": "#ffffffff",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "gap": 14,
+              "padding": [
+                0,
+                18
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VPp4x",
+                  "name": "ColorBar",
+                  "width": 4,
+                  "height": 36,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 2
+                },
+                {
+                  "type": "frame",
+                  "id": "ngqR3",
+                  "name": "Info",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 2,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "xBDd8",
+                      "name": "Title",
+                      "fill": "#1a1918ff",
+                      "content": "Project Name",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "text",
+                      "id": "o3z7b",
+                      "name": "Subtitle",
+                      "fill": "#94918aff",
+                      "content": "Task description",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "OaWDK",
+                  "name": "Duration",
+                  "fill": "#1a1918ff",
+                  "content": "0h 00m",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Space Mono",
+                  "fontSize": 14,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "3bLg2",
+          "x": 50,
+          "y": 900,
+          "name": "Filters",
+          "width": 800,
+          "height": 200,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "TRxmj",
+              "x": 20,
+              "y": 60,
+              "name": "Component/ProjectFilterItem/Default",
+              "reusable": true,
+              "height": 40,
+              "cornerRadius": 20,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "gap": 8,
+              "padding": [
+                0,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "uC1Tx",
+                  "name": "Dot",
+                  "width": 8,
+                  "height": 8,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 2
+                },
+                {
+                  "type": "text",
+                  "id": "8QDL4",
+                  "name": "Label",
+                  "fill": "#1a1918ff",
+                  "content": "Project Name",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "tLEds",
+              "x": 172,
+              "y": 60,
+              "name": "Component/ProjectFilterItem/Selected",
+              "reusable": true,
+              "height": 40,
+              "fill": "#1a1918ff",
+              "cornerRadius": 20,
+              "padding": [
+                0,
+                16
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "2CwXG",
+                  "name": "Label",
+                  "fill": "#fafaf9ff",
+                  "content": "All Projects",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "8Qrun",
+              "x": 294,
+              "y": 60,
+              "name": "Component/ProjectsFilter",
+              "reusable": true,
+              "height": 40,
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "3R8to",
+                  "type": "ref",
+                  "ref": "tLEds",
+                  "name": "allProjects",
+                  "descendants": {
+                    "2CwXG": {
+                      "content": "All Projects"
+                    }
+                  }
+                },
+                {
+                  "id": "SFp5n",
+                  "type": "ref",
+                  "ref": "TRxmj",
+                  "name": "project1",
+                  "descendants": {
+                    "uC1Tx": {
+                      "fill": "#e63946ff"
+                    },
+                    "8QDL4": {
+                      "content": "Project 1"
+                    }
+                  }
+                },
+                {
+                  "id": "DkuzA",
+                  "type": "ref",
+                  "ref": "TRxmj",
+                  "name": "project2",
+                  "descendants": {
+                    "uC1Tx": {
+                      "fill": "#2a9d8fff"
+                    },
+                    "8QDL4": {
+                      "content": "Project 2"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "W7DgW",
+          "x": 50,
+          "y": 1140,
+          "name": "Navigation",
+          "width": 800,
+          "height": 200,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "sxRlp",
+              "x": 20,
+              "y": 60,
+              "name": "Component/BottomTabBarNav/Item/Default",
+              "reusable": true,
+              "width": 80,
+              "height": 59,
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 4,
+              "padding": [
+                10,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "84SWP",
+                  "name": "Icon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "circle",
+                  "iconFontFamily": "lucide",
+                  "fill": "#94918aff"
+                },
+                {
+                  "type": "text",
+                  "id": "81u3c",
+                  "name": "Label",
+                  "fill": "#94918aff",
+                  "content": "Tab",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 10,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nOwie",
+              "x": 120,
+              "y": 60,
+              "name": "Component/BottomTabBarNav/Item/Selected",
+              "reusable": true,
+              "width": 80,
+              "height": 59,
+              "fill": "#1a1918ff",
+              "cornerRadius": 12,
+              "layout": "vertical",
+              "gap": 4,
+              "padding": [
+                10,
+                0
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "ktJsx",
+                  "name": "Icon",
+                  "width": 20,
+                  "height": 20,
+                  "iconFontName": "circle",
+                  "iconFontFamily": "lucide",
+                  "fill": "#fafaf9ff"
+                },
+                {
+                  "type": "text",
+                  "id": "mPsm9",
+                  "name": "Label",
+                  "fill": "#fafaf9ff",
+                  "content": "Tab",
+                  "lineHeight": 1.5,
+                  "textAlign": "center",
+                  "fontFamily": "DM Sans",
+                  "fontSize": 10,
+                  "fontWeight": "500"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "HjNBU",
+              "x": 220,
+              "y": 60,
+              "name": "Component/BottomTabBarNav",
+              "reusable": true,
+              "width": 345,
+              "height": 72,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "gap": 4,
+              "padding": [
+                6,
+                6,
+                0,
+                6
+              ],
+              "children": [
+                {
+                  "id": "EEedZ",
+                  "type": "ref",
+                  "ref": "nOwie",
+                  "width": "fill_container",
+                  "name": "timerTab",
+                  "descendants": {
+                    "ktJsx": {
+                      "iconFontName": "timer"
+                    },
+                    "mPsm9": {
+                      "content": "Timer"
+                    }
+                  }
+                },
+                {
+                  "id": "1j5it",
+                  "type": "ref",
+                  "ref": "sxRlp",
+                  "width": "fill_container",
+                  "name": "projectsTab",
+                  "descendants": {
+                    "84SWP": {
+                      "iconFontName": "folder"
+                    },
+                    "81u3c": {
+                      "content": "Projects"
+                    }
+                  }
+                },
+                {
+                  "id": "q3m1k",
+                  "type": "ref",
+                  "ref": "sxRlp",
+                  "width": "fill_container",
+                  "name": "addTab",
+                  "descendants": {
+                    "84SWP": {
+                      "iconFontName": "plus"
+                    },
+                    "81u3c": {
+                      "content": "Add"
+                    }
+                  }
+                },
+                {
+                  "id": "JTcVl",
+                  "type": "ref",
+                  "ref": "sxRlp",
+                  "width": "fill_container",
+                  "name": "historyTab",
+                  "descendants": {
+                    "84SWP": {
+                      "iconFontName": "history"
+                    },
+                    "81u3c": {
+                      "content": "History"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "pDTm8",
+          "x": 50,
+          "y": 1380,
+          "name": "Timer Displays",
+          "width": 900,
+          "height": 400,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "ZUba8",
+              "x": 20,
+              "y": 60,
+              "name": "Component/TimerDisplay/Idle",
+              "reusable": true,
+              "width": 345,
+              "padding": [
+                24,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "uVD58",
+                  "name": "Time",
+                  "fill": "#1a1918ff",
+                  "content": "00:00:00",
+                  "lineHeight": 1,
+                  "fontFamily": "Space Mono",
+                  "fontSize": 64,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.28
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "hkAKM",
+              "x": 385,
+              "y": 60,
+              "name": "Component/TimerDisplay/Empty",
+              "reusable": true,
+              "width": 345,
+              "padding": [
+                24,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "0UOGT",
+                  "name": "Time",
+                  "fill": "#c4c1bbff",
+                  "content": "00:00:00",
+                  "lineHeight": 1,
+                  "fontFamily": "Space Mono",
+                  "fontSize": 64,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.28
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "fOF80",
+              "x": 20,
+              "y": 192,
+              "name": "Component/TimerDisplay/Running",
+              "reusable": true,
+              "width": 345,
+              "padding": [
+                24,
+                0
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "b0Wdy",
+                  "name": "Time",
+                  "fill": "#1a1918ff",
+                  "content": "01:24:37",
+                  "lineHeight": 1,
+                  "fontFamily": "Space Mono",
+                  "fontSize": 64,
+                  "fontWeight": "700",
+                  "letterSpacing": -1.28
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mNFH4",
+              "x": 385,
+              "y": 192,
+              "name": "Component/TimerDisplay/Active",
+              "reusable": true,
+              "width": 345,
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "M5XxD",
+                  "name": "Display",
+                  "width": "fill_container",
+                  "padding": [
+                    24,
+                    0
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "RuWjn",
+                      "name": "Time",
+                      "fill": "#1a1918ff",
+                      "content": "01:24:37",
+                      "lineHeight": 1,
+                      "fontFamily": "Space Mono",
+                      "fontSize": 64,
+                      "fontWeight": "700",
+                      "letterSpacing": -1.28
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "1EyZp",
+                  "name": "Controls",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "WC6EY",
+                      "type": "ref",
+                      "ref": "wZhRL",
+                      "width": "fill_container",
+                      "cornerRadius": 14,
+                      "name": "discardBtn",
+                      "descendants": {
+                        "dhWE6": {
+                          "enabled": true,
+                          "iconFontName": "trash-2"
+                        },
+                        "3VPqV": {
+                          "content": "Discard"
+                        }
+                      }
+                    },
+                    {
+                      "id": "A1mFb",
+                      "type": "ref",
+                      "ref": "9TtQa",
+                      "width": "fill_container",
+                      "cornerRadius": 14,
+                      "name": "stopBtn",
+                      "descendants": {
+                        "3term": {
+                          "enabled": true,
+                          "iconFontName": "square"
+                        },
+                        "46f02": {
+                          "content": "Stop"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "6dH7g",
+          "x": 50,
+          "y": 1820,
+          "name": "Inputs",
+          "width": 800,
+          "height": 300,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "jfyXh",
+              "x": 20,
+              "y": 60,
+              "name": "Component/Input/SelectButton",
+              "reusable": true,
+              "width": 345,
+              "height": 56,
+              "fill": "#ffffffff",
+              "cornerRadius": 12,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#e5e3deff"
+              },
+              "gap": 12,
+              "padding": [
+                0,
+                16
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "WrdPh",
+                  "name": "Dot",
+                  "width": 10,
+                  "height": 10,
+                  "fill": "#e63946ff",
+                  "cornerRadius": 3
+                },
+                {
+                  "type": "text",
+                  "id": "YTCre",
+                  "name": "ProjectName",
+                  "fill": "#1a1918ff",
+                  "content": "Project Name",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 15,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "frame",
+                  "id": "JVHZv",
+                  "name": "Spacer",
+                  "width": "fill_container",
+                  "height": 1
+                },
+                {
+                  "type": "icon_font",
+                  "id": "TGa3k",
+                  "name": "Chevron",
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "chevron-down",
+                  "iconFontFamily": "lucide",
+                  "fill": "#94918aff"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "emqYj",
+              "x": 385,
+              "y": 60,
+              "name": "Component/Input/Select",
+              "reusable": true,
+              "width": 345,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "iYzlL",
+                  "name": "Label",
+                  "fill": "#94918aff",
+                  "content": "LABEL",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.65
+                },
+                {
+                  "type": "frame",
+                  "id": "U3Ity",
+                  "name": "Button",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "#ffffffff",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#e5e3deff"
+                  },
+                  "gap": 12,
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "WZVo5",
+                      "name": "Icon",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "calendar",
+                      "iconFontFamily": "lucide",
+                      "fill": "#94918aff"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Z5dnT",
+                      "name": "Value",
+                      "fill": "#1a1918ff",
+                      "content": "Select option",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "ILuPR",
+                      "name": "Spacer",
+                      "width": "fill_container",
+                      "height": 1
+                    },
+                    {
+                      "type": "icon_font",
+                      "id": "yomWa",
+                      "name": "Chevron",
+                      "width": 18,
+                      "height": 18,
+                      "iconFontName": "chevron-down",
+                      "iconFontFamily": "lucide",
+                      "fill": "#94918aff"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "O1LuK",
+              "x": 20,
+              "y": 136,
+              "name": "Component/Input/Text",
+              "reusable": true,
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "frp2m",
+                  "name": "Label",
+                  "fill": "#94918aff",
+                  "content": "LABEL",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.65
+                },
+                {
+                  "type": "frame",
+                  "id": "dW3Bz",
+                  "name": "Input",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "#ffffffff",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#e5e3deff"
+                  },
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "1ddhu",
+                      "name": "Value",
+                      "fill": "#1a1918ff",
+                      "content": "9:00 AM",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 17,
+                      "fontWeight": "600"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "MIeah",
+              "x": 200,
+              "y": 136,
+              "name": "Component/Input/TextArea",
+              "reusable": true,
+              "width": 345,
+              "layout": "vertical",
+              "gap": 10,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "SK7NO",
+                  "name": "Label",
+                  "fill": "#94918aff",
+                  "content": "LABEL (OPTIONAL)",
+                  "lineHeight": 1.5,
+                  "fontFamily": "DM Sans",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.65
+                },
+                {
+                  "type": "frame",
+                  "id": "AHHXq",
+                  "name": "Input",
+                  "width": "fill_container",
+                  "height": 100,
+                  "fill": "#ffffffff",
+                  "cornerRadius": 12,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#e5e3deff"
+                  },
+                  "layout": "vertical",
+                  "padding": 16,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "sLrWX",
+                      "name": "Value",
+                      "fill": "#94918aff",
+                      "content": "Add notes about this time entry...",
+                      "lineHeight": 1.5,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 15,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "CkTTR",
+          "x": 50,
+          "y": 2160,
+          "name": "Bottom Sheets",
+          "width": 450,
+          "height": 600,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "WwGpB",
+              "x": 20,
+              "y": 60,
+              "name": "Component/ProjectBottomSheet",
+              "reusable": true,
+              "width": 393,
+              "height": 500,
+              "fill": "#ffffffff",
+              "cornerRadius": [
+                24,
+                24,
+                0,
+                0
+              ],
+              "layout": "vertical",
+              "padding": [
+                8,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "GcGa5",
+                  "name": "HandleContainer",
+                  "width": "fill_container",
+                  "height": 24,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "TaKsB",
+                      "name": "HandleBar",
+                      "width": 40,
+                      "height": 5,
+                      "fill": "#e5e3deff",
+                      "cornerRadius": 3
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "94zKN",
+                  "name": "Header",
+                  "width": "fill_container",
+                  "height": 48,
+                  "padding": [
+                    0,
+                    24
+                  ],
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Y8ANr",
+                      "name": "Title",
+                      "fill": "#1a1918ff",
+                      "content": "Select Project",
+                      "lineHeight": 1.4,
+                      "fontFamily": "DM Sans",
+                      "fontSize": 17,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "id": "7bQeF",
+                      "type": "ref",
+                      "ref": "IU7o7",
+                      "name": "dismissBtn"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "m2hsP",
+                  "name": "ProjectList",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    24,
+                    24,
+                    24
+                  ],
+                  "children": [
+                    {
+                      "id": "YRf0w",
+                      "type": "ref",
+                      "ref": "FRSdN",
+                      "width": "fill_container",
+                      "name": "p1",
+                      "descendants": {
+                        "kKVm4": {
+                          "fill": "#e63946ff"
+                        },
+                        "5GPUF": {
+                          "content": "Brand Redesign"
+                        },
+                        "LPgGd": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "qd2wm",
+                      "type": "ref",
+                      "ref": "omR7l",
+                      "width": "fill_container",
+                      "name": "p2",
+                      "descendants": {
+                        "yJ45k": {
+                          "fill": "#2a9d8fff"
+                        },
+                        "gNrgf": {
+                          "content": "API Integration"
+                        },
+                        "9nnXu": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "Y3t5f",
+                      "type": "ref",
+                      "ref": "omR7l",
+                      "width": "fill_container",
+                      "name": "p3",
+                      "descendants": {
+                        "yJ45k": {
+                          "fill": "#3a86ffff"
+                        },
+                        "gNrgf": {
+                          "content": "Mobile App Audit"
+                        },
+                        "9nnXu": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "id": "dRBx9",
+                      "type": "ref",
+                      "ref": "omR7l",
+                      "width": "fill_container",
+                      "name": "p4",
+                      "descendants": {
+                        "yJ45k": {
+                          "fill": "#f4a261ff"
+                        },
+                        "gNrgf": {
+                          "content": "E-commerce Platform"
+                        },
+                        "9nnXu": {
+                          "enabled": false
+                        }
+                      }
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nWScX",
+                      "name": "NewProjectButton",
+                      "width": "fill_container",
+                      "height": 52,
+                      "fill": "#f5f5f4ff",
+                      "cornerRadius": 12,
+                      "gap": 12,
+                      "padding": [
+                        0,
+                        16
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon_font",
+                          "id": "PrawG",
+                          "name": "Icon",
+                          "width": 18,
+                          "height": 18,
+                          "iconFontName": "plus",
+                          "iconFontFamily": "lucide",
+                          "fill": "#94918aff"
+                        },
+                        {
+                          "type": "text",
+                          "id": "7SAKv",
+                          "name": "Label",
+                          "fill": "#94918aff",
+                          "content": "Create New Project",
+                          "lineHeight": 1.5,
+                          "fontFamily": "DM Sans",
+                          "fontSize": 15,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "ch9U1",
+          "x": 50,
+          "y": 40,
+          "name": "groupLabel1",
+          "content": "Buttons",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "La07F",
+          "x": 50,
+          "y": 280,
+          "name": "groupLabel2",
+          "content": "Session Items",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "0eIU5",
+          "x": 50,
+          "y": 520,
+          "name": "groupLabel3",
+          "content": "Project Items",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "pO0OQ",
+          "x": 50,
+          "y": 860,
+          "name": "groupLabel4",
+          "content": "Filters",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "EFDZD",
+          "x": 50,
+          "y": 1100,
+          "name": "groupLabel5",
+          "content": "Navigation",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "KaStj",
+          "x": 50,
+          "y": 1340,
+          "name": "groupLabel6",
+          "content": "Timer Displays",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "r0Twd",
+          "x": 50,
+          "y": 1780,
+          "name": "groupLabel7",
+          "content": "Inputs",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "UfabH",
+          "x": 50,
+          "y": 2120,
+          "name": "groupLabel8",
+          "content": "Bottom Sheets",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "vhTpw",
+          "x": 50,
+          "y": 2760,
+          "name": "screensLabel",
+          "content": "Screens",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "zPUCe",
+          "x": 550,
+          "y": 2760,
+          "name": "statsLabel",
+          "content": "Stats",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "Qk87g",
+          "x": 550,
+          "y": 2800,
+          "name": "Stats",
+          "width": 400,
+          "height": 150,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "uxzzv",
+              "x": 20,
+              "y": 30,
+              "name": "Component/StatsCard",
+              "reusable": true,
+              "width": 345,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "C2pv2",
+                  "name": "statsHeader",
+                  "fill": "#94918aff",
+                  "content": "TODAY",
+                  "fontFamily": "Inter",
+                  "fontSize": 11,
+                  "fontWeight": "500",
+                  "letterSpacing": 1.65
+                },
+                {
+                  "type": "frame",
+                  "id": "25YIu",
+                  "name": "statsRow",
+                  "width": "fill_container",
+                  "gap": 16,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "zdf3B",
+                      "name": "stat1",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "Varr3",
+                          "name": "stat1Val",
+                          "fill": "#1a1918ff",
+                          "content": "3h 24m",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "fRxSQ",
+                          "name": "stat1Label",
+                          "fill": "#94918aff",
+                          "content": "Total Time",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "y8jTe",
+                      "name": "stat2",
+                      "width": "fill_container",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "cJAwi",
+                          "name": "stat2Val",
+                          "fill": "#1a1918ff",
+                          "content": "5",
+                          "fontFamily": "Inter",
+                          "fontSize": 24,
+                          "fontWeight": "700"
+                        },
+                        {
+                          "type": "text",
+                          "id": "ESXLf",
+                          "name": "stat2Label",
+                          "fill": "#94918aff",
+                          "content": "Sessions",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "500"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "wWSQq",
+          "x": 1000,
+          "y": 40,
+          "name": "timerCardsLabel",
+          "content": "Timer Cards",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "AAYVo",
+          "x": 1000,
+          "y": 80,
+          "name": "Timer Cards",
+          "width": 800,
+          "height": 700,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "hc4IZ",
+              "x": 20,
+              "y": 20,
+              "name": "Component/TimerCard/Idle",
+              "reusable": true,
+              "width": 345,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "woOdd",
+                  "name": "cardHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "rmGhF",
+                      "name": "statusLabel",
+                      "fill": "#94918aff",
+                      "content": "IDLE",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "500",
+                      "letterSpacing": 1.65
+                    },
+                    {
+                      "id": "42YLc",
+                      "type": "ref",
+                      "ref": "IU7o7",
+                      "name": "idleMoreBtn",
+                      "descendants": {
+                        "ocqjL": {
+                          "iconFontName": "more-horizontal"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "0OSzm",
+                  "type": "ref",
+                  "ref": "ZUba8",
+                  "name": "timerDisplay",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "hkiGg",
+                  "type": "ref",
+                  "ref": "jfyXh",
+                  "name": "projSelector",
+                  "width": "fill_container",
+                  "descendants": {
+                    "YTCre": {
+                      "content": "Select Project"
+                    }
+                  }
+                },
+                {
+                  "type": "frame",
+                  "id": "r5AfP",
+                  "name": "actionButtons",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "CF79o",
+                      "type": "ref",
+                      "ref": "9TtQa",
+                      "name": "startBtn",
+                      "width": "fill_container",
+                      "descendants": {
+                        "3term": {
+                          "enabled": true,
+                          "iconFontName": "play"
+                        },
+                        "46f02": {
+                          "content": "Start"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "RI8JC",
+              "x": 385,
+              "y": 20,
+              "name": "Component/TimerCard/Running",
+              "reusable": true,
+              "width": 345,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nTSnp",
+                  "name": "cardHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Pbcrc",
+                      "name": "statusLabel",
+                      "fill": "#2a9d8fff",
+                      "content": "TRACKING",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "500",
+                      "letterSpacing": 1.65
+                    },
+                    {
+                      "id": "BeoJN",
+                      "type": "ref",
+                      "ref": "IU7o7",
+                      "name": "runMoreBtn",
+                      "descendants": {
+                        "ocqjL": {
+                          "iconFontName": "more-horizontal"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "G1qDY",
+                  "type": "ref",
+                  "ref": "fOF80",
+                  "name": "timerDisplay",
+                  "width": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "SEeTC",
+                  "name": "projInfo",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "LGj7S",
+                      "name": "projDot",
+                      "width": 10,
+                      "height": 10,
+                      "fill": "#e63946ff",
+                      "cornerRadius": 5
+                    },
+                    {
+                      "type": "text",
+                      "id": "KmgQ6",
+                      "name": "projName",
+                      "fill": "#1a1918ff",
+                      "content": "Project Name",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hKHFC",
+                  "name": "actionButtons",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "r5mzg",
+                      "type": "ref",
+                      "ref": "wZhRL",
+                      "name": "stopBtn",
+                      "width": "fill_container",
+                      "descendants": {
+                        "dhWE6": {
+                          "enabled": true,
+                          "iconFontName": "square"
+                        },
+                        "3VPqV": {
+                          "content": "Stop"
+                        }
+                      }
+                    },
+                    {
+                      "id": "LpcK0",
+                      "type": "ref",
+                      "ref": "2ShoT",
+                      "name": "pauseBtn",
+                      "width": "fill_container",
+                      "descendants": {
+                        "75iAx": {
+                          "enabled": true,
+                          "iconFontName": "pause"
+                        },
+                        "eOveh": {
+                          "content": "Pause"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "DBtMr",
+              "x": 20,
+              "y": 340,
+              "name": "Component/TimerCard/Paused",
+              "reusable": true,
+              "width": 345,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lkraH",
+                  "name": "cardHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "j7v5V",
+                      "name": "statusLabel",
+                      "fill": "#f59e0bff",
+                      "content": "PAUSED",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "500",
+                      "letterSpacing": 1.65
+                    },
+                    {
+                      "id": "ubGM2",
+                      "type": "ref",
+                      "ref": "IU7o7",
+                      "name": "pauseMoreBtn",
+                      "descendants": {
+                        "ocqjL": {
+                          "iconFontName": "more-horizontal"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "B2qvn",
+                  "type": "ref",
+                  "ref": "fOF80",
+                  "name": "timerDisplay",
+                  "width": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "TX05y",
+                  "name": "projInfo",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "XbbNr",
+                      "name": "projDot",
+                      "width": 10,
+                      "height": 10,
+                      "fill": "#e63946ff",
+                      "cornerRadius": 5
+                    },
+                    {
+                      "type": "text",
+                      "id": "dGy2R",
+                      "name": "projName",
+                      "fill": "#1a1918ff",
+                      "content": "Project Name",
+                      "fontFamily": "Inter",
+                      "fontSize": 15,
+                      "fontWeight": "500"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "QQVnX",
+                  "name": "actionButtons",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "id": "egEme",
+                      "type": "ref",
+                      "ref": "wZhRL",
+                      "name": "stopBtn",
+                      "width": "fill_container",
+                      "descendants": {
+                        "dhWE6": {
+                          "enabled": true,
+                          "iconFontName": "square"
+                        },
+                        "3VPqV": {
+                          "content": "Stop"
+                        }
+                      }
+                    },
+                    {
+                      "id": "FtrjK",
+                      "type": "ref",
+                      "ref": "2ShoT",
+                      "name": "resumeBtn",
+                      "width": "fill_container",
+                      "descendants": {
+                        "75iAx": {
+                          "enabled": true,
+                          "iconFontName": "play"
+                        },
+                        "eOveh": {
+                          "content": "Resume"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "gEnEw",
+              "x": 385,
+              "y": 340,
+              "name": "Component/TimerCard/Empty",
+              "reusable": true,
+              "width": 345,
+              "height": 320,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "layout": "vertical",
+              "gap": 20,
+              "padding": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "VKD0z",
+                  "name": "cardHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "yOX0n",
+                      "name": "statusLabel",
+                      "fill": "#94918aff",
+                      "content": "READY",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "500",
+                      "letterSpacing": 1.65
+                    },
+                    {
+                      "id": "VuZNQ",
+                      "type": "ref",
+                      "ref": "IU7o7",
+                      "name": "emptyMoreBtn",
+                      "descendants": {
+                        "ocqjL": {
+                          "iconFontName": "more-horizontal"
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "id": "FJjGx",
+                  "type": "ref",
+                  "ref": "hkAKM",
+                  "name": "timerDisplay",
+                  "width": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "Y8WEj",
+                  "name": "emptyContent",
+                  "width": "fill_container",
+                  "height": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": [
+                    24,
+                    0
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "1EfiO",
+                      "name": "emptyText",
+                      "layout": "vertical",
+                      "gap": 4,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "9WPaD",
+                          "name": "emptyTitle",
+                          "fill": "#1a1918ff",
+                          "content": "No Projects Yet",
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 16,
+                          "fontWeight": "600"
+                        },
+                        {
+                          "type": "text",
+                          "id": "1CxGV",
+                          "name": "emptySubtitle",
+                          "fill": "#94918aff",
+                          "content": "Create your first project to start tracking time",
+                          "textAlign": "center",
+                          "fontFamily": "Inter",
+                          "fontSize": 13,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    },
+                    {
+                      "id": "i08uk",
+                      "type": "ref",
+                      "ref": "M72Zy",
+                      "name": "addBtn",
+                      "descendants": {
+                        "RTi2A": {
+                          "iconFontName": "plus"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "7Cvks",
+          "x": 1000,
+          "y": 820,
+          "name": "cardsLabel",
+          "content": "Cards",
+          "fontFamily": "Inter",
+          "fontSize": 20,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "UdCKw",
+          "x": 1000,
+          "y": 860,
+          "name": "Cards",
+          "width": 800,
+          "height": 200,
+          "fill": "#FFFFFF",
+          "cornerRadius": 8,
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "UEDUz",
+              "x": 30,
+              "y": 30,
+              "name": "Component/ProjectsCard",
+              "reusable": true,
+              "width": 345,
+              "fill": "#ffffffff",
+              "cornerRadius": 16,
+              "stroke": {
+                "align": "inside",
+                "thickness": 0.5,
+                "fill": "#e5e3deff"
+              },
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "KhCXt",
+                  "name": "cardHeader",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "FUKMk",
+                      "name": "cardLabel",
+                      "fill": "#94918aff",
+                      "content": "RECENT SESSIONS",
+                      "fontFamily": "Inter",
+                      "fontSize": 11,
+                      "fontWeight": "500",
+                      "letterSpacing": 1.65
+                    },
+                    {
+                      "type": "text",
+                      "id": "d3Yjp",
+                      "name": "viewBtn",
+                      "fill": "#1a1918ff",
+                      "content": "View All",
+                      "fontFamily": "Inter",
+                      "fontSize": 13,
+                      "fontWeight": "600"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "tmRZA",
+                  "name": "cardList",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "id": "2rTkz",
+                      "type": "ref",
+                      "ref": "omR7l",
+                      "name": "item1",
+                      "width": "fill_container"
+                    },
+                    {
+                      "id": "JIrQ7",
+                      "type": "ref",
+                      "ref": "omR7l",
+                      "name": "item2",
+                      "width": "fill_container"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "1sz8N",
+      "x": 0,
+      "y": 1300,
+      "name": "Timer",
+      "width": 2550,
+      "height": 1020,
+      "fill": "#E8E8E8",
+      "layout": "none",
+      "children": [
+        {
+          "type": "text",
+          "id": "8XH4X",
+          "x": 50,
+          "y": 30,
+          "name": "label",
+          "fill": "#1a1918ff",
+          "content": "Timer Screens",
+          "fontFamily": "Inter",
+          "fontSize": 28,
+          "fontWeight": "700"
+        },
+        {
+          "type": "text",
+          "id": "2Gy8s",
+          "x": 50,
+          "y": 90,
+          "name": "label1",
+          "fill": "#94918aff",
+          "content": "Idle",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "9d80t",
+          "x": 493,
+          "y": 90,
+          "name": "label2",
+          "fill": "#94918aff",
+          "content": "Running",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "DH9XW",
+          "x": 936,
+          "y": 90,
+          "name": "label3",
+          "fill": "#94918aff",
+          "content": "Paused",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "vwXCR",
+          "x": 1379,
+          "y": 90,
+          "name": "label4",
+          "fill": "#94918aff",
+          "content": "Empty",
+          "fontFamily": "Inter",
+          "fontSize": 14,
+          "fontWeight": "600"
+        },
+        {
+          "type": "frame",
+          "id": "lKeOD",
+          "x": 50,
+          "y": 120,
+          "name": "Timer V3 - Idle",
+          "clip": true,
+          "width": 393,
+          "height": 852,
+          "fill": "#fafaf9ff",
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "LRxnG",
+              "x": 0,
+              "y": 0,
+              "name": "Content",
+              "width": 393,
+              "height": 736,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                32,
+                24,
+                24,
+                24
+              ],
+              "children": [
+                {
+                  "id": "6noaP",
+                  "type": "ref",
+                  "ref": "hc4IZ",
+                  "name": "timerCard",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "pVfk8",
+                  "type": "ref",
+                  "ref": "uxzzv",
+                  "width": "fill_container",
+                  "name": "stats1"
+                },
+                {
+                  "id": "J4TxR",
+                  "type": "ref",
+                  "ref": "UEDUz",
+                  "name": "projectsCard",
+                  "width": "fill_container",
+                  "descendants": {
+                    "FUKMk": {
+                      "content": "RECENT PROJECTS"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "9ZJAY",
+              "type": "ref",
+              "ref": "HjNBU",
+              "x": 0,
+              "y": 736,
+              "width": 393,
+              "name": "bottomNav3"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "sdr0h",
+          "x": 493,
+          "y": 120,
+          "name": "Timer V3 - Running",
+          "clip": true,
+          "width": 393,
+          "height": 852,
+          "fill": "#fafaf9ff",
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "5YBHP",
+              "x": 0,
+              "y": 0,
+              "name": "Content",
+              "width": 393,
+              "height": 736,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                32,
+                24,
+                24,
+                24
+              ],
+              "children": [
+                {
+                  "id": "qLSSr",
+                  "type": "ref",
+                  "ref": "RI8JC",
+                  "name": "timerCard",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "4NUPD",
+                  "type": "ref",
+                  "ref": "uxzzv",
+                  "width": "fill_container",
+                  "name": "stats2"
+                },
+                {
+                  "id": "ka3zF",
+                  "type": "ref",
+                  "ref": "UEDUz",
+                  "name": "projectsCard",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            {
+              "id": "kXt9J",
+              "type": "ref",
+              "ref": "HjNBU",
+              "x": 0,
+              "y": 736,
+              "width": 393,
+              "name": "bottomNav3"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "h9wrI",
+          "x": 936,
+          "y": 120,
+          "name": "Timer V3 - Paused",
+          "clip": true,
+          "width": 393,
+          "height": 852,
+          "fill": "#fafaf9ff",
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "cvvts",
+              "x": 0,
+              "y": 0,
+              "name": "Content",
+              "width": 393,
+              "height": 736,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                32,
+                24,
+                24,
+                24
+              ],
+              "children": [
+                {
+                  "id": "VnMNM",
+                  "type": "ref",
+                  "ref": "DBtMr",
+                  "name": "timerCard",
+                  "width": "fill_container"
+                },
+                {
+                  "id": "UO4iF",
+                  "type": "ref",
+                  "ref": "uxzzv",
+                  "width": "fill_container",
+                  "name": "stats3"
+                },
+                {
+                  "id": "8H76z",
+                  "type": "ref",
+                  "ref": "UEDUz",
+                  "name": "projectsCard",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            {
+              "id": "v59Ya",
+              "type": "ref",
+              "ref": "HjNBU",
+              "x": 0,
+              "y": 736,
+              "width": 393,
+              "name": "bottomNav3"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "OlrYz",
+          "x": 1379,
+          "y": 120,
+          "name": "Timer V3 - Empty",
+          "clip": true,
+          "width": 393,
+          "height": 852,
+          "fill": "#fafaf9ff",
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "VZ9xD",
+              "x": 0,
+              "y": 0,
+              "name": "Content",
+              "width": 393,
+              "height": 736,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                32,
+                24,
+                24,
+                24
+              ],
+              "children": [
+                {
+                  "id": "7xWLK",
+                  "type": "ref",
+                  "ref": "gEnEw",
+                  "name": "timerCard",
+                  "width": "fill_container",
+                  "height": "fill_container"
+                },
+                {
+                  "id": "3YkdT",
+                  "type": "ref",
+                  "ref": "uxzzv",
+                  "width": "fill_container",
+                  "name": "stats4",
+                  "descendants": {
+                    "Varr3": {
+                      "content": "0h 0m"
+                    },
+                    "cJAwi": {
+                      "content": "0"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "Vjs2v",
+              "type": "ref",
+              "ref": "HjNBU",
+              "x": 0,
+              "y": 736,
+              "width": 393,
+              "name": "bottomNav3"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
