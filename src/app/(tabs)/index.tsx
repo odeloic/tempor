@@ -1,41 +1,61 @@
-import { ActiveProjectHeader } from "@/components/Timer/ActiveProjectHeader";
-import { QuickStartProjectCard } from "@/components/Timer/QuickStartProjectCard";
-import { TimerControls } from "@/components/Timer/TimerControls";
-import { TimerDisplay } from "@/components/Timer/TimerDisplay";
-import { Toast } from "@/components/ui/Toast";
+import { selectedProjectIdAtom } from "@/atoms/ui";
+import { ProjectsCard } from "@/components/Project/ProjectsCard";
+import { TimerCard } from "@/components/Timer/TimerCard";
 import { AppScrollView } from "@/components/ui/AppScrollView";
 import { Screen } from "@/components/ui/Screen";
 import { ScreenSection } from "@/components/ui/ScreenSection";
+import { StatsCard } from "@/components/ui/StatsCard";
+import { Toast } from "@/components/ui/Toast";
+import { type Project } from "@/db/schema";
 import { useProjects } from "@/hooks/useProjects";
+import { useTimeEntries } from "@/hooks/useTimeEntries";
 import { useTimer, type SavedSession } from "@/hooks/useTimer";
+import { scale } from "@/lib/scale";
 import { formatDuration } from "@/lib/time";
 import { useTheme } from "@/theme/ThemeProvider";
-import { fonts, spacing } from "@/theme/tokens";
-import { useCallback, useState } from "react";
+import { endOfDay, startOfDay } from "date-fns";
+import { useRouter } from "expo-router";
+import { useAtom } from "jotai";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TimerScreen() {
-  const { colors } = useTheme();
+  const { spacing } = useTheme();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const { projects, getProject } = useProjects();
-  const { status, projectId, elapsed, start, stop, discard } = useTimer();
+  const { status, projectId } = useTimer();
+
+  const todayRange = useMemo(() => {
+    const now = new Date();
+    return { start: startOfDay(now), end: endOfDay(now) };
+  }, []);
+  const { entries: todayEntries, totalDuration: todayDuration } =
+    useTimeEntries({ dateRange: todayRange });
 
   const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
+  const [selectedProjectId, setSelectedProjectId] = useAtom(
+    selectedProjectIdAtom,
+  );
 
   const activeProject = projectId
     ? (getProject(Number(projectId)) ?? null)
     : null;
 
-  /**
-   * FIXME: Wouldn't this be something like a hook useToast that can be reused
-   * anywhere within the app? I imagine this would be better suited for different use cases
-   * Saving a project, Saving a new time entry
-   * Also different states: Error, Success, Warning
-   */
+  const selectedProject = selectedProjectId
+    ? (getProject(selectedProjectId) ?? null)
+    : null;
+
+  const displayProject = status !== "idle" ? activeProject : selectedProject;
+
+  useEffect(() => {
+    if (status !== "idle") setSelectedProjectId(null);
+  }, [status, setSelectedProjectId]);
+
   const showSavedToast = useCallback(
     (saved: SavedSession) => {
       const project = getProject(Number(saved.projectId));
@@ -49,36 +69,26 @@ export default function TimerScreen() {
     [getProject, t],
   );
 
-  // FIXME: Not every time i select a project this toast shows up
-  const handleProjectSelect = useCallback(
-    async (id: number) => {
-      const savedSession = await start(String(id));
-      if (savedSession) {
-        showSavedToast(savedSession);
-      }
-    },
-    [start, showSavedToast],
-  );
-
-  const handleStart = useCallback(async () => {
-    if (activeProject) {
-      const savedSession = await start(String(activeProject.id));
-      if (savedSession) {
-        showSavedToast(savedSession);
-      }
-    }
-  }, [activeProject, start, showSavedToast]);
-
-  const handleStop = useCallback(async () => {
-    const savedSession = await stop();
-    if (savedSession) {
-      showSavedToast(savedSession);
-    }
-  }, [stop, showSavedToast]);
-
   const handleHideToast = useCallback(() => {
     setToastVisible(false);
   }, []);
+
+  const recentProjects = useMemo(() => {
+    return [...projects]
+      .sort((a, b) => {
+        const aTime = a.lastUsedAt?.getTime() ?? 0;
+        const bTime = b.lastUsedAt?.getTime() ?? 0;
+        return bTime - aTime;
+      })
+      .slice(0, 2);
+  }, [projects]);
+
+  const handleSelectProject = useCallback(
+    (project: Project) => {
+      setSelectedProjectId(project.id);
+    },
+    [setSelectedProjectId],
+  );
 
   return (
     <Screen>
@@ -90,91 +100,51 @@ export default function TimerScreen() {
       <AppScrollView
         style={styles.scrollView}
         contentContainerStyle={{
-          paddingTop: insets.top + spacing.xl,
+          paddingTop: insets.top,
           paddingBottom: 120,
+          gap: scale(10),
         }}
       >
         <ScreenSection>
-          <ActiveProjectHeader project={activeProject} status={status} />
-
-          <View style={styles.timerSection}>
-            <TimerDisplay elapsed={elapsed} isPaused={status === "paused"} />
-          </View>
-
-          <View style={styles.controlsSection}>
-            {/** FIXME: As far as i know */}
-            <TimerControls
-              status={status}
-              hasProject={activeProject !== null}
-              onStart={handleStart}
-              onStop={handleStop}
-              onDiscard={discard}
-            />
-          </View>
-
-          <View style={styles.quickStartSection}>
-            <Text style={[styles.sectionLabel, { color: colors.textSecondary }]}>
-              {t("timer.quickStart")}
-            </Text>
-            <View style={styles.projectList}>
-              {/**
-               * FIXME: Now this is a component that is being re-used in multiple places
-               * Timer screen, when creating an entry, when editing an entry, etc...
-               * Need to be refactored and re-designed to support multiple projects,
-               * or even maybe add a quick add
-               */}
-              {projects.map((project) => (
-                <QuickStartProjectCard
-                  key={project.id}
-                  project={project}
-                  isActive={projectId === String(project.id)}
-                  timerStatus={status}
-                  onPress={() => handleProjectSelect(project.id)}
-                />
-              ))}
-              {projects.length === 0 && (
-                <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                  {t("timer.noProjects")}
-                </Text>
-              )}
-            </View>
-          </View>
+          <TimerCard
+            project={displayProject}
+            hasProjects={projects.length > 0}
+            onSelectProject={() => router.push("/project/select")}
+            onCreateProject={() => router.push("/project/new")}
+            onSessionSaved={showSavedToast}
+          />
         </ScreenSection>
+        <ScreenSection>
+          <StatsCard
+            title={t("timer.today")}
+            stats={[
+              {
+                value: formatDuration(todayDuration),
+                label: t("timer.totalTime"),
+              },
+              {
+                value: String(todayEntries.length),
+                label: t("timer.sessions"),
+              },
+            ]}
+          />
+        </ScreenSection>
+        {projects.length > 0 && (
+          <ScreenSection>
+            <ProjectsCard
+              projects={recentProjects}
+              onSelectProject={handleSelectProject}
+              onViewAll={() => router.push("/project/select")}
+            />
+          </ScreenSection>
+        )}
       </AppScrollView>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   scrollView: {
     flex: 1,
-  },
-  timerSection: {
-    marginBottom: spacing.xxl,
-  },
-  controlsSection: {
-    marginBottom: spacing.xxl + spacing.md,
-  },
-  quickStartSection: {
-    marginTop: spacing.lg,
-  },
-  sectionLabel: {
-    fontSize: 11,
-    fontFamily: fonts.sansMedium,
-    letterSpacing: 1.65,
-    textTransform: "uppercase",
-    marginBottom: spacing.md,
-  },
-  projectList: {
-    gap: spacing.sm,
-  },
-  emptyText: {
-    fontSize: 14,
-    fontFamily: fonts.sans,
-    textAlign: "center",
-    paddingVertical: spacing.lg,
   },
 });

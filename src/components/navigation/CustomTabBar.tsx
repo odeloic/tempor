@@ -1,9 +1,9 @@
 import { useTheme } from '@/theme/ThemeProvider';
-import { fonts, radii, spacing } from '@/theme/tokens';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Timer, Folder, Plus, Clock } from 'lucide-react-native';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { TabBarItem } from '@/components/navigation/TabBarItem';
 
 const ICONS = {
   index: Timer,
@@ -13,7 +13,7 @@ const ICONS = {
 } as const;
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const { colors } = useTheme();
+  const { colors, spacing, radii } = useTheme();
   const insets = useSafeAreaInsets();
 
   return (
@@ -23,6 +23,8 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
         {
           backgroundColor: colors.background,
           paddingBottom: insets.bottom || spacing.md,
+          paddingHorizontal: spacing.lg,
+          paddingTop: spacing.md,
         },
       ]}
     >
@@ -32,6 +34,7 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
           {
             backgroundColor: colors.surface,
             borderColor: colors.border,
+            borderRadius: radii.lg,
           },
         ]}
       >
@@ -62,36 +65,15 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
           };
 
           return (
-            <Pressable
+            <TabBarItem
               key={route.key}
-              accessibilityRole="button"
-              accessibilityState={isFocused ? { selected: true } : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
+              icon={Icon}
+              label={label}
+              selected={isFocused}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={[
-                styles.tab,
-                {
-                  backgroundColor: isFocused ? colors.textPrimary : 'transparent',
-                },
-              ]}
-            >
-              <Icon
-                size={20}
-                color={isFocused ? colors.background : colors.textSecondary}
-                strokeWidth={1.67}
-              />
-              <Text
-                style={[
-                  styles.label,
-                  {
-                    color: isFocused ? colors.background : colors.textSecondary,
-                  },
-                ]}
-              >
-                {label}
-              </Text>
-            </Pressable>
+              accessibilityLabel={options.tabBarAccessibilityLabel}
+            />
           );
         })}
       </View>
@@ -100,28 +82,11 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: spacing.lg,
-    paddingTop: spacing.md,
-  },
+  container: {},
   tabContainer: {
     flexDirection: 'row',
-    borderRadius: radii.lg,
     borderWidth: 0.5,
     padding: 6,
     gap: 4,
-  },
-  tab: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    borderRadius: radii.md,
-    gap: 4,
-  },
-  label: {
-    fontSize: 10,
-    fontFamily: fonts.sansMedium,
-    textAlign: 'center',
   },
 });

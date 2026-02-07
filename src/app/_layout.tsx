@@ -104,6 +104,7 @@ function RootLayoutNav() {
             headerShown: false
           }}>
             <Stack.Screen name="(tabs)" />
+            <Stack.Screen name="project/select" options={{ presentation: 'modal' }} />
             <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
           </Stack>
         </KeyboardProvider>

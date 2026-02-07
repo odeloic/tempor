@@ -1,6 +1,5 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { fonts, spacing } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 
 type ProjectFilterChipProps = {
@@ -16,27 +15,33 @@ export function ProjectFilterChip({
   onPress,
   label,
 }: ProjectFilterChipProps) {
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
 
   return (
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
         styles.chip,
-        {
-          backgroundColor: isSelected ? colors.textPrimary : 'transparent',
-          borderColor: isSelected ? 'transparent' : colors.border,
-          opacity: pressed ? 0.8 : 1,
-        },
+        isSelected
+          ? { backgroundColor: colors.textPrimary }
+          : {
+              backgroundColor: 'transparent',
+              borderWidth: 0.5,
+              borderColor: colors.border,
+            },
+        { opacity: pressed ? 0.8 : 1 },
       ]}
     >
       {project && (
-        <View style={[styles.colorDot, { backgroundColor: project.color }]} />
+        <View style={[styles.dot, { backgroundColor: project.color }]} />
       )}
       <Text
         style={[
           styles.label,
-          { color: isSelected ? colors.background : colors.textPrimary },
+          {
+            fontFamily: fonts.sansMedium,
+            color: isSelected ? colors.background : colors.textPrimary,
+          },
         ]}
         numberOfLines={1}
       >
@@ -50,19 +55,19 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: spacing.sm,
-    paddingVertical: 10,
-    paddingHorizontal: spacing.md,
+    justifyContent: 'center',
+    height: 40,
+    paddingHorizontal: 16,
     borderRadius: 20,
-    borderWidth: 1,
+    gap: 8,
   },
-  colorDot: {
+  dot: {
     width: 8,
     height: 8,
     borderRadius: 2,
   },
   label: {
     fontSize: 13,
-    fontFamily: fonts.sansMedium,
+    lineHeight: 13 * 1.5,
   },
 });

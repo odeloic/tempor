@@ -4,3 +4,5 @@ import { atom } from "jotai";
 export const projectFilterAtom = atom<Project['id'][]>([]);
 
 export const dateRangeFilterAtom = atom<{ start: Date; end: Date } | null>(null);
+
+export const selectedProjectIdAtom = atom<number | null>(null);

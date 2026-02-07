@@ -1,21 +1,37 @@
+import { scale } from "@/lib/scale";
 import { formatElapsed } from "@/lib/time";
 import { useTheme } from "@/theme/ThemeProvider";
 import { useEffect, useRef } from "react";
 import { Animated, StyleSheet, View } from "react-native";
 
-type TimerDisplayProps = {
-  elapsed: number;
-  isPaused?: boolean;
-};
+type TimerStatus = "idle" | "empty" | "running" | "paused";
 
-export function TimerDisplay({ elapsed, isPaused = false }: TimerDisplayProps) {
+interface TimerDisplayProps {
+  elapsed: number;
+  status?: TimerStatus;
+  /** @deprecated Use `status` instead. Kept for backward compatibility. */
+  isPaused?: boolean;
+}
+
+const emptyColor = "#c4c1bb";
+
+export function TimerDisplay({ elapsed, status, isPaused }: TimerDisplayProps) {
   const { colors, fonts } = useTheme();
   const pulseAnim = useRef(new Animated.Value(1)).current;
+
+  // Derive effective status: prefer explicit `status`, fall back to `isPaused`
+  const effectiveStatus: TimerStatus = status
+    ? status
+    : isPaused
+      ? "paused"
+      : "idle";
+
+  const isPausedState = effectiveStatus === "paused";
 
   useEffect(() => {
     let animation: Animated.CompositeAnimation | null = null;
 
-    if (isPaused) {
+    if (isPausedState) {
       animation = Animated.loop(
         Animated.sequence([
           Animated.timing(pulseAnim, {
@@ -28,7 +44,7 @@ export function TimerDisplay({ elapsed, isPaused = false }: TimerDisplayProps) {
             duration: 1000,
             useNativeDriver: true,
           }),
-        ])
+        ]),
       );
       animation.start();
     } else {
@@ -39,17 +55,27 @@ export function TimerDisplay({ elapsed, isPaused = false }: TimerDisplayProps) {
       animation?.stop();
       pulseAnim.setValue(1);
     };
-  }, [isPaused, pulseAnim]);
+  }, [isPausedState, pulseAnim]);
+
+  const textColor =
+    effectiveStatus === "empty" ? emptyColor : colors.textPrimary;
+
+  const fontSize = Math.min(scale(64), 80);
+  const letterSpacing = -(fontSize * 0.02);
 
   return (
     <View style={styles.container}>
       <Animated.Text
+        numberOfLines={1}
+        adjustsFontSizeToFit
         style={[
           styles.time,
           {
-            color: colors.textPrimary,
+            fontSize,
+            letterSpacing,
+            color: textColor,
             fontFamily: fonts.mono,
-            opacity: isPaused ? pulseAnim : 1,
+            opacity: isPausedState ? pulseAnim : 1,
           },
         ]}
       >
@@ -62,9 +88,9 @@ export function TimerDisplay({ elapsed, isPaused = false }: TimerDisplayProps) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "flex-start",
+    paddingVertical: 8,
   },
   time: {
-    fontSize: 64,
-    letterSpacing: -1.28,
+    // fontSize and letterSpacing applied dynamically via scale()
   },
 });
