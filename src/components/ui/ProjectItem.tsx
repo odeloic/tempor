@@ -1,22 +1,26 @@
+import { type ReactNode } from 'react';
+import { type Project } from '@/db/schema';
 import { useTheme } from '@/theme/ThemeProvider';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 interface ProjectItemProps {
-  name: string;
-  color: string;
-  subtitle?: string;
+  project: Project;
+  variant?: 'default' | 'card';
   selected?: boolean;
+  rightIcon?: ReactNode;
   onPress?: () => void;
 }
 
 export function ProjectItem({
-  name,
-  color,
-  subtitle,
+  project,
+  variant = 'default',
   selected = false,
+  rightIcon,
   onPress,
 }: ProjectItemProps) {
+  const { name, color, client } = project;
   const { colors, fonts, spacing, radii } = useTheme();
+  const isCard = variant === 'card';
 
   return (
     <Pressable
@@ -24,10 +28,16 @@ export function ProjectItem({
       style={({ pressed }) => [
         styles.container,
         {
-          borderRadius: radii.md,
-          paddingHorizontal: spacing.md,
+          borderRadius: isCard ? radii.lg : radii.md,
+          paddingHorizontal: isCard ? spacing.lg - 6 : spacing.md,
           gap: spacing.md - 2,
-          backgroundColor: selected ? colors.textPrimary : 'transparent',
+          backgroundColor: selected
+            ? colors.textPrimary
+            : isCard
+              ? colors.surface
+              : 'transparent',
+          borderWidth: isCard ? 1 : 0,
+          borderColor: isCard ? colors.border : 'transparent',
           opacity: pressed ? 0.8 : 1,
         },
       ]}
@@ -53,7 +63,7 @@ export function ProjectItem({
           {name}
         </Text>
 
-        {subtitle ? (
+        {client ? (
           <Text
             style={[
               styles.subtitle,
@@ -64,10 +74,12 @@ export function ProjectItem({
             ]}
             numberOfLines={1}
           >
-            {subtitle}
+            {client}
           </Text>
         ) : null}
       </View>
+
+      {rightIcon}
     </Pressable>
   );
 }

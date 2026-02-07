@@ -72,8 +72,7 @@ export function ProjectBottomSheet({
         {projects.map((project) => (
           <ProjectItem
             key={project.id}
-            name={project.name}
-            color={project.color}
+            project={project}
             selected={project.id === selectedProjectId}
             onPress={() => onSelectProject(project)}
           />

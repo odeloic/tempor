@@ -1,15 +1,15 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useRouter } from 'expo-router';
-import { useTranslation } from 'react-i18next';
-import { Ionicons } from '@expo/vector-icons';
-import { ScreenList } from '@/components/ui/ScreenList';
-import { Screen } from '@/components/ui/Screen';
-import { ScreenSection } from '@/components/ui/ScreenSection';
-import { useTheme } from '@/theme/ThemeProvider';
-import { fonts, spacing } from '@/theme/tokens';
-import { useProjects } from '@/hooks/useProjects';
-import { ProjectCard } from '@/components/Project/ProjectCard';
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
+import { Ionicons } from "@expo/vector-icons";
+import { ScreenList } from "@/components/ui/ScreenList";
+import { Screen } from "@/components/ui/Screen";
+import { ScreenSection } from "@/components/ui/ScreenSection";
+import { useTheme } from "@/theme/ThemeProvider";
+import { fonts, spacing } from "@/theme/tokens";
+import { useProjects } from "@/hooks/useProjects";
+import { ProjectItem } from "@/components/ui/ProjectItem";
 
 export default function ProjectsScreen() {
   const { colors } = useTheme();
@@ -24,10 +24,10 @@ export default function ProjectsScreen() {
       <ScreenSection style={{ paddingTop: insets.top + spacing.lg }}>
         <View style={styles.header}>
           <Text style={[styles.title, { color: colors.textPrimary }]}>
-            {t('projects.title')}
+            {t("projects.title")}
           </Text>
           <Pressable
-            onPress={() => router.push('/project/new')}
+            onPress={() => router.push("/project/new")}
             style={({ pressed }) => [
               styles.addButton,
               {
@@ -47,8 +47,12 @@ export default function ProjectsScreen() {
         keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.listContent}
         renderItem={({ item }) => (
-          <ProjectCard
+          <ProjectItem
             project={item}
+            variant="card"
+            rightIcon={
+              <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
+            }
             onPress={() => router.push(`/(tabs)/projects/${item.id}`)}
           />
         )}
@@ -56,10 +60,12 @@ export default function ProjectsScreen() {
           !isLoading ? (
             <View style={styles.emptyState}>
               <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-                {t('projects.noProjects')}
+                {t("projects.noProjects")}
               </Text>
-              <Text style={[styles.emptySubtext, { color: colors.textSecondary }]}>
-                {t('projects.createFirst')}
+              <Text
+                style={[styles.emptySubtext, { color: colors.textSecondary }]}
+              >
+                {t("projects.createFirst")}
               </Text>
             </View>
           ) : null
@@ -72,9 +78,9 @@ export default function ProjectsScreen() {
 
 const styles = StyleSheet.create({
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingBottom: spacing.xl,
   },
   title: {
@@ -85,8 +91,8 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   listContent: {
     paddingBottom: 120,
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
     height: 10,
   },
   emptyState: {
-    alignItems: 'center',
+    alignItems: "center",
     paddingTop: 48,
   },
   emptyText: {
