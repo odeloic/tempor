@@ -1,6 +1,6 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { Timer, Folder, Plus, Clock } from 'lucide-react-native';
+import { Timer, Folder, Plus, Clock, Settings } from 'lucide-react-native';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TabBarItem } from '@/components/navigation/TabBarItem';
@@ -10,6 +10,7 @@ const ICONS = {
   projects: Folder,
   add: Plus,
   history: Clock,
+  settings: Settings,
 } as const;
 
 export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarProps) {
@@ -19,7 +20,6 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
   return (
     <View
       style={[
-        styles.container,
         {
           backgroundColor: colors.background,
           paddingBottom: insets.bottom || spacing.md,
@@ -35,6 +35,8 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
             backgroundColor: colors.surface,
             borderColor: colors.border,
             borderRadius: radii.lg,
+            padding: spacing.xs + 2,
+            gap: spacing.xs,
           },
         ]}
       >
@@ -43,7 +45,11 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
           const label = options.title ?? route.name;
           const isFocused = state.index === index;
 
-          const Icon = ICONS[route.name as keyof typeof ICONS] ?? Timer;
+          const iconKey = route.name as keyof typeof ICONS;
+          if (__DEV__ && !(iconKey in ICONS)) {
+            console.warn(`CustomTabBar: missing icon for route "${route.name}"`);
+          }
+          const Icon = ICONS[iconKey] ?? Timer;
 
           const onPress = () => {
             const event = navigation.emit({
@@ -82,11 +88,8 @@ export function CustomTabBar({ state, descriptors, navigation }: BottomTabBarPro
 }
 
 const styles = StyleSheet.create({
-  container: {},
   tabContainer: {
     flexDirection: 'row',
     borderWidth: 0.5,
-    padding: 6,
-    gap: 4,
   },
 });

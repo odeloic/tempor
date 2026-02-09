@@ -35,5 +35,17 @@ export const timerState = sqliteTable(DB_TABLES.TIMER_STATE,
     ]
 );
 
+export const settings = sqliteTable(DB_TABLES.SETTINGS,
+    {
+        id: integer().primaryKey(),
+        remindersEnabled: integer('reminders_enabled', { mode: 'boolean' }).notNull().default(true),
+        reminderIntervalMinutes: integer('reminder_interval_minutes').notNull().default(30),
+    },
+    (table) => [
+        check('settings_singleton_check', sql`${table.id} = 1`)
+    ]
+);
+
 export type TimerState = typeof timerState.$inferSelect;
 export type Project = typeof projects.$inferSelect;
+export type Settings = typeof settings.$inferSelect;

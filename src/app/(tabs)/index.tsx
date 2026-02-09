@@ -12,7 +12,7 @@ import { useTimeEntries } from "@/hooks/useTimeEntries";
 import { useTimer, type SavedSession } from "@/hooks/useTimer";
 import { scale } from "@/lib/scale";
 import { formatDuration } from "@/lib/time";
-import { useTheme } from "@/theme/ThemeProvider";
+
 import { endOfDay, startOfDay } from "date-fns";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
@@ -22,7 +22,7 @@ import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TimerScreen() {
-  const { spacing } = useTheme();
+
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
   const router = useRouter();

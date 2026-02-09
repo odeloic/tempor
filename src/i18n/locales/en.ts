@@ -5,6 +5,7 @@ export const en = {
     projects: "Projects",
     add: "Add",
     history: "History",
+    settings: "Settings",
   },
 
   // Timer screen and controls
@@ -144,6 +145,25 @@ export const en = {
     save: "Save",
     error: "Error",
     noProjects: "No projects. Create one first.",
+  },
+
+  // Settings screen
+  settings: {
+    title: "Settings",
+    remindersEnabled: "Timer Reminders",
+    remindersDescription: "Get notified when a timer is still running",
+    reminderInterval: "REMINDER INTERVAL",
+    intervalMinutes_one: "Every {{count}} minute",
+    intervalMinutes_other: "Every {{count}} minutes",
+    intervalHours_one: "Every {{count}} hour",
+    intervalHours_other: "Every {{count}} hours",
+  },
+
+  // Notifications
+  notifications: {
+    reminderTitle: "Timer Still Running",
+    reminderBody: "Your timer for {{project}} is still running",
+    unknownProject: "Unknown Project",
   },
 
   // 404 screen
