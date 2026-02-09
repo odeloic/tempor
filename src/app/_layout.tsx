@@ -13,6 +13,7 @@ import { db } from '@/db/client';
 import { prepareMigrations } from '@/db/migrate';
 import migrations from '@/db/migrations/migrations';
 import { initializeTimer } from '@/lib/timer';
+import { NotificationManager } from '@/components/NotificationManager';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import {
@@ -63,46 +64,25 @@ export default function RootLayout() {
   }, [fontsLoaded, migrationsReady, dbReady]);
 
   if (migrationsError) {
-    console.error('Migration error:', migrationsError);
+    throw migrationsError;
   }
 
   if (!fontsLoaded || !migrationsReady || !dbReady) {
     return null;
   }
 
-
-  // const [loaded, error] = useFonts({
-  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  //   ...FontAwesome.font,
-  // });
-
-  // // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  // useEffect(() => {
-  //   if (error) throw error;
-  // }, [error]);
-
-  // useEffect(() => {
-  //   if (loaded) {
-  //     SplashScreen.hideAsync();
-  //   }
-  // }, [loaded]);
-
-  // if (!loaded) {
-  //   return null;
-  // }
-
   return <RootLayoutNav />;
 }
 
-function RootLayoutNav() {
+const STACK_SCREEN_OPTIONS = { headerShown: false } as const;
 
+function RootLayoutNav() {
   return (
     <ThemeProvider>
       <JotaiProvider>
         <KeyboardProvider>
-          <Stack screenOptions={{
-            headerShown: false
-          }}>
+          <NotificationManager />
+          <Stack screenOptions={STACK_SCREEN_OPTIONS}>
             <Stack.Screen name="(tabs)" />
             <Stack.Screen name="project/select" options={{ presentation: 'modal' }} />
             <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />

@@ -8,6 +8,13 @@
       "when": 1769100358401,
       "tag": "0000_large_wendigo",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1770495881281,
+      "tag": "0001_yellow_charles_xavier",
+      "breakpoints": true
     }
   ]
 }

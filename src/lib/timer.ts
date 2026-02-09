@@ -1,5 +1,6 @@
 import { db } from "@/db/client";
 import { timerState } from "@/db/schema";
+import { ensureSettings } from "@/lib/settings";
 import { eq } from "drizzle-orm";
 
 /**
@@ -18,5 +19,6 @@ export const ensureTimerState = async () => {
 
 export const initializeTimer = async (cb: () => void) => {
     await ensureTimerState();
+    await ensureSettings();
     cb();
 }

@@ -6,6 +6,7 @@ export const colors = {
     textSecondary: "#94918A",
     border: "#e5e3deff",
     destructive: "#E63946",
+    accent: "#2A9D8F",
   },
   dark: {
     background: "#121211",
@@ -14,6 +15,7 @@ export const colors = {
     textSecondary: "#8A8983",
     border: "#2E2E2B",
     destructive: "#E63946",
+    accent: "#2A9D8F",
   },
 } as const;
 
