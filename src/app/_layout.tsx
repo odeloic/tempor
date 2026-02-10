@@ -84,7 +84,6 @@ function RootLayoutNav() {
           <NotificationManager />
           <Stack screenOptions={STACK_SCREEN_OPTIONS}>
             <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="project/select" options={{ presentation: 'modal' }} />
             <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
           </Stack>
         </KeyboardProvider>

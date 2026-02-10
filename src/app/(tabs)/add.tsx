@@ -1,29 +1,33 @@
-import { useCallback, useState } from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-} from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTranslation } from 'react-i18next';
-import { startOfDay } from 'date-fns';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
-
 import {
   DateSelector,
   DurationInput,
   NoteInput,
-  ProjectSelector,
 } from '@/components/AddEntry';
+import { ProjectPickerModal } from '@/components/Project/ProjectPickerModal';
 import { Screen } from '@/components/ui/Screen';
 import { ScreenSection } from '@/components/ui/ScreenSection';
+import { SelectButton } from '@/components/ui/SelectButton';
 import { Toast } from '@/components/ui/Toast';
+import { type Project } from '@/db/schema';
 import { useProjects } from '@/hooks/useProjects';
+import { useProjectPicker } from '@/hooks/useProjectPicker';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { formatDuration, hoursMinutesToSeconds } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
+
+import { startOfDay } from 'date-fns';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function AddEntryScreen() {
   const { colors } = useTheme();
@@ -32,6 +36,7 @@ export default function AddEntryScreen() {
   const tabBarHeight = useBottomTabBarHeight();
   const { projects } = useProjects();
   const { create } = useTimeEntries();
+  const picker = useProjectPicker();
 
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date>(startOfDay(new Date()));
@@ -43,6 +48,7 @@ export default function AddEntryScreen() {
   const [toastMessage, setToastMessage] = useState('');
 
   const duration = hoursMinutesToSeconds(hours, minutes);
+  const selectedProject = projects.find((p) => p.id === selectedProjectId) ?? null;
   const isValid = selectedProjectId !== null && duration > 0;
 
   const resetForm = useCallback(() => {
@@ -65,7 +71,6 @@ export default function AddEntryScreen() {
         note: note.trim() || null,
       });
 
-      const selectedProject = projects.find((p) => p.id === selectedProjectId);
       const projectName = selectedProject?.name ?? 'project';
       setToastMessage(t('addEntry.savedToast', { duration: formatDuration(duration), project: projectName }));
       setToastVisible(true);
@@ -81,16 +86,20 @@ export default function AddEntryScreen() {
     isValid,
     isSaving,
     selectedProjectId,
+    selectedProject,
     selectedDate,
     duration,
     note,
     create,
-    projects,
     resetForm,
     t,
   ]);
 
   const handleHideToast = useCallback(() => setToastVisible(false), []);
+
+  const handleSelectProject = useCallback((project: Project) => {
+    setSelectedProjectId(project.id);
+  }, []);
 
   return (
     <Screen style={styles.container}>
@@ -113,11 +122,17 @@ export default function AddEntryScreen() {
             {t('addEntry.title')}
           </Text>
 
-          <ProjectSelector
-            projects={projects}
-            selectedId={selectedProjectId}
-            onSelect={setSelectedProjectId}
-          />
+          <View style={styles.section}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>
+              {t('form.project')}
+            </Text>
+            <SelectButton
+              label={selectedProject?.name ?? ''}
+              color={selectedProject?.color}
+              placeholder={t('timer.selectProject')}
+              onPress={picker.open}
+            />
+          </View>
 
           <DateSelector value={selectedDate} onChange={setSelectedDate} />
 
@@ -156,6 +171,14 @@ export default function AddEntryScreen() {
           </Pressable>
         </ScreenSection>
       </KeyboardAwareScrollView>
+      <ProjectPickerModal
+        visible={picker.visible}
+        projects={projects}
+        selectedProjectId={selectedProjectId ?? undefined}
+        onSelectProject={handleSelectProject}
+        onCreateProject={picker.create}
+        onDismiss={picker.dismiss}
+      />
     </Screen>
   );
 }
@@ -171,6 +194,16 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: fonts.sansSemiBold,
     marginBottom: spacing.lg,
+  },
+  section: {
+    marginBottom: spacing.lg,
+  },
+  label: {
+    fontSize: 11,
+    fontFamily: fonts.sansMedium,
+    letterSpacing: 1.5,
+    textTransform: 'uppercase',
+    marginBottom: 10,
   },
   saveButton: {
     height: 56,

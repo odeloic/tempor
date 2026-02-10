@@ -1,4 +1,4 @@
-import { selectedProjectIdAtom } from "@/atoms/ui";
+import { ProjectPickerModal } from "@/components/Project/ProjectPickerModal";
 import { ProjectsCard } from "@/components/Project/ProjectsCard";
 import { TimerCard } from "@/components/Timer/TimerCard";
 import { AppScrollView } from "@/components/ui/AppScrollView";
@@ -8,6 +8,7 @@ import { StatsCard } from "@/components/ui/StatsCard";
 import { Toast } from "@/components/ui/Toast";
 import { type Project } from "@/db/schema";
 import { useProjects } from "@/hooks/useProjects";
+import { useProjectPicker } from "@/hooks/useProjectPicker";
 import { useTimeEntries } from "@/hooks/useTimeEntries";
 import { useTimer, type SavedSession } from "@/hooks/useTimer";
 import { scale } from "@/lib/scale";
@@ -15,7 +16,6 @@ import { formatDuration } from "@/lib/time";
 
 import { endOfDay, startOfDay } from "date-fns";
 import { useRouter } from "expo-router";
-import { useAtom } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
@@ -28,6 +28,7 @@ export default function TimerScreen() {
   const router = useRouter();
   const { projects, getProject } = useProjects();
   const { status, projectId } = useTimer();
+  const picker = useProjectPicker();
 
   const todayRange = useMemo(() => {
     const now = new Date();
@@ -38,9 +39,7 @@ export default function TimerScreen() {
 
   const [toastMessage, setToastMessage] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
-  const [selectedProjectId, setSelectedProjectId] = useAtom(
-    selectedProjectIdAtom,
-  );
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
 
   const activeProject = projectId
     ? (getProject(Number(projectId)) ?? null)
@@ -54,7 +53,7 @@ export default function TimerScreen() {
 
   useEffect(() => {
     if (status !== "idle") setSelectedProjectId(null);
-  }, [status, setSelectedProjectId]);
+  }, [status]);
 
   const showSavedToast = useCallback(
     (saved: SavedSession) => {
@@ -87,7 +86,7 @@ export default function TimerScreen() {
     (project: Project) => {
       setSelectedProjectId(project.id);
     },
-    [setSelectedProjectId],
+    [],
   );
 
   return (
@@ -109,7 +108,7 @@ export default function TimerScreen() {
           <TimerCard
             project={displayProject}
             hasProjects={projects.length > 0}
-            onSelectProject={() => router.push("/project/select")}
+            onSelectProject={picker.open}
             onCreateProject={() => router.push("/project/new")}
             onSessionSaved={showSavedToast}
           />
@@ -134,11 +133,19 @@ export default function TimerScreen() {
             <ProjectsCard
               projects={recentProjects}
               onSelectProject={handleSelectProject}
-              onViewAll={() => router.push("/project/select")}
+              onViewAll={picker.open}
             />
           </ScreenSection>
         )}
       </AppScrollView>
+      <ProjectPickerModal
+        visible={picker.visible}
+        projects={projects}
+        selectedProjectId={selectedProjectId ?? undefined}
+        onSelectProject={handleSelectProject}
+        onCreateProject={picker.create}
+        onDismiss={picker.dismiss}
+      />
     </Screen>
   );
 }
