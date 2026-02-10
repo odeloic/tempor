@@ -14,7 +14,7 @@
       "backgroundColor": "#FFD739"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.odeloic.tempor",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

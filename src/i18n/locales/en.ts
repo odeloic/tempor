@@ -145,6 +145,7 @@ export const en = {
     save: "Save",
     error: "Error",
     noProjects: "No projects. Create one first.",
+    selectOption: "Select option",
   },
 
   // Settings screen

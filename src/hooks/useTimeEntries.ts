@@ -42,8 +42,8 @@ export function useTimeEntries(filter?: TimeEntriesFilter) {
         .from(sessions)
         .orderBy(desc(sessions.date), desc(sessions.createdAt));
       setSessionList(result);
-    } catch (error) {
-      console.error('Failed to fetch sessions:', error);
+    } catch {
+      // Session fetch failed silently
     } finally {
       setIsLoading(false);
     }

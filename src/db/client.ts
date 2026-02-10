@@ -11,7 +11,7 @@ export const db = drizzle(expoDb);
  * The app must be restarted after calling this function.
  */
 export function deleteDatabase(): void {
+  if (!__DEV__) return;
   expoDb.closeSync();
   deleteDatabaseSync(DATABASE_NAME);
-  console.log(`Database "${DATABASE_NAME}" deleted. Please restart the app.`);
 }

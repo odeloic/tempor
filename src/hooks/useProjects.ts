@@ -28,8 +28,8 @@ export function useProjects() {
     try {
       const result = await db.select().from(projects);
       setProjectList(result);
-    } catch (error) {
-      console.error('Failed to fetch projects:', error);
+    } catch {
+      // Project fetch failed silently
     } finally {
       setIsLoading(false);
     }
