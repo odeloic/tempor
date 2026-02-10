@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useAtomValue } from 'jotai';
 import * as Notifications from 'expo-notifications';
 import { timerStateAtom } from '@/atoms/timer';
-import { settingsAtom } from '@/atoms/settings';
+import { useAppSettings } from '@/components/AppSettingsProvider';
 import { projectsAtom } from '@/atoms/projects';
 import i18n from '@/i18n';
 
@@ -10,7 +10,7 @@ const REMINDER_NOTIFICATION_ID = 'timer-reminder';
 
 export function useReminderNotifications() {
     const timer = useAtomValue(timerStateAtom);
-    const settings = useAtomValue(settingsAtom);
+    const { remindersEnabled, reminderIntervalMinutes } = useAppSettings();
     const projects = useAtomValue(projectsAtom);
 
     const projectName = useMemo(() => {
@@ -23,7 +23,7 @@ export function useReminderNotifications() {
         const manage = async () => {
             await Notifications.cancelScheduledNotificationAsync(REMINDER_NOTIFICATION_ID).catch(() => {});
 
-            if (timer.status !== 'running' || !settings.remindersEnabled) {
+            if (timer.status !== 'running' || !remindersEnabled) {
                 return;
             }
 
@@ -37,7 +37,7 @@ export function useReminderNotifications() {
                 },
                 trigger: {
                     type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-                    seconds: settings.reminderIntervalMinutes * 60,
+                    seconds: reminderIntervalMinutes * 60,
                     repeats: true,
                 },
             });
@@ -50,5 +50,5 @@ export function useReminderNotifications() {
         return () => {
             Notifications.cancelScheduledNotificationAsync(REMINDER_NOTIFICATION_ID).catch(() => {});
         };
-    }, [timer.status, projectName, settings.remindersEnabled, settings.reminderIntervalMinutes]);
+    }, [timer.status, projectName, remindersEnabled, reminderIntervalMinutes]);
 }
