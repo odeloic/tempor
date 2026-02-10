@@ -43,9 +43,7 @@ export function useReminderNotifications() {
             });
         };
 
-        manage().catch((error) => {
-            console.error('Failed to manage reminder notification:', error);
-        });
+        manage().catch(() => {});
 
         return () => {
             Notifications.cancelScheduledNotificationAsync(REMINDER_NOTIFICATION_ID).catch(() => {});

@@ -1,4 +1,3 @@
-/** TODO: Use Flat list or Flash list */
 import { dateRangeFilterAtom, projectFilterAtom } from '@/atoms/ui';
 import {
   AggregatedEntryCard,

@@ -71,8 +71,7 @@ export default function AddEntryScreen() {
       setToastVisible(true);
 
       resetForm();
-    } catch (error) {
-      console.error('Failed to save entry:', error);
+    } catch {
       setToastMessage(t('addEntry.failedToSave'));
       setToastVisible(true);
     } finally {

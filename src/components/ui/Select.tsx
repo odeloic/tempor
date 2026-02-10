@@ -1,6 +1,7 @@
 import { useTheme } from '@/theme/ThemeProvider';
 import { ChevronDown, type LucideIcon } from 'lucide-react-native';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 interface SelectProps {
   label: string;
@@ -13,13 +14,15 @@ interface SelectProps {
 export function Select({
   label,
   value,
-  placeholder = 'Select option',
+  placeholder,
   icon: Icon,
   onPress,
 }: SelectProps) {
   const { colors, fonts, spacing, radii } = useTheme();
+  const { t } = useTranslation();
+  const resolvedPlaceholder = placeholder ?? t('common.selectOption');
 
-  const displayText = value ?? placeholder;
+  const displayText = value ?? resolvedPlaceholder;
   const hasValue = value !== undefined && value.length > 0;
 
   return (

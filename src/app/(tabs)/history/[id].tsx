@@ -398,7 +398,7 @@ export default function EditEntryScreen() {
         <View
           style={[
             styles.deleteConfirm,
-            { backgroundColor: '#FEF2F2' },
+            { backgroundColor: colors.destructiveBackground },
           ]}
         >
           <Text
@@ -438,7 +438,7 @@ export default function EditEntryScreen() {
                 },
               ]}
             >
-              <Text style={[styles.confirmButtonText, { color: '#FFFFFF' }]}>
+              <Text style={[styles.confirmButtonText, { color: colors.background }]}>
                 {t('common.delete')}
               </Text>
             </Pressable>

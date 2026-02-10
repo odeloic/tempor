@@ -7,8 +7,7 @@ export async function requestNotificationPermissions(): Promise<boolean> {
 
         const { status } = await Notifications.requestPermissionsAsync();
         return status === 'granted';
-    } catch (error) {
-        console.error('Failed to request notification permissions:', error);
+    } catch {
         return false;
     }
 }

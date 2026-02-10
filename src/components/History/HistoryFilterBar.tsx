@@ -1,4 +1,5 @@
 import { StyleSheet, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { spacing } from '@/theme/tokens';
 import { type Project } from '@/db/schema';
 import { type DateRange } from '@/hooks/useTimeEntries';
@@ -23,6 +24,7 @@ export function HistoryFilterBar({
   dateRange,
   onDateRangeChange,
 }: HistoryFilterBarProps) {
+  const { t } = useTranslation();
   const allSelected = selectedProjectIds.length === 0;
 
   return (
@@ -35,7 +37,7 @@ export function HistoryFilterBar({
         <ProjectFilterChip
           isSelected={allSelected}
           onPress={onClearProjectFilter}
-          label="All Projects"
+          label={t('history.allProjects')}
         />
         {projects.map((project) => (
           <ProjectFilterChip

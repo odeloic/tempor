@@ -28,8 +28,8 @@ export function useSettings() {
                 }
 
                 setState(row);
-            } catch (error) {
-                console.error('Failed to load settings:', error);
+            } catch {
+                // Settings load failed — defaults will be used
             }
         };
         loadSettings();
