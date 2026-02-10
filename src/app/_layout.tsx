@@ -13,6 +13,7 @@ import { db } from '@/db/client';
 import { prepareMigrations } from '@/db/migrate';
 import migrations from '@/db/migrations/migrations';
 import { initializeTimer } from '@/lib/timer';
+import { AppSettingsProvider } from '@/components/AppSettingsProvider';
 import { NotificationManager } from '@/components/NotificationManager';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -80,13 +81,15 @@ function RootLayoutNav() {
   return (
     <ThemeProvider>
       <JotaiProvider>
-        <KeyboardProvider>
-          <NotificationManager />
-          <Stack screenOptions={STACK_SCREEN_OPTIONS}>
-            <Stack.Screen name="(tabs)" />
-            <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
-          </Stack>
-        </KeyboardProvider>
+        <AppSettingsProvider>
+          <KeyboardProvider>
+            <NotificationManager />
+            <Stack screenOptions={STACK_SCREEN_OPTIONS}>
+              <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="project/new" options={{ presentation: 'modal' }} />
+            </Stack>
+          </KeyboardProvider>
+        </AppSettingsProvider>
       </JotaiProvider>
     </ThemeProvider>
   );
