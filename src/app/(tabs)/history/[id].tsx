@@ -1,13 +1,18 @@
 import { type Session } from '@/atoms/sessions';
 import { timerStateAtom } from '@/atoms/timer';
+import { ProjectPickerModal } from '@/components/Project/ProjectPickerModal';
+import { Screen } from '@/components/ui/Screen';
+import { ScreenHeader } from '@/components/ui/ScreenHeader';
+import { ScreenSection } from '@/components/ui/ScreenSection';
+import { SelectButton } from '@/components/ui/SelectButton';
+import { type Project } from '@/db/schema';
 import { useProjects } from '@/hooks/useProjects';
+import { useProjectPicker } from '@/hooks/useProjectPicker';
 import { useTimeEntries } from '@/hooks/useTimeEntries';
 import { hoursMinutesToSeconds } from '@/lib/time';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, radii, spacing } from '@/theme/tokens';
-import { Screen } from '@/components/ui/Screen';
-import { ScreenHeader } from '@/components/ui/ScreenHeader';
-import { ScreenSection } from '@/components/ui/ScreenSection';
+
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -36,6 +41,7 @@ export default function EditEntryScreen() {
   const { getEntry, update, remove, refresh } = useTimeEntries();
   const timerState = useAtomValue(timerStateAtom);
   const tabBarHeight = useBottomTabBarHeight();
+  const picker = useProjectPicker();
 
   const [entry, setEntry] = useState<Session | null>(null);
   const [projectId, setProjectId] = useState<string>('');
@@ -65,6 +71,7 @@ export default function EditEntryScreen() {
   }, [entryId, getEntry]);
 
   const isTimerRunning = timerState.status !== 'idle';
+  const selectedProject = projects.find((p) => String(p.id) === projectId) ?? null;
 
   const duration = hoursMinutesToSeconds(hours, minutes);
   const isValid = projectId && duration > 0;
@@ -117,6 +124,14 @@ export default function EditEntryScreen() {
     []
   );
 
+  const handleSelectProject = useCallback((project: Project) => {
+    setProjectId(String(project.id));
+  }, []);
+
+  const handleOpenPicker = useCallback(() => {
+    if (!isTimerRunning) picker.open();
+  }, [isTimerRunning, picker]);
+
   const formatDisplayDate = (d: Date) => {
     const today = new Date();
     const yesterday = new Date(today);
@@ -153,13 +168,13 @@ export default function EditEntryScreen() {
         bottomOffset={tabBarHeight}
         keyboardShouldPersistTaps="handled"
       >
-          <ScreenHeader
-            title={t('editEntry.title')}
-            onBack={() => router.back()}
-            style={{ marginBottom: spacing.xl }}
-          />
+        <ScreenHeader
+          title={t('editEntry.title')}
+          onBack={() => router.back()}
+          style={{ marginBottom: spacing.xl }}
+        />
 
-          <ScreenSection>
+        <ScreenSection>
           {/* Timer Warning */}
           {isTimerRunning && (
             <View
@@ -176,277 +191,259 @@ export default function EditEntryScreen() {
             <Text style={[styles.label, { color: colors.textSecondary }]}>
               {t('form.project')}
             </Text>
-            <View style={styles.projectList}>
-              {projects.map((p) => {
-                const isSelected = String(p.id) === projectId;
-                return (
-                  <Pressable
-                    key={p.id}
-                    onPress={() => !isTimerRunning && setProjectId(String(p.id))}
-                    disabled={isTimerRunning}
-                    style={({ pressed }) => [
-                      styles.projectOption,
-                      {
-                        borderColor: isSelected
-                          ? colors.textPrimary
-                          : colors.border,
-                        borderWidth: isSelected ? 2 : 1,
-                        backgroundColor: colors.surface,
-                        opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
-                      },
+            <SelectButton
+              label={selectedProject?.name ?? ''}
+              color={selectedProject?.color}
+              placeholder={t('timer.selectProject')}
+              onPress={handleOpenPicker}
+            />
+          </View>
+
+          {/* Date Picker */}
+          <View style={styles.section}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>
+              {t('form.date')}
+            </Text>
+            <Pressable
+              onPress={() => !isTimerRunning && setShowDatePicker(true)}
+              disabled={isTimerRunning}
+              style={({ pressed }) => [
+                styles.dateButton,
+                {
+                  backgroundColor: colors.surface,
+                  borderColor: colors.border,
+                  opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
+                },
+              ]}
+            >
+              <Text style={[styles.dateText, { color: colors.textPrimary }]}>
+                {formatDisplayDate(date)}
+              </Text>
+              <Text style={[styles.dateSubtext, { color: colors.textSecondary }]}>
+                {date.toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </Text>
+            </Pressable>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date}
+                mode="date"
+                display="spinner"
+                onChange={handleDateChange}
+                maximumDate={new Date()}
+              />
+            )}
+          </View>
+
+          {/* Duration */}
+          <View style={styles.section}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>
+              {t('form.duration')}
+            </Text>
+            <View style={styles.durationRow}>
+              <View style={styles.durationInput}>
+                <View
+                  style={[
+                    styles.inputWrapper,
+                    {
+                      backgroundColor: colors.surface,
+                      borderColor: colors.border,
+                      opacity: isTimerRunning ? 0.5 : 1,
+                    },
+                  ]}
+                >
+                  <TextInput
+                    value={hours > 0 ? String(hours) : ''}
+                    onChangeText={(text) => {
+                      const val = parseInt(text, 10);
+                      setHours(isNaN(val) ? 0 : Math.max(0, Math.min(23, val)));
+                    }}
+                    keyboardType="number-pad"
+                    placeholder="0"
+                    placeholderTextColor={colors.textSecondary}
+                    editable={!isTimerRunning}
+                    style={[
+                      styles.durationTextInput,
+                      { color: colors.textPrimary },
+                    ]}
+                  />
+                  <Text
+                    style={[styles.durationUnit, { color: colors.textSecondary }]}
+                  >
+                    {t('duration.hrs')}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.durationInput}>
+                <View
+                  style={[
+                    styles.inputWrapper,
+                    {
+                      backgroundColor: colors.surface,
+                      borderColor: colors.border,
+                      opacity: isTimerRunning ? 0.5 : 1,
+                    },
+                  ]}
+                >
+                  <TextInput
+                    value={minutes > 0 ? String(minutes) : ''}
+                    onChangeText={(text) => {
+                      const val = parseInt(text, 10);
+                      setMinutes(isNaN(val) ? 0 : Math.max(0, Math.min(59, val)));
+                    }}
+                    keyboardType="number-pad"
+                    placeholder="0"
+                    placeholderTextColor={colors.textSecondary}
+                    editable={!isTimerRunning}
+                    style={[
+                      styles.durationTextInput,
+                      { color: colors.textPrimary },
+                    ]}
+                  />
+                  <Text
+                    style={[styles.durationUnit, { color: colors.textSecondary }]}
+                  >
+                    {t('duration.min')}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          {/* Note */}
+          <View style={styles.section}>
+            <Text style={[styles.label, { color: colors.textSecondary }]}>
+              {t('form.note')}{' '}
+              <Text style={styles.optionalText}>{t('form.optional')}</Text>
+            </Text>
+            <TextInput
+              value={note}
+              onChangeText={setNote}
+              placeholder={t('form.notePlaceholder')}
+              placeholderTextColor={colors.textSecondary}
+              multiline
+              numberOfLines={3}
+              editable={!isTimerRunning}
+              style={[
+                styles.noteInput,
+                {
+                  backgroundColor: colors.surface,
+                  borderColor: colors.border,
+                  color: colors.textPrimary,
+                  opacity: isTimerRunning ? 0.5 : 1,
+                },
+              ]}
+            />
+          </View>
+
+          {/* Save Button */}
+          <Pressable
+            onPress={handleSave}
+            disabled={!isValid || !hasChanges || isSaving || isTimerRunning}
+            style={({ pressed }) => [
+              styles.saveButton,
+              {
+                backgroundColor:
+                  isValid && hasChanges && !isTimerRunning
+                    ? colors.textPrimary
+                    : colors.border,
+                opacity: pressed ? 0.9 : 1,
+              },
+            ]}
+          >
+            <Text
+              style={[
+                styles.saveButtonText,
+                {
+                  color:
+                    isValid && hasChanges && !isTimerRunning
+                      ? colors.background
+                      : colors.textSecondary,
+                },
+              ]}
+            >
+              {isSaving ? t('editEntry.saving') : t('editEntry.saveChanges')}
+            </Text>
+          </Pressable>
+
+          {/* Delete Button */}
+          {!showDeleteConfirm ? (
+            <Pressable
+              onPress={() => setShowDeleteConfirm(true)}
+              disabled={isTimerRunning}
+              style={({ pressed }) => [
+                styles.deleteButton,
+                { opacity: pressed ? 0.7 : isTimerRunning ? 0.5 : 1 },
+              ]}
+            >
+              <Text style={[styles.deleteButtonText, { color: colors.destructive }]}>
+                {t('editEntry.deleteEntry')}
+              </Text>
+            </Pressable>
+          ) : (
+            <View
+              style={[
+                styles.deleteConfirm,
+                { backgroundColor: colors.destructiveBackground },
+              ]}
+            >
+              <Text
+                style={[styles.deleteConfirmText, { color: colors.textPrimary }]}
+              >
+                {t('editEntry.deleteConfirm')}
+              </Text>
+              <View style={styles.deleteConfirmButtons}>
+                <Pressable
+                  onPress={() => setShowDeleteConfirm(false)}
+                  style={({ pressed }) => [
+                    styles.confirmButton,
+                    {
+                      backgroundColor: 'transparent',
+                      borderColor: colors.border,
+                      borderWidth: 1,
+                      opacity: pressed ? 0.7 : 1,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={[
+                      styles.confirmButtonText,
+                      { color: colors.textPrimary },
                     ]}
                   >
-                    <View
-                      style={[styles.projectDot, { backgroundColor: p.color }]}
-                    />
-                    <Text
-                      style={[styles.projectName, { color: colors.textPrimary }]}
-                    >
-                      {p.name}
-                    </Text>
-                  </Pressable>
-                );
-              })}
+                    {t('common.cancel')}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={handleDelete}
+                  style={({ pressed }) => [
+                    styles.confirmButton,
+                    {
+                      backgroundColor: colors.destructive,
+                      opacity: pressed ? 0.9 : 1,
+                    },
+                  ]}
+                >
+                  <Text style={[styles.confirmButtonText, { color: colors.background }]}>
+                    {t('common.delete')}
+                  </Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-
-      {/* Date Picker */}
-      <View style={styles.section}>
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('form.date')}
-        </Text>
-        <Pressable
-          onPress={() => !isTimerRunning && setShowDatePicker(true)}
-          disabled={isTimerRunning}
-          style={({ pressed }) => [
-            styles.dateButton,
-            {
-              backgroundColor: colors.surface,
-              borderColor: colors.border,
-              opacity: pressed ? 0.8 : isTimerRunning ? 0.5 : 1,
-            },
-          ]}
-        >
-          <Text style={[styles.dateText, { color: colors.textPrimary }]}>
-            {formatDisplayDate(date)}
-          </Text>
-          <Text style={[styles.dateSubtext, { color: colors.textSecondary }]}>
-            {date.toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </Text>
-        </Pressable>
-        {showDatePicker && (
-          <DateTimePicker
-            value={date}
-            mode="date"
-            display="spinner"
-            onChange={handleDateChange}
-            maximumDate={new Date()}
-          />
-        )}
-      </View>
-
-      {/* Duration */}
-      <View style={styles.section}>
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('form.duration')}
-        </Text>
-        <View style={styles.durationRow}>
-          <View style={styles.durationInput}>
-            <View
-              style={[
-                styles.inputWrapper,
-                {
-                  backgroundColor: colors.surface,
-                  borderColor: colors.border,
-                  opacity: isTimerRunning ? 0.5 : 1,
-                },
-              ]}
-            >
-              <TextInput
-                value={hours > 0 ? String(hours) : ''}
-                onChangeText={(text) => {
-                  const val = parseInt(text, 10);
-                  setHours(isNaN(val) ? 0 : Math.max(0, Math.min(23, val)));
-                }}
-                keyboardType="number-pad"
-                placeholder="0"
-                placeholderTextColor={colors.textSecondary}
-                editable={!isTimerRunning}
-                style={[
-                  styles.durationTextInput,
-                  { color: colors.textPrimary },
-                ]}
-              />
-              <Text
-                style={[styles.durationUnit, { color: colors.textSecondary }]}
-              >
-                {t('duration.hrs')}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.durationInput}>
-            <View
-              style={[
-                styles.inputWrapper,
-                {
-                  backgroundColor: colors.surface,
-                  borderColor: colors.border,
-                  opacity: isTimerRunning ? 0.5 : 1,
-                },
-              ]}
-            >
-              <TextInput
-                value={minutes > 0 ? String(minutes) : ''}
-                onChangeText={(text) => {
-                  const val = parseInt(text, 10);
-                  setMinutes(isNaN(val) ? 0 : Math.max(0, Math.min(59, val)));
-                }}
-                keyboardType="number-pad"
-                placeholder="0"
-                placeholderTextColor={colors.textSecondary}
-                editable={!isTimerRunning}
-                style={[
-                  styles.durationTextInput,
-                  { color: colors.textPrimary },
-                ]}
-              />
-              <Text
-                style={[styles.durationUnit, { color: colors.textSecondary }]}
-              >
-                {t('duration.min')}
-              </Text>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      {/* Note */}
-      <View style={styles.section}>
-        <Text style={[styles.label, { color: colors.textSecondary }]}>
-          {t('form.note')}{' '}
-          <Text style={styles.optionalText}>{t('form.optional')}</Text>
-        </Text>
-        <TextInput
-          value={note}
-          onChangeText={setNote}
-          placeholder={t('form.notePlaceholder')}
-          placeholderTextColor={colors.textSecondary}
-          multiline
-          numberOfLines={3}
-          editable={!isTimerRunning}
-          style={[
-            styles.noteInput,
-            {
-              backgroundColor: colors.surface,
-              borderColor: colors.border,
-              color: colors.textPrimary,
-              opacity: isTimerRunning ? 0.5 : 1,
-            },
-          ]}
-        />
-      </View>
-
-      {/* Save Button */}
-      <Pressable
-        onPress={handleSave}
-        disabled={!isValid || !hasChanges || isSaving || isTimerRunning}
-        style={({ pressed }) => [
-          styles.saveButton,
-          {
-            backgroundColor:
-              isValid && hasChanges && !isTimerRunning
-                ? colors.textPrimary
-                : colors.border,
-            opacity: pressed ? 0.9 : 1,
-          },
-        ]}
-      >
-        <Text
-          style={[
-            styles.saveButtonText,
-            {
-              color:
-                isValid && hasChanges && !isTimerRunning
-                  ? colors.background
-                  : colors.textSecondary,
-            },
-          ]}
-        >
-          {isSaving ? t('editEntry.saving') : t('editEntry.saveChanges')}
-        </Text>
-      </Pressable>
-
-      {/* Delete Button */}
-      {!showDeleteConfirm ? (
-        <Pressable
-          onPress={() => setShowDeleteConfirm(true)}
-          disabled={isTimerRunning}
-          style={({ pressed }) => [
-            styles.deleteButton,
-            { opacity: pressed ? 0.7 : isTimerRunning ? 0.5 : 1 },
-          ]}
-        >
-          <Text style={[styles.deleteButtonText, { color: colors.destructive }]}>
-            {t('editEntry.deleteEntry')}
-          </Text>
-        </Pressable>
-      ) : (
-        <View
-          style={[
-            styles.deleteConfirm,
-            { backgroundColor: colors.destructiveBackground },
-          ]}
-        >
-          <Text
-            style={[styles.deleteConfirmText, { color: colors.textPrimary }]}
-          >
-            {t('editEntry.deleteConfirm')}
-          </Text>
-          <View style={styles.deleteConfirmButtons}>
-            <Pressable
-              onPress={() => setShowDeleteConfirm(false)}
-              style={({ pressed }) => [
-                styles.confirmButton,
-                {
-                  backgroundColor: 'transparent',
-                  borderColor: colors.border,
-                  borderWidth: 1,
-                  opacity: pressed ? 0.7 : 1,
-                },
-              ]}
-            >
-              <Text
-                style={[
-                  styles.confirmButtonText,
-                  { color: colors.textPrimary },
-                ]}
-              >
-                {t('common.cancel')}
-              </Text>
-            </Pressable>
-            <Pressable
-              onPress={handleDelete}
-              style={({ pressed }) => [
-                styles.confirmButton,
-                {
-                  backgroundColor: colors.destructive,
-                  opacity: pressed ? 0.9 : 1,
-                },
-              ]}
-            >
-              <Text style={[styles.confirmButtonText, { color: colors.background }]}>
-                {t('common.delete')}
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      )}
-          </ScreenSection>
+          )}
+        </ScreenSection>
       </KeyboardAwareScrollView>
+      <ProjectPickerModal
+        visible={picker.visible}
+        projects={projects}
+        selectedProjectId={selectedProject?.id}
+        onSelectProject={handleSelectProject}
+        onCreateProject={picker.create}
+        onDismiss={picker.dismiss}
+      />
     </Screen>
   );
 }
@@ -490,26 +487,6 @@ const styles = StyleSheet.create({
     textTransform: 'none',
     fontFamily: fonts.sans,
     letterSpacing: 0,
-  },
-  projectList: {
-    gap: 6,
-  },
-  projectOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-    padding: 14,
-    paddingHorizontal: 16,
-    borderRadius: radii.md,
-  },
-  projectDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 3,
-  },
-  projectName: {
-    fontSize: 15,
-    fontFamily: fonts.sansMedium,
   },
   dateButton: {
     padding: 16,
