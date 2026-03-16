@@ -1,9 +1,9 @@
-import { REMINDER_INTERVAL_OPTIONS } from '@/atoms/settings';
+import { REMINDER_INTERVAL_OPTIONS } from '@/constants/settings';
 import { Card } from '@/components/ui/Card';
 import { AppScrollView } from '@/components/ui/AppScrollView';
 import { Screen } from '@/components/ui/Screen';
 import { ScreenSection } from '@/components/ui/ScreenSection';
-import { useSettings } from '@/hooks/useSettings';
+import { useAppSettings } from '@/components/AppSettingsProvider';
 import { requestNotificationPermissions } from '@/lib/notifications';
 import { useTheme } from '@/theme/ThemeProvider';
 import { fonts, spacing } from '@/theme/tokens';
@@ -22,7 +22,7 @@ export default function SettingsScreen() {
         reminderIntervalMinutes,
         setRemindersEnabled,
         setReminderInterval,
-    } = useSettings();
+    } = useAppSettings();
 
     const contentContainerStyle = useMemo(() => ({
         paddingTop: insets.top + spacing.xl,
